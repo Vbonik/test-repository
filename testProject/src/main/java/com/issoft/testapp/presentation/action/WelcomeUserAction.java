@@ -22,7 +22,7 @@ public class WelcomeUserAction implements Action{
     // all struts logic here
     @Override
     public String execute() {
-        
+
         return "SUCCESS";
 
     }
