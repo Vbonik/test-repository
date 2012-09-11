@@ -1,6 +1,6 @@
 package com.issoft.ftp.model;
 
-import java.io.File;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,19 +10,25 @@ import java.io.File;
  * To change this template use File | Settings | File Templates.
  */
 public class FTPFile {
-    private File userFile;
+    private MultipartFile userFile;
     private String userFileContentType;
     private String userFileFileName;
+    private String destination;
+    private String[] fileList;
 
 
     public FTPFile() {
     }
 
-    public File getUserFile() {
+    public FTPFile(String[] fileList) {
+        this.fileList = fileList;
+    }
+
+    public MultipartFile getUserFile() {
         return userFile;
     }
 
-    public void setUserFile(File userFile) {
+    public void setUserFile(MultipartFile userFile) {
         this.userFile = userFile;
     }
 
@@ -40,5 +46,21 @@ public class FTPFile {
 
     public void setUserFileFileName(String userFileFileName) {
         this.userFileFileName = userFileFileName;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public String[] getFileList() {
+        return fileList;
+    }
+
+    public void setFileList(String[] fileList) {
+        this.fileList = fileList;
     }
 }

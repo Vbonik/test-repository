@@ -6,13 +6,23 @@
 
     <package name="default" namespace="/" extends="struts-default">
         <action name="Ftp" class="com.issoft.ftp.presentation.action.FtpAction">
-            <result name="SUCCESS">/welcomePage.jsp</result>
+            <result name="SUCCESS">jsp/welcomePage.jsp</result>
         </action>
         <action name="uploadFtp" method="upload" class="com.issoft.ftp.presentation.action.FtpAction">
-            <result name="SUCCESS">jsp/welcomePage.jsp</result>
+            <result name="SUCCESS">welcomePage.jsp</result>
+            <result name="FAILURE">warning.jsp</result>
+        </action>
+        <action name="downloadFtp" method="download" class="com.issoft.ftp.presentation.action.FtpAction">
+            <result name="SUCCESS">welcomePage.jsp</result>
+            <result name="FAILURE">warning.jsp</result>
         </action>
         <action name="loginFtp" method="login" class="com.issoft.ftp.presentation.action.FtpAction">
             <result name="SUCCESS">jsp/upload.jsp</result>
+        </action>
+        <action name="getDownloadFileListFtp" method="getDownloadFileList"
+                class="com.issoft.ftp.presentation.action.FtpAction">
+            <result name="SUCCESS">download.jsp</result>
+            <result name="FAILURE">warning.jsp</result>
         </action>
     </package>
 

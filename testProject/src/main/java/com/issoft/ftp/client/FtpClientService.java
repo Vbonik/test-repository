@@ -4,21 +4,17 @@
  */
 package com.issoft.ftp.client;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPConnectionClosedException;
 import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.log4j.Logger;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.*;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 
 /**
  * @author slavabrodnitski
@@ -28,13 +24,13 @@ public class FtpClientService {
     private static final Integer DEFAULT_FTP_LISTENER_PORT = 2121;
     private static final Logger logger = Logger.getLogger(FtpClientService.class);
 
-
     private final FTPClient client = new FTPClient();
     private final InetAddress host;
     private final Integer port;
+
     private Boolean logged = false;
 
-    // org.apache.ftpserver.ftplet.FtpException: Ivalid address. - becouse Server is not started!
+    // org.apache.ftpserver.ftplet.FtpException: Invalid address. - because Server is not started!
     public FtpClientService() throws UnknownHostException, FtpException {
         //TODO: must use try catch to this ex.
         this(InetAddress.getByName("localhost"), DEFAULT_FTP_LISTENER_PORT);
@@ -51,6 +47,7 @@ public class FtpClientService {
         return false;
     }
 
+    //TODO: catch exceptions if server is not running
     public FtpClientService(InetAddress host, Integer port) throws FtpException {
         if (host != null) {
             this.host = host;
@@ -62,18 +59,18 @@ public class FtpClientService {
                     client.connect(host);
                 }
                 return;
-            } catch (IOException ioEx) {
-                logger.error("Connection failed.");
+            } catch (IOException e) {
+                logger.error("Connection failed.", e);
             }
         }
-        throw new FtpException("Ivalid address.");
+        throw new FtpException("Invalid address or server is not running.");
     }
 
     //TODO: something bad with this stuff
-    public Boolean uploadFile(String remoteName, File file) {
+    public Boolean uploadFile(String remoteName, MultipartFile file) {
         if ((remoteName != null) && (file != null)) {
             try {
-                return client.storeFile(remoteName, new FileInputStream(file));
+                return client.storeFile(remoteName, new FileInputStream((File) file));
             } catch (SocketException sEx) {
                 logger.error(sEx);
             } catch (IOException ioEx) {
@@ -83,25 +80,43 @@ public class FtpClientService {
         return false;
     }
 
+    public String[] getAllFilesInFTPServer() {
+        String[] filesOnFTP = null;
+        try {
+            filesOnFTP = client.listNames();
+        } catch (IOException e) {
+            logger.error("No files on directory", e);
+        }
+        return filesOnFTP;
+    }
+
     public File downloadFile(String remotePath, String localPath) {
+        File outputFile = null;
+        InputStreamReader streamReader = null;
+        OutputStream outputStream = null;
         if ((logged) && (remotePath != null)) {
             try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader
-                        (client.retrieveFileStream(remotePath)));
-                StringBuilder strBuilder = new StringBuilder();
-                while (reader.ready()) {
-                    strBuilder.append(reader.readLine());
+                streamReader = new InputStreamReader(client.retrieveFileStream(remotePath));
+                if (streamReader != null) {
+                    outputFile = new File(localPath);
+                    if (outputFile != null) {
+                        try {
+                            outputStream = new FileOutputStream(outputFile);
+                            if (outputStream != null) {
+                                outputStream.write(IOUtils.toByteArray(streamReader));
+                            }
+                        } catch (IOException e) {
+                            logger.error("Problems with outputStream", e);
+                        } finally {
+                            outputStream.close();
+                        }
+                    }
                 }
-                File readedFile = new File(localPath);
-                OutputStream s = new FileOutputStream(readedFile);
-                s.write(strBuilder.toString().getBytes());
-                s.flush();
-                return readedFile;
-            } catch (IOException ioEx) {
-
+            } catch (IOException e) {
+                logger.error("Problems with streamReader", e);
             }
         }
-        return null;
+        return outputFile;
     }
 
 
@@ -109,8 +124,10 @@ public class FtpClientService {
         try {
             client.logout();
             client.disconnect();
-        } catch (FTPConnectionClosedException fcEx) {
-        } catch (IOException ioEx) {
+        } catch (FTPConnectionClosedException e) {
+            logger.error("Logout client from FTP", e);
+        } catch (IOException e) {
+            logger.error("Disconnect client from FTP", e);
         }
     }
 

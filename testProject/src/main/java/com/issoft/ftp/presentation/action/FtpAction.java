@@ -3,42 +3,90 @@ package com.issoft.ftp.presentation.action;
 import com.issoft.ftp.client.FtpClientService;
 import com.issoft.ftp.model.FTPFile;
 import com.issoft.ftp.model.User;
-import com.issoft.ftp.util.RealPathSeparator;
+import com.opensymphony.xwork2.ActionSupport;
+import org.apache.ftpserver.ftplet.FtpException;
 
 import java.io.File;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
-
-import com.opensymphony.xwork2.ActionSupport;
-import org.apache.ftpserver.ftplet.FtpException;
 
 /**
  * @author slavabrodnitski
  */
 public class FtpAction extends ActionSupport {
 
-    private FtpClientService ftpService;
-    private User user;
     private static final String SUCCESS = "SUCCESS";
     private static final String FAILURE = "FAILURE";
 
+    private User user;
     private FTPFile ftpFile;
+    private FtpClientService ftpService;
 
-
-    public FtpClientService getFtpService() {
-        return ftpService;
+    @Override
+    public String execute() {
+        return SUCCESS;
     }
 
-    public void setFtpService(FtpClientService ftpService) {
-        this.ftpService = ftpService;
+    public String upload() {
+        //TODO: need delete or make login() IoC!
+        //or use SpringSecurity login details
+
+        //EXCEPTION: if upload is not working e.g.:
+        //No result defined for action com.issoft.ftp.presentation.action.FtpAction and result input
+        //this mean that file size is too big!
+        login();
+        Boolean fileUpload = false;
+        try {
+            fileUpload = ftpService.uploadFile(ftpFile.getUserFileFileName(), ftpFile.getUserFile());
+        } catch (NullPointerException ex) {
+            return FAILURE;
+        }
+        return SUCCESS;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public String getDownloadFileList() {
+        login();
+        try {
+            ftpFile = new FTPFile(ftpService.getAllFilesInFTPServer());
+        } catch (NullPointerException e) {
+            return FAILURE;
+        }
+        return SUCCESS;
+    }
+
+    public String download() {
+        login();
+        File file = null;
+        try {
+            file = ftpService.downloadFile(ftpFile.getUserFileFileName(), ftpFile.getDestination() + ftpFile.getUserFileFileName());
+        } catch (NullPointerException ex) {
+            return FAILURE;
+        }
+        return SUCCESS;
+    }
+
+    public String login() {
+        try {
+            ftpService = new FtpClientService(Inet4Address.getByName("localhost"), 2121);
+            if (user != null) {
+                ftpService.login(user.getLogin(), user.getPassword());
+            } else {
+                ftpService.login("admin", "admin");
+            }
+        } catch (FtpException e) {
+            e.printStackTrace();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return SUCCESS;
     }
 
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public FTPFile getFtpFile() {
@@ -49,42 +97,11 @@ public class FtpAction extends ActionSupport {
         this.ftpFile = ftpFile;
     }
 
-    @Override
-    public String execute() {
-        return SUCCESS;
+    public FtpClientService getFtpService() {
+        return ftpService;
     }
 
-    public String upload() {
-        login();
-        Boolean fileUpload = ftpService.uploadFile(ftpFile.getUserFileFileName(), ftpFile.getUserFile());
-        if (fileUpload) {
-            return SUCCESS;
-        } else return FAILURE;
+    public void setFtpService(FtpClientService ftpService) {
+        this.ftpService = ftpService;
     }
-
-    public String login() {
-        try {
-            ftpService = new FtpClientService(Inet4Address.getByName("localhost"), 2121);
-            ftpService.login(user.getLogin(), user.getPassword());
-        } catch (FtpException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (UnknownHostException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        return SUCCESS;
-    }
-
-    private void ConnectToFTP() {
-        //TODO: ex!
-        try {
-            ftpService = new FtpClientService(Inet4Address.getByName("localhost"), 2121);
-            ftpService.login("admin", "admin");
-        } catch (FtpException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (UnknownHostException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-    }
-
-
 }
