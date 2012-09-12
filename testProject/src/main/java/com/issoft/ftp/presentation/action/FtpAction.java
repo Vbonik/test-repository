@@ -2,91 +2,74 @@ package com.issoft.ftp.presentation.action;
 
 import com.issoft.ftp.client.FtpClientService;
 import com.issoft.ftp.model.FTPFile;
-import com.issoft.ftp.model.User;
-import com.opensymphony.xwork2.ActionSupport;
-import org.apache.ftpserver.ftplet.FtpException;
+import org.springframework.security.core.userdetails.User;
+import com.issoft.ftp.util.RealPathSeparator;
 
 import java.io.File;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
+
+import com.opensymphony.xwork2.ActionSupport;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import org.apache.ftpserver.ftplet.FtpException;
+import org.apache.struts2.dispatcher.StrutsRequestWrapper;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author slavabrodnitski
  */
 public class FtpAction extends ActionSupport {
 
+    private FtpClientService ftpService;
+    private User user;
     private static final String SUCCESS = "SUCCESS";
     private static final String FAILURE = "FAILURE";
-
-    private User user;
     private FTPFile ftpFile;
-    private FtpClientService ftpService;
+    private String j_username;
+    private String j_password;
 
-    @Override
-    public String execute() {
-        return SUCCESS;
+    public String getJ_password() {
+        return j_password;
     }
 
-    public String upload() {
-        //TODO: need delete or make login() IoC!
-        //or use SpringSecurity login details
-
-        //EXCEPTION: if upload is not working e.g.:
-        //No result defined for action com.issoft.ftp.presentation.action.FtpAction and result input
-        //this mean that file size is too big!
-        login();
-        Boolean fileUpload = false;
-        try {
-            fileUpload = ftpService.uploadFile(ftpFile.getUserFileFileName(), ftpFile.getUserFile());
-        } catch (NullPointerException ex) {
-            return FAILURE;
-        }
-        return SUCCESS;
+    public void setJ_password(String j_password) {
+        this.j_password = j_password;
     }
 
-    public String getDownloadFileList() {
-        login();
-        try {
-            ftpFile = new FTPFile(ftpService.getAllFilesInFTPServer());
-        } catch (NullPointerException e) {
-            return FAILURE;
-        }
-        return SUCCESS;
+    public String getJ_username() {
+        return j_username;
     }
 
-    public String download() {
-        login();
-        File file = null;
-        try {
-            file = ftpService.downloadFile(ftpFile.getUserFileFileName(), ftpFile.getDestination() + ftpFile.getUserFileFileName());
-        } catch (NullPointerException ex) {
-            return FAILURE;
-        }
-        return SUCCESS;
+    public void setJ_username(String j_username) {
+        this.j_username = j_username;
     }
 
-    public String login() {
-        try {
-            ftpService = new FtpClientService(Inet4Address.getByName("localhost"), 2121);
-            if (user != null) {
-                ftpService.login(user.getLogin(), user.getPassword());
-            } else {
-                ftpService.login("admin", "admin");
-            }
-        } catch (FtpException e) {
-            e.printStackTrace();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        return SUCCESS;
+    public FtpClientService getFtpService() {
+        return ftpService;
     }
 
-    public User getUser() {
-        return user;
+    public void setFtpService(FtpClientService ftpService) {
+        this.ftpService = ftpService;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public FTPFile getFtpFile() {
@@ -97,11 +80,42 @@ public class FtpAction extends ActionSupport {
         this.ftpFile = ftpFile;
     }
 
-    public FtpClientService getFtpService() {
-        return ftpService;
+    @Override
+    public String execute() {
+        return SUCCESS;
     }
 
-    public void setFtpService(FtpClientService ftpService) {
-        this.ftpService = ftpService;
+    public String upload() {
+        // login();
+        Boolean fileUpload = ftpService.uploadFile(ftpFile.getUserFileFileName(), ftpFile.getUserFile());
+        if (fileUpload) {
+            return SUCCESS;
+        } else {
+            return FAILURE;
+        }
+    }
+
+    public String login() throws FtpException, UnknownHostException,IOException {
+        //will change in spring config
+        ftpService = new FtpClientService();
+        User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Boolean isLoggined = ftpService.login(principal.getUsername(), principal.getPassword());
+        if (isLoggined) {            
+            return SUCCESS;
+        } else {
+            return FAILURE;
+        }
+    }
+
+    private void ConnectToFTP() {
+        //TODO: ex!
+        try {
+            ftpService = new FtpClientService(Inet4Address.getByName("localhost"), 2121);
+            ftpService.login("admin", "admin");
+        } catch (FtpException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (UnknownHostException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 }

@@ -11,22 +11,25 @@ package com.issoft.ftp.model;
 public class User {
 
     private Integer id;
-    private String login;
+    private String username;
     private String password;
 
     public User() {
         id = -1;
-        login = new String();
-        password = new String();
+        username = new String("username");// to clean
+        password = new String("password");// to clean
     }
+
     public User(String login, String password) {
-        this.login = login;
+        this.username = login;
         this.password = password;
     }
+
     public User(Integer id, String login, String password) {
         this(login, password);
-        this.id = id;        
+        this.id = id;
     }
+
     public Integer getId() {
         return id;
     }
@@ -35,12 +38,12 @@ public class User {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String login) {
+        this.username = login;
     }
 
     public String getPassword() {

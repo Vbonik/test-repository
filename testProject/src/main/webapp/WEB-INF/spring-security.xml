@@ -7,15 +7,20 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
 
-    <http auto-config="true">
-        <intercept-url pattern="/Ftp*" access="ROLE_USER"/>
+    <beans:import resource="spring-database.xml"/>
+    <http auto-config="true" >
+        <intercept-url pattern="/ftp" access="ROLE_USER" />
+        <form-login login-page="/jsp/login.jsp" default-target-url="/loginFtp"
+                    authentication-failure-url="/jsp/warning.jsp"/>
+            
+
     </http>
 
     <authentication-manager>
         <authentication-provider>
             <jdbc-user-service data-source-ref="dataSource"
                                users-by-username-query="
-		      select username, password, enabled from users where username = ?"
+    		      select username, password, enabled from users where username = ?"
                                authorities-by-username-query="
 		      select user.username, role.authority from users user, user_roles role
 		      where user.role_id = role.id and user.username = ?" />
