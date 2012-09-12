@@ -30,9 +30,10 @@ public class FtpClientService {
 
     private Boolean logged = false;
 
-    // org.apache.ftpserver.ftplet.FtpException: Invalid address. - because Server is not started!
+    //TODO: must use try catch to this ex.
+    //ex = org.apache.ftpserver.ftplet.FtpException
+    //e.g. logger.error("Server is not started", ex);
     public FtpClientService() throws UnknownHostException, FtpException {
-        //TODO: must use try catch to this ex.
         this(InetAddress.getByName("localhost"), DEFAULT_FTP_LISTENER_PORT);
     }
 
@@ -47,7 +48,7 @@ public class FtpClientService {
         return false;
     }
 
-    //TODO: catch exceptions if server is not running
+    //TODO: catch exceptions if server is not running/start
     public FtpClientService(InetAddress host, Integer port) throws FtpException {
         if (host != null) {
             this.host = host;
@@ -66,7 +67,9 @@ public class FtpClientService {
         throw new FtpException("Invalid address or server is not running.");
     }
 
-    //TODO: something bad with this stuff
+    //TODO: resolve file size problem
+    // something bad with this stuff  or something other.
+    // Because i can't upload files, more than 2048
     public Boolean uploadFile(String remoteName, MultipartFile file) {
         if ((remoteName != null) && (file != null)) {
             try {
@@ -80,6 +83,7 @@ public class FtpClientService {
         return false;
     }
 
+    //TODO: rename
     public String[] getAllFilesInFTPServer() {
         String[] filesOnFTP = null;
         try {
@@ -92,8 +96,8 @@ public class FtpClientService {
 
     public File downloadFile(String remotePath, String localPath) {
         File outputFile = null;
-        InputStreamReader streamReader = null;
-        OutputStream outputStream = null;
+        InputStreamReader streamReader;
+        OutputStream outputStream;
         if ((logged) && (remotePath != null)) {
             try {
                 streamReader = new InputStreamReader(client.retrieveFileStream(remotePath));
@@ -104,11 +108,12 @@ public class FtpClientService {
                             outputStream = new FileOutputStream(outputFile);
                             if (outputStream != null) {
                                 outputStream.write(IOUtils.toByteArray(streamReader));
+                                outputStream.close();
                             }
                         } catch (IOException e) {
                             logger.error("Problems with outputStream", e);
-                        } finally {
-                            outputStream.close();
+                        } catch (NullPointerException e) {
+                            logger.error("Problems with outputStream", e);
                         }
                     }
                 }
