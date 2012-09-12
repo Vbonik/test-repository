@@ -11,7 +11,12 @@ import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -24,16 +29,17 @@ public class FtpClientService {
     private static final Integer DEFAULT_FTP_LISTENER_PORT = 2121;
     private static final Logger logger = Logger.getLogger(FtpClientService.class);
 
+
     private final FTPClient client = new FTPClient();
     private final InetAddress host;
     private final Integer port;
-
     private Boolean logged = false;
 
     //TODO: must use try catch to this ex.
     //ex = org.apache.ftpserver.ftplet.FtpException
     //e.g. logger.error("Server is not started", ex);
     public FtpClientService() throws UnknownHostException, FtpException {
+        //TODO: must use try catch to this ex.
         this(InetAddress.getByName("localhost"), DEFAULT_FTP_LISTENER_PORT);
     }
 
@@ -41,7 +47,8 @@ public class FtpClientService {
         if (login != null) {
             try {
                 return logged = client.login(login, password);
-            } catch (IOException ioEx) {
+            }
+            catch (IOException ioEx) {
                 logger.error("Invalid login or password", ioEx);
             }
         }
@@ -56,15 +63,17 @@ public class FtpClientService {
                 this.port = port;
                 if (port != null) {
                     client.connect(host, port);
-                } else {
+                }
+                else {
                     client.connect(host);
                 }
                 return;
-            } catch (IOException e) {
-                logger.error("Connection failed.", e);
+            }
+            catch (IOException ioEx) {
+                logger.error("Connection failed.");
             }
         }
-        throw new FtpException("Invalid address or server is not running.");
+        throw new FtpException("Connection failed.");
     }
 
     //TODO: resolve file size problem
@@ -74,9 +83,11 @@ public class FtpClientService {
         if ((remoteName != null) && (file != null)) {
             try {
                 return client.storeFile(remoteName, new FileInputStream((File) file));
-            } catch (SocketException sEx) {
+            }
+            catch (SocketException sEx) {
                 logger.error(sEx);
-            } catch (IOException ioEx) {
+            }
+            catch (IOException ioEx) {
                 logger.error(ioEx);
             }
         }
@@ -88,7 +99,8 @@ public class FtpClientService {
         String[] filesOnFTP = null;
         try {
             filesOnFTP = client.listNames();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             logger.error("No files on directory", e);
         }
         return filesOnFTP;
@@ -110,14 +122,17 @@ public class FtpClientService {
                                 outputStream.write(IOUtils.toByteArray(streamReader));
                                 outputStream.close();
                             }
-                        } catch (IOException e) {
+                        }
+                        catch (IOException e) {
                             logger.error("Problems with outputStream", e);
-                        } catch (NullPointerException e) {
+                        }
+                        catch (NullPointerException e) {
                             logger.error("Problems with outputStream", e);
                         }
                     }
                 }
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 logger.error("Problems with streamReader", e);
             }
         }
@@ -129,9 +144,11 @@ public class FtpClientService {
         try {
             client.logout();
             client.disconnect();
-        } catch (FTPConnectionClosedException e) {
+        }
+        catch (FTPConnectionClosedException e) {
             logger.error("Logout client from FTP", e);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             logger.error("Disconnect client from FTP", e);
         }
     }

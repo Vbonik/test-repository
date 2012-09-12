@@ -4,7 +4,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-    <bean id="user" class="com.issoft.ftp.model.User"/>
     <bean id="ftpFile" class="com.issoft.ftp.model.FTPFile"/>
     
        
@@ -20,7 +19,6 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     
     <bean id="ftpAction" class="com.issoft.ftp.presentation.action.FtpAction">
         <!--<property name="ftpService" ref="ftpClientService"/>-->
-        <property name="user" ref="user"/>
         <property name="ftpFile" ref="ftpFile"/>        
     </bean>
     
