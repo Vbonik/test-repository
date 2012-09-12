@@ -1,16 +1,19 @@
 package com.issoft.ftp.presentation.action;
 
 import com.issoft.ftp.client.FtpClientService;
+import com.issoft.database.log.EntryDAO;
 import com.issoft.ftp.model.FTPFile;
-import com.opensymphony.xwork2.ActionSupport;
-import org.apache.ftpserver.ftplet.FtpException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+import java.io.IOException;
+
+import org.apache.ftpserver.ftplet.FtpException;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * @author slavabrodnitski
@@ -36,6 +39,14 @@ public class FtpAction extends ActionSupport {
 
     public void setFtpFile(FTPFile ftpFile) {
         this.ftpFile = ftpFile;
+    }
+
+    public EntryDAO getEntryDAO() {
+        return entryDAO;
+    }
+
+    public void setEntryDAO(EntryDAO entryDAO) {
+        this.entryDAO = entryDAO;
     }
 
     @Override
@@ -82,13 +93,16 @@ public class FtpAction extends ActionSupport {
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Boolean isLoggined = ftpService.login(principal.getUsername(), principal.getPassword());
         if (isLoggined) {
+            audit(principal, "login", SUCCESS);
             return SUCCESS;
-        } else {
+        }
+        else {
+            audit(principal, "login", FAILURE);
             return FAILURE;
         }
     }
 
-    private void connectToFTP() {
+    private void ConnectToFTP() {
         //TODO: ex!
         try {
             ftpService = new FtpClientService(Inet4Address.getByName("localhost"), 2121);
@@ -98,5 +112,19 @@ public class FtpAction extends ActionSupport {
         } catch (UnknownHostException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+    }
+
+    /**
+     * Writes executed action details to database.
+     * TEMP? Bug with creating bean property.
+     *
+     * @param user
+     * @param action
+     * @param status
+     */
+    private void audit(User user, String action, String status) {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("hibernateSettingsTemp.xml");
+        entryDAO = (EntryDAO) context.getBean("myEntryDAO");
+        entryDAO.saveEntry(user, action, status);
     }
 }
