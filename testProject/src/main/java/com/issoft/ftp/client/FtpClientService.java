@@ -84,7 +84,7 @@ public class FtpClientService {
     }
 
     //TODO: rename
-    public String[] getAllFilesInFTPServer() {
+    public String[] getAllFileNamesOnFTPServer() {
         String[] filesOnFTP = null;
         try {
             filesOnFTP = client.listNames();

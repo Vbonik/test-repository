@@ -3,29 +3,16 @@ package com.issoft.ftp.presentation.action;
 import com.issoft.ftp.client.FtpClientService;
 import com.issoft.ftp.model.FTPFile;
 import org.springframework.security.core.userdetails.User;
-import com.issoft.ftp.util.RealPathSeparator;
 
-import java.io.File;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
 import com.opensymphony.xwork2.ActionSupport;
-import java.io.DataOutputStream;
+
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
+
 import org.apache.ftpserver.ftplet.FtpException;
-import org.apache.struts2.dispatcher.StrutsRequestWrapper;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author slavabrodnitski
@@ -93,6 +80,16 @@ public class FtpAction extends ActionSupport {
         } else {
             return FAILURE;
         }
+    }
+
+    public String getDownloadFileList() {
+        //login();
+        try {
+            ftpFile = new FTPFile(ftpService.getAllFileNamesOnFTPServer());
+        } catch (NullPointerException e) {
+            return FAILURE;
+        }
+        return SUCCESS;
     }
 
     public String login() throws FtpException, UnknownHostException,IOException {
