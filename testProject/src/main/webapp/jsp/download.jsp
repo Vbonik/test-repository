@@ -12,6 +12,7 @@
     <title>Download</title>
 </head>
 <body>
+<h2>Download</h2>
 <s:iterator value="ftpFile.fileNamesOnFTP" id="fileName">
     <s:url action="downloadFtp" var="urlTag">
         <s:param name="ftpFile.userFileFileName">
@@ -27,6 +28,12 @@
 
 <s:form action="Ftp">
     <s:submit action="getDownloadFileListFtp" value="Refresh"/>
+</s:form>
+
+<h2>Upload</h2>
+<s:form action="Ftp" method="post" enctype="multipart/form-data">
+    <s:file name="ftpFile.userFile"/>
+    <s:submit action="uploadFtp" value="Upload"/>
 </s:form>
 </body>
 </html>

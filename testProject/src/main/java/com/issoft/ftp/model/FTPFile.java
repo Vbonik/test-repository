@@ -13,14 +13,15 @@ public class FTPFile {
     private MultipartFile userFile;
     private String userFileContentType;
     private String userFileFileName;
-    private String[] filenamesOnFTP;
+    private String[] fileNamesOnFTP;
+    private String destination;
 
 
     public FTPFile() {
     }
 
-    public FTPFile(String[] filenamesOnFTP) {
-        this.filenamesOnFTP = filenamesOnFTP;
+    public FTPFile(String[] fileNamesOnFTP) {
+        this.fileNamesOnFTP = fileNamesOnFTP;
     }
 
     public MultipartFile getUserFile() {
@@ -47,11 +48,19 @@ public class FTPFile {
         this.userFileFileName = userFileFileName;
     }
 
-    public String[] getFilenamesOnFTP() {
-        return filenamesOnFTP;
+    public String[] getFileNamesOnFTP() {
+        return fileNamesOnFTP;
     }
 
-    public void setFilenamesOnFTP(String[] filenamesOnFTP) {
-        this.filenamesOnFTP = filenamesOnFTP;
+    public void setFileNamesOnFTP(String[] fileNamesOnFTP) {
+        this.fileNamesOnFTP = fileNamesOnFTP;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
     }
 }

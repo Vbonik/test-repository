@@ -2,17 +2,15 @@ package com.issoft.ftp.presentation.action;
 
 import com.issoft.ftp.client.FtpClientService;
 import com.issoft.ftp.model.FTPFile;
-import org.springframework.security.core.userdetails.User;
-
-import java.net.Inet4Address;
-import java.net.UnknownHostException;
-
 import com.opensymphony.xwork2.ActionSupport;
-
-import java.io.IOException;
-
 import org.apache.ftpserver.ftplet.FtpException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 
 /**
  * @author slavabrodnitski
@@ -20,28 +18,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class FtpAction extends ActionSupport {
 
     private FtpClientService ftpService;
-    private User user;
     private static final String SUCCESS = "SUCCESS";
     private static final String FAILURE = "FAILURE";
     private FTPFile ftpFile;
-    private String j_username;
-    private String j_password;
-
-    public String getJ_password() {
-        return j_password;
-    }
-
-    public void setJ_password(String j_password) {
-        this.j_password = j_password;
-    }
-
-    public String getJ_username() {
-        return j_username;
-    }
-
-    public void setJ_username(String j_username) {
-        this.j_username = j_username;
-    }
 
     public FtpClientService getFtpService() {
         return ftpService;
@@ -49,14 +28,6 @@ public class FtpAction extends ActionSupport {
 
     public void setFtpService(FtpClientService ftpService) {
         this.ftpService = ftpService;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public User getUser() {
-        return user;
     }
 
     public FTPFile getFtpFile() {
@@ -73,17 +44,30 @@ public class FtpAction extends ActionSupport {
     }
 
     public String upload() {
-        // login();
-        Boolean fileUpload = ftpService.uploadFile(ftpFile.getUserFileFileName(), ftpFile.getUserFile());
-        if (fileUpload) {
-            return SUCCESS;
-        } else {
+        connectToFTP();
+        try {
+            Boolean fileUpload = ftpService.uploadFile(ftpFile.getUserFileFileName(), ftpFile.getUserFile());
+        } catch (NullPointerException e) {
             return FAILURE;
         }
+        return SUCCESS;
     }
 
-    public String getDownloadFileList() {
-        //login();
+    public String download() {
+        connectToFTP();
+        try {
+            if (ftpFile.getDestination() == null) {
+                ftpFile.setDestination("C:/");
+            }
+            File file = ftpService.downloadFile(ftpFile.getUserFileFileName(), ftpFile.getDestination() + ftpFile.getUserFileFileName());
+        } catch (NullPointerException e) {
+            return FAILURE;
+        }
+        return SUCCESS;
+    }
+
+    public String getDownloadFileList() throws FtpException, IOException {
+        connectToFTP();
         try {
             ftpFile = new FTPFile(ftpService.getAllFileNamesOnFTPServer());
         } catch (NullPointerException e) {
@@ -92,19 +76,19 @@ public class FtpAction extends ActionSupport {
         return SUCCESS;
     }
 
-    public String login() throws FtpException, UnknownHostException,IOException {
+    public String login() throws FtpException, UnknownHostException, IOException {
         //will change in spring config
         ftpService = new FtpClientService();
-        User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Boolean isLoggined = ftpService.login(principal.getUsername(), principal.getPassword());
-        if (isLoggined) {            
+        if (isLoggined) {
             return SUCCESS;
         } else {
             return FAILURE;
         }
     }
 
-    private void ConnectToFTP() {
+    private void connectToFTP() {
         //TODO: ex!
         try {
             ftpService = new FtpClientService(Inet4Address.getByName("localhost"), 2121);
