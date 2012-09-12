@@ -12,12 +12,19 @@
     <title>Download</title>
 </head>
 <body>
-<h5><s:property value="ftpFile.fileList"/> </br></h5>
-<s:form action="Ftp">
-    <s:textfield name="ftpFile.userFileFileName" label="File name"/>
-    <s:textfield name="ftpFile.destination" label="Destination"/>
-    <s:submit action="downloadFtp" value="Download"/>
-</s:form>
+<s:iterator value="ftpFile.fileNamesOnFTP" id="fileName">
+    <s:url action="downloadFtp" var="urlTag">
+        <s:param name="ftpFile.userFileFileName">
+            <s:property/>
+        </s:param>
+        <s:param name="ftpFile.destination">
+            C:/
+        </s:param>
+    </s:url>
+    <a href="<s:property value="#urlTag" />"><s:property/></a>
+    <br>
+</s:iterator>
+
 <s:form action="Ftp">
     <s:submit action="getDownloadFileListFtp" value="Refresh"/>
 </s:form>
