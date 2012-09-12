@@ -15,8 +15,8 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            /WEB-INF/spring-database.xml,
-            /WEB-INF/spring-security.xml
+            /WEB-INF/spring-security.xml,
+            /WEB-INF/applicationContext.xml
         </param-value>
     </context-param>
 
@@ -46,7 +46,7 @@
     </filter-mapping>
 
     <welcome-file-list>
-        <welcome-file>jsp/login.jsp</welcome-file>
+        <welcome-file>jsp/welcomePage.jsp</welcome-file>
     </welcome-file-list>
 
 

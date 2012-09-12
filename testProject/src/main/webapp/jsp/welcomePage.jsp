@@ -3,12 +3,9 @@
 <html>
 <head></head>
 <body>
-<h1 style="color: green;">Complete</h1>
-
-<h3><font style="color: green;">File:</font></h3>
-<h5><s:property value="ftpFile.userFile"/> </br></h5>
-<h5><s:property value="ftpFile.userFileFileName"/> </br></h5>
-<h3><font style="color: green;">was successfully!</font>
-</h3>
+<h1>Hello</h1>
+<h4>
+    <s:property value="username"/>
+</h4>
 </body>
 </html>
