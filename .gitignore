@@ -1,1 +1,5 @@
 /testProject/target/
+/testProject/classes
+/testProject/.idea
+/testProject/*.iml
+/testProject/*.ipr

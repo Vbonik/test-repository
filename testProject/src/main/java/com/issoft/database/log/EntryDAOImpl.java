@@ -24,19 +24,26 @@ public class EntryDAOImpl implements EntryDAO {
     public void saveEntry(User user, String action, String status) {
         Entry entry = new Entry();
         entry.setUserName(user.getUsername());
+        entry.setAuthorities(getAuthorities(user));
+        entry.setAction(action);
+        entry.setStatus(status);
+        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Minsk")); //must be called once??
+        entry.setDate(Calendar.getInstance().getTime());
+        hibernateTemplate.saveOrUpdate(entry);
+    }
 
+    /**
+     * Gets collection of user authorities and converting them to one string.
+     *
+     * @param user
+     * @return String authorities
+     */
+    private String getAuthorities(User user) {
         StringBuffer authorities = new StringBuffer();
         for (GrantedAuthority authority : user.getAuthorities()) {
             authorities.append(authority.getAuthority() + ", ");
         }
-        entry.setAuthorities(authorities.toString());
-
-        entry.setAction(action);
-        entry.setStatus(status);
-
-        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Minsk")); //must be called once??
-        entry.setDate(Calendar.getInstance().getTime());
-        hibernateTemplate.saveOrUpdate(entry);
+        return authorities.toString();
     }
 
     @Override

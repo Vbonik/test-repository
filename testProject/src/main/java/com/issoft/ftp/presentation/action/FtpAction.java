@@ -5,7 +5,6 @@ import com.issoft.database.log.EntryDAO;
 import com.issoft.ftp.model.FTPFile;
 import org.springframework.security.core.userdetails.User;
 
-import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -128,7 +127,7 @@ public class FtpAction extends ActionSupport {
      * @param status
      */
     private void audit(User user, String action, String status) {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("hibernateSettingsTemp.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-hibernate.xml");
         entryDAO = (EntryDAO) context.getBean("myEntryDAO");
         entryDAO.saveEntry(user, action, status);
     }

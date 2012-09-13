@@ -4,13 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-<<<<<<< Updated upstream
     <bean id="ftpFile" class="com.issoft.ftp.model.FTPFile"/>
-    
-=======
-    <bean id="ftpFile" class="com.issoft.ftp.model.FTPFile"/>    
->>>>>>> Stashed changes
-       
+
     <bean id="inetAddress"  class="java.net.Inet4Address" factory-method="getByName">
         <constructor-arg value="localhost"/>
     </bean>
@@ -19,7 +14,6 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
         <constructor-arg ref="inetAddress"/>
         <constructor-arg value="2121"/>
     </bean>-->
-    
     
     <bean id="ftpAction" class="com.issoft.ftp.presentation.action.FtpAction">
         <!--<property name="ftpService" ref="ftpClientService"/>-->
