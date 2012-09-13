@@ -4,7 +4,7 @@
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 
-    <package name="default" namespace="/directoryList" extends="struts-default">
+    <package name="default" namespace="/" extends="struts-default">
         <action name="ftp" class="com.issoft.ftp.presentation.action.FtpAction">
             <result name="SUCCESS">jsp/welcomePage.jsp</result>
         </action>
