@@ -9,10 +9,12 @@ import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
 import com.opensymphony.xwork2.ActionSupport;
+import java.io.File;
 
 import java.io.IOException;
 
 import org.apache.ftpserver.ftplet.FtpException;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
@@ -20,15 +22,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class FtpAction extends ActionSupport {
 
-
     private FtpClientService ftpService;
     private static final String SUCCESS = "SUCCESS";
     private static final String FAILURE = "FAILURE";
     private FTPFile ftpFile;
+    private EntryDAO entryDAO;
 
-
-   
-   
     public FtpClientService getFtpService() {
         return ftpService;
     }
@@ -58,7 +57,6 @@ public class FtpAction extends ActionSupport {
         return SUCCESS;
     }
 
-
     public String upload() throws FtpException, UnknownHostException {
         // login();
         ftpService = new FtpClientService();
@@ -68,11 +66,11 @@ public class FtpAction extends ActionSupport {
         } else {
             return FAILURE;
         }
-        
+
     }
 
     public String download() {
-        connectToFTP();
+      
         try {
             if (ftpFile.getDestination() == null) {
                 ftpFile.setDestination("C:/");
@@ -84,8 +82,6 @@ public class FtpAction extends ActionSupport {
         return SUCCESS;
     }
 
-
-		
     public String getDownloadFileList() throws FtpException, UnknownHostException, IOException {
         try {
             ftpService = new FtpClientService();
@@ -105,8 +101,7 @@ public class FtpAction extends ActionSupport {
         if (isLoggined) {
             audit(principal, "login", SUCCESS);
             return SUCCESS;
-        }
-        else {
+        } else {
             audit(principal, "login", FAILURE);
             return FAILURE;
         }
@@ -125,8 +120,8 @@ public class FtpAction extends ActionSupport {
     }
 
     /**
-     * Writes executed action details to database.
-     * TEMP? Bug with creating bean property.
+     * Writes executed action details to database. TEMP? Bug with creating bean
+     * property.
      *
      * @param user
      * @param action

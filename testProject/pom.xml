@@ -124,7 +124,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-<<<<<<< Updated upstream
+
 
         <!-- Hibernate -->
         <dependency>
@@ -187,7 +187,7 @@
             <version>1.2</version>
         </dependency>
 
-=======
+
         <dependency>
             <groupId>com.jgeppert.struts2.jquery</groupId>
             <artifactId>struts2-jquery-plugin</artifactId>
@@ -198,7 +198,7 @@
             <artifactId>struts2-jquery-tree-plugin</artifactId>
             <version>3.3.3</version>
         </dependency>
->>>>>>> Stashed changes
+
     </dependencies>
 
     <build>
