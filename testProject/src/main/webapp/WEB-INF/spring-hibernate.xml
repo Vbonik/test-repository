@@ -22,7 +22,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
         </property>
     </bean>
 
-    <bean id="myEntryDAO" class="com.issoft.database.log.LogEntryDAOImpl">
+    <bean id="myLogEntryDAO" class="com.issoft.database.log.LogEntryDAOImpl">
         <property name="sessionFactory" ref="mySessionFactory"/>
     </bean>
 

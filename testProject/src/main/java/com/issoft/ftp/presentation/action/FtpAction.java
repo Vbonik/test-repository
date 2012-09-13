@@ -125,7 +125,7 @@ public class FtpAction extends ActionSupport {
      */
     private void audit(User user, String action, String status) {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("../spring-hibernate.xml");
-        logEntryDAO = (LogEntryDAO) context.getBean("proxy");
+        logEntryDAO = (LogEntryDAO) context.getBean("myLogEntryDAO");
         logEntryDAO.saveEntry(user, action, status);
     }
 }
