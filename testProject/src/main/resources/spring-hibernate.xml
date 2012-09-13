@@ -17,7 +17,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
         <property name="dataSource" ref="hibDataSource"/>
         <property name="annotatedClasses">
             <list>
-                <value>com.issoft.database.log.Entry</value>
+                <value>com.issoft.database.log.LogEntry</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -29,7 +29,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
         </property>
     </bean>
 
-    <bean id="myEntryDAO" class="com.issoft.database.log.EntryDAOImpl">
+    <bean id="myEntryDAO" class="com.issoft.database.log.LogEntryDAOImpl">
         <property name="sessionFactory" ref="mySessionFactory"/>
     </bean>
 

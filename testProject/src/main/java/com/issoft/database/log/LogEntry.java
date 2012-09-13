@@ -13,8 +13,8 @@ import java.util.Date;
  * @author: AS
  */
 @Entity
-@Table(name = "ENTRY")
-public class Entry {
+@Table(name = "LOG_TABLE")
+public class LogEntry {
 
     private Long id;
     private String userName;

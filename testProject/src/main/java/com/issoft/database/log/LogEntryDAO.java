@@ -7,10 +7,10 @@ import java.util.List;
 /**
  * @author: AS
  */
-public interface EntryDAO {
+public interface LogEntryDAO {
 
     public void saveEntry(User user, String action, String status);
 
-    public List<Entry> listEntry();
+    public List<LogEntry> listEntry();
 }
 

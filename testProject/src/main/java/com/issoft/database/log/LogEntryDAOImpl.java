@@ -12,7 +12,7 @@ import java.util.TimeZone;
 /**
  * @author: AS
  */
-public class EntryDAOImpl implements EntryDAO {
+public class LogEntryDAOImpl implements LogEntryDAO {
 
     private HibernateTemplate hibernateTemplate;
 
@@ -22,14 +22,14 @@ public class EntryDAOImpl implements EntryDAO {
 
     @Override
     public void saveEntry(User user, String action, String status) {
-        Entry entry = new Entry();
-        entry.setUserName(user.getUsername());
-        entry.setAuthorities(getAuthorities(user));
-        entry.setAction(action);
-        entry.setStatus(status);
+        LogEntry logEntry = new LogEntry();
+        logEntry.setUserName(user.getUsername());
+        logEntry.setAuthorities(getAuthorities(user));
+        logEntry.setAction(action);
+        logEntry.setStatus(status);
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Minsk")); //must be called once??
-        entry.setDate(Calendar.getInstance().getTime());
-        hibernateTemplate.saveOrUpdate(entry);
+        logEntry.setDate(Calendar.getInstance().getTime());
+        hibernateTemplate.saveOrUpdate(logEntry);
     }
 
     /**
@@ -47,7 +47,7 @@ public class EntryDAOImpl implements EntryDAO {
     }
 
     @Override
-    public List<Entry> listEntry() {
+    public List<LogEntry> listEntry() {
         return hibernateTemplate.find("from Entry");
     }
 }
