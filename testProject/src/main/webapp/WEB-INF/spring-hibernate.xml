@@ -26,18 +26,4 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
         <property name="sessionFactory" ref="mySessionFactory"/>
     </bean>
 
-    <bean id="hijackBeforeMethodBean" class="com.issoft.ftp.util.HijackBeforeMethod" />
-
-    <bean id="proxy"
-          class="org.springframework.aop.framework.ProxyFactoryBean">
-
-        <property name="target" ref="myEntryDAO" />
-
-        <property name="interceptorNames">
-            <list>
-                <value>hijackBeforeMethodBean</value>
-            </list>
-        </property>
-    </bean>
-
 </beans>
