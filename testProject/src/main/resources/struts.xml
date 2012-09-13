@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC
         "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
@@ -6,29 +5,29 @@
 <struts>
 
     <package name="default" namespace="/" extends="struts-default">
-        
+
         <action name="uploadFtp" method="upload" class="com.issoft.ftp.presentation.action.FtpAction">
             <result name="SUCCESS">jsp/welcomePage.jsp</result>
         </action>
-       
+
         <action name="loginFtp" method="login" class="com.issoft.ftp.presentation.action.FtpAction">
-            <result name="SUCCESS" >
-                /jsp/directoryList.jsp       
-            </result>            
+            <result name="SUCCESS">
+                /jsp/directoryList.jsp
+            </result>
             <result name="FAILURE">/index.jsp</result>
         </action>
-        <action name="directoryList" >
+        <action name="directoryList">
             <result>
-            /jsp/directoryList.jsp
-            </result>            
-           
+                /jsp/directoryList.jsp
+            </result>
+
         </action>
-         <action name="fileList" method="getDownloadFileList" class="com.issoft.ftp.presentation.action.FtpAction">
-            <result name="SUCCESS" >
-            <param name="location">/jsp/download.jsp</param>
-            <param name="ftpFile">${ftpFile}</param>
-            </result>            
+        <action name="fileList" method="getDownloadFileList" class="com.issoft.ftp.presentation.action.FtpAction">
+            <result name="SUCCESS">
+                <param name="location">/jsp/download.jsp</param>
+                <param name="ftpFile">${ftpFile}</param>
+            </result>
             <result name="FAILURE">/index.jsp</result>
         </action>
     </package>
-
+</struts>
