@@ -8,16 +8,16 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/log"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/ftp"/>
         <property name="username" value="root"/>
-        <property name="password" value="admin"/>
+        <property name="password" value="Vbonik555"/>
     </bean>
 
     <bean id="mySessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="hibDataSource"/>
         <property name="annotatedClasses">
             <list>
-                <value>com.issoft.database.log.Entry</value>
+                <value>com.issoft.database.log.LogEntry</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -29,7 +29,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
         </property>
     </bean>
 
-    <bean id="myEntryDAO" class="com.issoft.database.log.EntryDAOImpl">
+    <bean id="myEntryDAO" class="com.issoft.database.log.LogEntryDAOImpl">
         <property name="sessionFactory" ref="mySessionFactory"/>
     </bean>
 

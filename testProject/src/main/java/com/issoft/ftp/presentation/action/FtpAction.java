@@ -1,7 +1,7 @@
 package com.issoft.ftp.presentation.action;
 
+import com.issoft.database.log.LogEntryDAO;
 import com.issoft.ftp.client.FtpClientService;
-import com.issoft.database.log.EntryDAO;
 import com.issoft.ftp.model.FTPFile;
 import org.springframework.security.core.userdetails.User;
 
@@ -25,7 +25,7 @@ public class FtpAction extends ActionSupport {
     private static final String SUCCESS = "SUCCESS";
     private static final String FAILURE = "FAILURE";
     private FTPFile ftpFile;
-    private EntryDAO entryDAO;
+    private LogEntryDAO logEntryDAO;
 
     public FtpClientService getFtpService() {
         return ftpService;
@@ -43,12 +43,12 @@ public class FtpAction extends ActionSupport {
         this.ftpFile = ftpFile;
     }
 
-    public EntryDAO getEntryDAO() {
-        return entryDAO;
+    public LogEntryDAO getLogEntryDAO() {
+        return logEntryDAO;
     }
 
-    public void setEntryDAO(EntryDAO entryDAO) {
-        this.entryDAO = entryDAO;
+    public void setLogEntryDAO(LogEntryDAO logEntryDAO) {
+        this.logEntryDAO = logEntryDAO;
     }
 
     @Override
@@ -128,7 +128,7 @@ public class FtpAction extends ActionSupport {
      */
     private void audit(User user, String action, String status) {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-hibernate.xml");
-        entryDAO = (EntryDAO) context.getBean("myEntryDAO");
-        entryDAO.saveEntry(user, action, status);
+        logEntryDAO = (LogEntryDAO) context.getBean("myEntryDAO");
+        logEntryDAO.saveEntry(user, action, status);
     }
 }

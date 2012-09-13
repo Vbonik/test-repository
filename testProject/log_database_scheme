@@ -1,11 +1,7 @@
 
-delimiter $$
+CREATE DATABASE `log`
 
-CREATE DATABASE `log` /*!40100 DEFAULT CHARACTER SET cp1251 */$$
-
-delimiter $$
-
-CREATE TABLE `entry` (
+CREATE TABLE `LOG_TABLE` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_name` varchar(45) DEFAULT NULL,
   `authorities` longtext,
@@ -13,4 +9,6 @@ CREATE TABLE `entry` (
   `status` longtext,
   `date` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=cp1251$$
+) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET='cp1251'
+
+

@@ -4,10 +4,7 @@
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 
-    <package name="default" namespace="/directoryList" extends="struts-default">
-        <action name="ftp" class="com.issoft.ftp.presentation.action.FtpAction">
-            <result name="SUCCESS">jsp/welcomePage.jsp</result>
-        </action>
+    <package name="default" namespace="/" extends="struts-default">
         
         <action name="uploadFtp" method="upload" class="com.issoft.ftp.presentation.action.FtpAction">
             <result name="SUCCESS">jsp/welcomePage.jsp</result>
@@ -19,7 +16,13 @@
             </result>            
             <result name="FAILURE">/index.jsp</result>
         </action>
-        <action name="directoryList" method="getDownloadFileList" class="com.issoft.ftp.presentation.action.FtpAction">
+        <action name="directoryList" >
+            <result>
+            /jsp/directoryList.jsp
+            </result>            
+           
+        </action>
+         <action name="fileList" method="getDownloadFileList" class="com.issoft.ftp.presentation.action.FtpAction">
             <result name="SUCCESS" >
             <param name="location">/jsp/download.jsp</param>
             <param name="ftpFile">${ftpFile}</param>
