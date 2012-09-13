@@ -24,9 +24,9 @@
         </c:if>
 
         <s:form action="/j_spring_security_check" method="post"> 
-            <s:textfield name="j_username" label="username:"/> 
-            <s:password  name="j_password" label="password:"/>
-            <s:submit key="enter"/>
+            <s:textfield name="j_username" label="username"/> 
+            <s:password  name="j_password" label="password"/>
+            <s:submit label="enter"/>
         </s:form>    
     </body>
 </html>

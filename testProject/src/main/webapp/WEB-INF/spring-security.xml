@@ -9,7 +9,7 @@
 
     <beans:import resource="spring-database.xml"/>
     <http auto-config="true" >
-        <intercept-url pattern="/ftp" access="ROLE_USER" />
+        <intercept-url pattern="/directoryList" access="ROLE_USER" />
         <form-login login-page="/jsp/login.jsp" default-target-url="/loginFtp"
                     authentication-failure-url="/jsp/warning.jsp"/>
             
