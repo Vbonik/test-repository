@@ -3,18 +3,15 @@ package com.issoft.ftp.presentation.action;
 import com.issoft.database.log.LogEntryDAO;
 import com.issoft.ftp.client.FtpClientService;
 import com.issoft.ftp.model.FTPFile;
-import org.springframework.security.core.userdetails.User;
-
-import java.net.UnknownHostException;
-
 import com.opensymphony.xwork2.ActionSupport;
-import java.io.File;
-
-import java.io.IOException;
-
 import org.apache.ftpserver.ftplet.FtpException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.UnknownHostException;
 
 /**
  * @author slavabrodnitski
@@ -69,7 +66,7 @@ public class FtpAction extends ActionSupport {
     }
 
     public String download() {
-      
+
         try {
             if (ftpFile.getDestination() == null) {
                 ftpFile.setDestination("C:/");
