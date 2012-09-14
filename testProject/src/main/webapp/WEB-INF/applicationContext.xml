@@ -5,7 +5,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-    <bean:import resource="spring-hibernate.xml"/>
 
     <bean id="ftpFile" class="com.issoft.ftp.model.FTPFile"/>
     <bean id="inetAddress" class="java.net.Inet4Address" factory-method="getByName">
@@ -18,7 +17,6 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
     <bean id="ftpAction" class="com.issoft.ftp.presentation.action.FtpAction">
         <property name="ftpFile" ref="ftpFile"/>
-        <property name="logEntryDAO" ref="myLogEntryDAO"/>
         <property name="ftpService" ref="ftpClientService"/>
     </bean>
 

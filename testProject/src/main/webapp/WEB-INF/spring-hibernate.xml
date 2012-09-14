@@ -29,6 +29,8 @@
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <!-- Aspect -->
-    <bean id="customerAspect" class="com.issoft.ftp.util.AspectTest"/>
+    <bean id="customerAspect" class="com.issoft.ftp.util.LoggingAspect">
+        <property name="logEntryDAO" ref="myLogEntryDAO"/>
+    </bean>
 
 </beans>

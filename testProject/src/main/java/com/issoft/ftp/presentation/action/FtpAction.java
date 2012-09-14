@@ -22,7 +22,6 @@ public class FtpAction extends ActionSupport {
     private static final String SUCCESS = "SUCCESS";
     private static final String FAILURE = "FAILURE";
     private FTPFile ftpFile;
-    private LogEntryDAO logEntryDAO;
 
     public FtpClientService getFtpService() {
         return ftpService;
@@ -38,14 +37,6 @@ public class FtpAction extends ActionSupport {
 
     public void setFtpFile(FTPFile ftpFile) {
         this.ftpFile = ftpFile;
-    }
-
-    public LogEntryDAO getLogEntryDAO() {
-        return logEntryDAO;
-    }
-
-    public void setLogEntryDAO(LogEntryDAO logEntryDAO) {
-        this.logEntryDAO = logEntryDAO;
     }
 
     @Override
@@ -91,15 +82,13 @@ public class FtpAction extends ActionSupport {
         return SUCCESS;
     }
 
-    public String login() throws FtpException, UnknownHostException, IOException {
+    public String login() throws FtpException, IOException {
         //ftpService = new FtpClientService();
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Boolean isLoggined = ftpService.login(principal.getUsername(), principal.getPassword());
         if (isLoggined) {
-            audit(principal, "login", SUCCESS);
             return SUCCESS;
         } else {
-            audit(principal, "login", FAILURE);
             return FAILURE;
         }
     }
@@ -110,15 +99,4 @@ public class FtpAction extends ActionSupport {
 
     }
 
-    /**
-     * Writes executed action details to database. TEMP? Bug with creating bean
-     * property.
-     *
-     * @param user
-     * @param action
-     * @param status
-     */
-    private void audit(User user, String action, String status) {
-        logEntryDAO.saveEntry(user, action, status);
-    }
 }
