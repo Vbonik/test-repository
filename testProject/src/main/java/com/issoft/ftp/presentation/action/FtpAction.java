@@ -53,9 +53,10 @@ public class FtpAction extends ActionSupport {
         return SUCCESS;
     }
 
-    public String upload() throws FtpException, UnknownHostException {
+    public String upload() throws FtpException, UnknownHostException, IOException {
         // login();
-        ftpService = new FtpClientService();
+        ftpService = new FtpClientService();// to clean
+        login();// to clean
         Boolean fileUpload = ftpService.uploadFile(ftpFile.getUserFileFileName(), ftpFile.getUserFile());
         if (fileUpload) {
             return SUCCESS;
@@ -65,11 +66,12 @@ public class FtpAction extends ActionSupport {
 
     }
 
-    public String download() {
-
+    public String download() throws FtpException, UnknownHostException, IOException {
         try {
+            ftpService = new FtpClientService();// to clean
+            login();// to clean
             if (ftpFile.getDestination() == null) {
-                ftpFile.setDestination("C:/");
+                ftpFile.setDestination("D:/");
             }
             File file = ftpService.downloadFile(ftpFile.getUserFileFileName(), ftpFile.getDestination() + ftpFile.getUserFileFileName());
         } catch (NullPointerException e) {

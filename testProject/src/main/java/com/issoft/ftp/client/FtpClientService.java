@@ -79,7 +79,7 @@ public class FtpClientService {
     //TODO: resolve file size problem
     // something bad with this stuff  or something other.
     // Because i can't upload files, more than 2048
-    public Boolean uploadFile(String remoteName, MultipartFile file) {
+    public Boolean uploadFile(String remoteName, File file) {
         if ((remoteName != null) && (file != null)) {
             try {
                 return client.storeFile(remoteName, new FileInputStream((File) file));

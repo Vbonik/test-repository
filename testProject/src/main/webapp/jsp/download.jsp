@@ -13,21 +13,19 @@
         <title>Download</title>
     </head>
     <body>
-        <s:iterator value="ftpFile.fileNamesOnFTP" id="fileName">
-            <s:url action="downloadFtp" var="urlTag">
-                <s:param name="ftpFile.userFileFileName">
-                    <s:property/>
-                </s:param>
-                <s:param name="ftpFile.destination">
-                    D:/
-                </s:param>
-            </s:url>
-            <a href="<s:property value="#urlTag" />"><s:property/></a>
-            <br>
-        </s:iterator>
+        <script language="JavaScript" type="text/javascript">
+            function showFileDialog() {
+                var dHlpr = document.createElement( 'INPUT');
+                dHlpr.type = "dir";
+                dHlpr.style.display = 'none';
+                document.body.appendChild( dHlpr);
+                dHlpr.click();
+            }
+        </script>
+        <input type="button" onclick="showFileDialog()" value="Показать стандартный диалог выбора файлов"><br>
+        <s:iterator value="ftpFile.fileNamesOnFTP" var="fileName">
+            <a id="fileDownload" href="downloadFile?ftpFile.userFileFileName=<s:property />" ><s:property /></a>
+        </s:iterator>       
 
-        <s:form action="Ftp">
-            <s:submit action="getDownloadFileListFtp" value="Refresh"/>
-        </s:form>
     </body>
 </html>
