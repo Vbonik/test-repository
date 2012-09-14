@@ -5,7 +5,6 @@ import com.issoft.ftp.client.FtpClientService;
 import com.issoft.ftp.model.FTPFile;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.ftpserver.ftplet.FtpException;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
@@ -16,6 +15,7 @@ import java.net.UnknownHostException;
 /**
  * @author slavabrodnitski
  */
+
 public class FtpAction extends ActionSupport {
 
     private FtpClientService ftpService;
@@ -55,7 +55,7 @@ public class FtpAction extends ActionSupport {
 
     public String upload() throws FtpException, UnknownHostException, IOException {
         // login();
-        ftpService = new FtpClientService();// to clean
+//        ftpService = new FtpClientService();// to clean
         login();// to clean
         Boolean fileUpload = ftpService.uploadFile(ftpFile.getUserFileFileName(), ftpFile.getUserFile());
         if (fileUpload) {
@@ -68,7 +68,7 @@ public class FtpAction extends ActionSupport {
 
     public String download() throws FtpException, UnknownHostException, IOException {
         try {
-            ftpService = new FtpClientService();// to clean
+//            ftpService = new FtpClientService();// to clean
             login();// to clean
             if (ftpFile.getDestination() == null) {
                 ftpFile.setDestination("D:/");
@@ -82,7 +82,7 @@ public class FtpAction extends ActionSupport {
 
     public String getDownloadFileList() throws FtpException, UnknownHostException, IOException {
         try {
-            ftpService = new FtpClientService();
+//            ftpService = new FtpClientService();
             login();
             ftpFile = new FTPFile(ftpService.getAllFileNamesOnFTPServer());
         } catch (NullPointerException e) {
@@ -92,8 +92,7 @@ public class FtpAction extends ActionSupport {
     }
 
     public String login() throws FtpException, UnknownHostException, IOException {
-        //will change in spring config
-        ftpService = new FtpClientService();
+        //ftpService = new FtpClientService();
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Boolean isLoggined = ftpService.login(principal.getUsername(), principal.getPassword());
         if (isLoggined) {
@@ -106,15 +105,9 @@ public class FtpAction extends ActionSupport {
     }
 
     private void ConnectToFTP() {
-        //TODO: ex!
-        try {
-            ftpService = new FtpClientService();
-            ftpService.login("admin", "admin");
-        } catch (FtpException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (UnknownHostException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        //ftpService = new FtpClientService();
+        ftpService.login("admin", "admin");
+
     }
 
     /**
@@ -126,8 +119,6 @@ public class FtpAction extends ActionSupport {
      * @param status
      */
     private void audit(User user, String action, String status) {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("../spring-hibernate.xml");
-        logEntryDAO = (LogEntryDAO) context.getBean("myLogEntryDAO");
         logEntryDAO.saveEntry(user, action, status);
     }
 }
