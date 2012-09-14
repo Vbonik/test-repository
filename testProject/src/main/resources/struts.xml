@@ -8,6 +8,7 @@
 
 
     <package name="default" namespace="/" extends="struts-default">
+
         
         <action name="uploadFile" method="upload" class="com.issoft.ftp.presentation.action.FtpAction">
             <interceptor-ref name="defaultStack">
@@ -19,15 +20,15 @@
         
         <action name="downloadFile" method="download" class="com.issoft.ftp.presentation.action.FtpAction">
             <result name="SUCCESS">/index.jsp</result>
-        </action>
-       
+
+
         <action name="loginFtp" method="login" class="com.issoft.ftp.presentation.action.FtpAction">
-            <result name="SUCCESS" >
-                /jsp/directoryList.jsp       
-            </result>            
+            <result name="SUCCESS">
+                /jsp/directoryList.jsp
+            </result>
             <result name="FAILURE">/index.jsp</result>
         </action>
-        <action name="directoryList" >
+        <action name="directoryList">
             <result>
                 /jsp/directoryList.jsp
             </result>            
@@ -42,4 +43,5 @@
         </action>
     </package>
 
+        
 </struts>
