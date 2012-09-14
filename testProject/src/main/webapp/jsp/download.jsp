@@ -27,5 +27,13 @@
             <a id="fileDownload" href="downloadFile?ftpFile.userFileFileName=<s:property />" ><s:property /></a>
         </s:iterator>       
 
-    </body>
+<s:form action="Ftp">
+    <s:submit action="directoryList" value="Refresh"/>
+</s:form>
+
+<s:form action="Ftp" method="post" enctype="multipart/form-data">
+    <s:file name="ftpFile.userFile" label="User file"/>
+    <s:submit action="uploadFtp" value="Upload"/>
+</s:form>
+</body>
 </html>

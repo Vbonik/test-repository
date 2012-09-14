@@ -5,19 +5,13 @@
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
 
-    <bean id="ftpFile" class="com.issoft.ftp.model.FTPFile"/>    
-    <bean id="inetAddress"  class="java.net.Inet4Address" factory-method="getByName">
+    <bean id="ftpFile" class="com.issoft.ftp.model.FTPFile"/>
+    <bean id="inetAddress" class="java.net.Inet4Address" factory-method="getByName">
         <constructor-arg value="localhost"/>
     </bean>
 
-    <!--<bean id="ftpClientService" class="com.issoft.ftp.client.FtpClientService">
-        <constructor-arg ref="inetAddress"/>
-        <constructor-arg value="2121"/>
-    </bean>-->
-    
     <bean id="ftpAction" class="com.issoft.ftp.presentation.action.FtpAction">
-        <!--<property name="ftpService" ref="ftpClientService"/>-->
-        <property name="ftpFile" ref="ftpFile"/>        
+        <property name="ftpFile" ref="ftpFile"/>
     </bean>
 
 </beans>
