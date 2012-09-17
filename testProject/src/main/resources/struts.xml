@@ -3,13 +3,11 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-    
-    <constant name="struts.multipart.maxSize" value="9999999999999" />
 
+    <constant name="struts.multipart.maxSize" value="9999999999999"/>
 
     <package name="default" namespace="/" extends="struts-default">
 
-        
         <action name="uploadFile" method="upload" class="com.issoft.ftp.presentation.action.FtpAction">
             <interceptor-ref name="defaultStack">
                 <param name="fileUpload.maximumSize">500242880</param>
@@ -17,7 +15,7 @@
 
             <result name="SUCCESS">/index.jsp</result>
         </action>
-        
+
         <action name="downloadFile" method="download" class="com.issoft.ftp.presentation.action.FtpAction">
             <result name="SUCCESS" type="stream">
                 <param name="contentType">application/octet-stream</param>
@@ -26,8 +24,10 @@
                 <param name="bufferSize">1024</param>
             </result>
         </action>
+            <result name="SUCCESS">/index.jsp</result>
+        </action>
 
-        <action name="loginFtp" method="login" class="com.issoft.ftp.presentation.action.FtpAction">
+        <action name="loginFtp" method="login" class="ftpAction">
             <result name="SUCCESS">
                 /jsp/directoryList.jsp
             </result>
@@ -37,17 +37,15 @@
         <action name="directoryList">
             <result>
                 /jsp/directoryList.jsp
-            </result>            
-           
+            </result>
+
         </action>
         <action name="fileList" method="getDownloadFileList" class="com.issoft.ftp.presentation.action.FtpAction">
-            <result name="SUCCESS" >
+            <result name="SUCCESS">
                 <param name="location">/jsp/download.jsp</param>
                 <param name="ftpFile">${ftpFile}</param>
-            </result>            
+            </result>
             <result name="FAILURE">/index.jsp</result>
         </action>
     </package>
-
-        
 </struts>
