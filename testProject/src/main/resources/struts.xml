@@ -19,8 +19,13 @@
         </action>
         
         <action name="downloadFile" method="download" class="com.issoft.ftp.presentation.action.FtpAction">
-            <result name="SUCCESS">/index.jsp</result>
-
+            <result name="SUCCESS" type="stream">
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">fileInputStream</param>
+                <param name="contentDisposition">attachment;filename="%{ftpFile.userFileFileName}"</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
 
         <action name="loginFtp" method="login" class="com.issoft.ftp.presentation.action.FtpAction">
             <result name="SUCCESS">
@@ -28,6 +33,7 @@
             </result>
             <result name="FAILURE">/index.jsp</result>
         </action>
+        
         <action name="directoryList">
             <result>
                 /jsp/directoryList.jsp

@@ -8,6 +8,7 @@
 	http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
 
     <beans:import resource="spring-database.xml"/>
+    
     <http auto-config="true" >
         <intercept-url pattern="/directoryList" access="ROLE_USER" />
         <form-login login-page="/jsp/login.jsp" default-target-url="/loginFtp"

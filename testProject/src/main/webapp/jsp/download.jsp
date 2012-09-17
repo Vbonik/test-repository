@@ -1,13 +1,8 @@
-
-<%--
-  Created by IntelliJ IDEA.
-  User: nikitadavydov
-  Date: 9/11/12
-  Time: 4:51 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
+<%@ taglib prefix="sjt" uri="/struts-jquery-tree-tags"%>
+<sj:head jqueryui="true"/>
 <html>
     <head>
         <title>Download</title>
@@ -22,9 +17,12 @@
                 dHlpr.click();
             }
         </script>
-        <input type="button" onclick="showFileDialog()" value="Показать стандартный диалог выбора файлов"><br>
+        <!--<input type="button" onclick="showFileDialog()" value="Показать стандартный диалог выбора файлов"><br>-->
+
         <s:iterator value="ftpFile.fileNamesOnFTP" var="fileName">
-            <a id="fileDownload" href="downloadFile?ftpFile.userFileFileName=<s:property />" ><s:property /></a>
+            <s:url var="fileDownloadUrl" action="downloadFile?ftpFile.userFileFileName=%{fileName}" ></s:url>
+            <s:a href="%{fileDownloadUrl}"> <s:property/> </s:a>
+                <br/>
         </s:iterator>       
 
     </body>

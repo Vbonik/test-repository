@@ -10,8 +10,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.UnknownHostException;
+import org.apache.commons.net.io.SocketInputStream;
 
 /**
  * @author slavabrodnitski
@@ -21,8 +24,17 @@ public class FtpAction extends ActionSupport {
     private FtpClientService ftpService;
     private static final String SUCCESS = "SUCCESS";
     private static final String FAILURE = "FAILURE";
+    private InputStream fileInputStream;
     private FTPFile ftpFile;
     private LogEntryDAO logEntryDAO;
+
+    public InputStream getFileInputStream() {
+        return fileInputStream;
+    }
+
+    public void setFileInputStream(InputStream fileInputStream) {
+        this.fileInputStream = fileInputStream;
+    }
 
     public FtpClientService getFtpService() {
         return ftpService;
@@ -73,7 +85,8 @@ public class FtpAction extends ActionSupport {
             if (ftpFile.getDestination() == null) {
                 ftpFile.setDestination("D:/");
             }
-            File file = ftpService.downloadFile(ftpFile.getUserFileFileName(), ftpFile.getDestination() + ftpFile.getUserFileFileName());
+            fileInputStream = (InputStream) ftpService.downloadFile(ftpFile.getUserFileFileName());
+
         } catch (NullPointerException e) {
             return FAILURE;
         }
