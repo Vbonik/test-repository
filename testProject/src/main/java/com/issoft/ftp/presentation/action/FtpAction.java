@@ -1,6 +1,5 @@
 package com.issoft.ftp.presentation.action;
 
-import com.issoft.database.log.LogEntryDAO;
 import com.issoft.ftp.client.FtpClientService;
 import com.issoft.ftp.model.FTPFile;
 import com.opensymphony.xwork2.ActionSupport;
@@ -8,12 +7,9 @@ import org.apache.ftpserver.ftplet.FtpException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.UnknownHostException;
-import org.apache.commons.net.io.SocketInputStream;
 
 /**
  * @author slavabrodnitski
@@ -35,11 +31,11 @@ public class FtpAction extends ActionSupport {
         this.fileInputStream = fileInputStream;
     }
 
-    public FtpClientService getFtpService() {
+    public FtpClientService getFtpClientService() {
         return ftpService;
     }
 
-    public void setFtpService(FtpClientService ftpService) {
+    public void setFtpClientService(FtpClientService ftpService) {
         this.ftpService = ftpService;
     }
 
@@ -71,12 +67,12 @@ public class FtpAction extends ActionSupport {
 
     public String download() throws FtpException, UnknownHostException, IOException {
         try {
-//            ftpService = new FtpClientService();// to clean
+            //ftpService = new FtpClientService();// to clean
             login();// to clean
             if (ftpFile.getDestination() == null) {
                 ftpFile.setDestination("D:/");
             }
-            fileInputStream = (InputStream) ftpService.downloadFile(ftpFile.getUserFileFileName());
+            fileInputStream = ftpService.downloadFile(ftpFile.getUserFileFileName());
 
         } catch (NullPointerException e) {
             return FAILURE;
@@ -87,7 +83,7 @@ public class FtpAction extends ActionSupport {
     public String getDownloadFileList() throws FtpException, UnknownHostException, IOException {
         try {
 //            ftpService = new FtpClientService();
-            login();
+ //           login();
             ftpFile = new FTPFile(ftpService.getAllFileNamesOnFTPServer());
         } catch (NullPointerException e) {
             return FAILURE;

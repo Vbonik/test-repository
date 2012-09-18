@@ -24,8 +24,6 @@
                 <param name="bufferSize">1024</param>
             </result>
         </action>
-            <result name="SUCCESS">/index.jsp</result>
-        </action>
 
         <action name="loginFtp" method="login" class="ftpAction">
             <result name="SUCCESS">
@@ -33,7 +31,7 @@
             </result>
             <result name="FAILURE">/index.jsp</result>
         </action>
-        
+
         <action name="directoryList">
             <result>
                 /jsp/directoryList.jsp

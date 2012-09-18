@@ -17,7 +17,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
     <bean id="ftpAction" class="com.issoft.ftp.presentation.action.FtpAction">
         <property name="ftpFile" ref="ftpFile"/>
-        <property name="ftpService" ref="ftpClientService"/>
+        <property name="ftpClientService" ref="ftpClientService"/>
     </bean>
 
 </beans>
