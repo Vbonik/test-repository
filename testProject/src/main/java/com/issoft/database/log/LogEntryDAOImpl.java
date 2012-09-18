@@ -4,7 +4,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -31,11 +30,5 @@ public class LogEntryDAOImpl implements LogEntryDAO {
         logEntry.setDate(Calendar.getInstance().getTime());
 
         hibernateTemplate.saveOrUpdate(logEntry);
-    }
-
-
-    @Override
-    public List<LogEntry> listEntry() {
-        return hibernateTemplate.find("from Entry");
     }
 }
