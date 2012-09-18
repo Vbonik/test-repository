@@ -2,8 +2,6 @@ package com.issoft.database.log;
 
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 
 import java.util.Calendar;
 import java.util.List;
@@ -21,30 +19,20 @@ public class LogEntryDAOImpl implements LogEntryDAO {
     }
 
     @Override
-    public void saveEntry(User user, String action, String status) {
+    public void saveEntry(String userName, String authorities, String action, String status) {
         LogEntry logEntry = new LogEntry();
-        logEntry.setUserName(user.getUsername());
-        logEntry.setAuthorities(getAuthorities(user));
+
+        logEntry.setUserName(userName);
+        logEntry.setAuthorities(authorities);
         logEntry.setAction(action);
         logEntry.setStatus(status);
+
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Minsk")); //must be called once??
         logEntry.setDate(Calendar.getInstance().getTime());
+
         hibernateTemplate.saveOrUpdate(logEntry);
     }
 
-    /**
-     * Gets collection of user authorities and converting them to one string.
-     *
-     * @param user
-     * @return String authorities
-     */
-    private String getAuthorities(User user) {
-        StringBuffer authorities = new StringBuffer();
-        for (GrantedAuthority authority : user.getAuthorities()) {
-            authorities.append(authority.getAuthority() + ", ");
-        }
-        return authorities.toString();
-    }
 
     @Override
     public List<LogEntry> listEntry() {

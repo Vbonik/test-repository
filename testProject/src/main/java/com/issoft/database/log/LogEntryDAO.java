@@ -1,7 +1,5 @@
 package com.issoft.database.log;
 
-import org.springframework.security.core.userdetails.User;
-
 import java.util.List;
 
 /**
@@ -9,8 +7,8 @@ import java.util.List;
  */
 public interface LogEntryDAO {
 
-    public void saveEntry(User user, String action, String status);
-
     public List<LogEntry> listEntry();
+
+    void saveEntry(String userName, String authorities, String action, String status);
 }
 
