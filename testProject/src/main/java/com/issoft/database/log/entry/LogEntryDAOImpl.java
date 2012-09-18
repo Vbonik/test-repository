@@ -1,4 +1,4 @@
-package com.issoft.database.log;
+package com.issoft.database.log.entry;
 
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.HibernateTemplate;

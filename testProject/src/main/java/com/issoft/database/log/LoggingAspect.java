@@ -1,6 +1,6 @@
-package com.issoft.ftp.util;
+package com.issoft.database.log;
 
-import com.issoft.database.log.LogEntryDAO;
+import com.issoft.database.log.entry.LogEntryDAO;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
