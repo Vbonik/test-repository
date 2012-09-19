@@ -19,12 +19,21 @@
         </script>
         <!--<input type="button" onclick="showFileDialog()" value="Показать стандартный диалог выбора файлов"><br>-->
 
-        <s:iterator value="ftpFile.fileNamesOnFTP" var="fileName">
-            <s:url var="fileDownloadUrl" action="downloadFile?ftpFile.userFileFileName=%{fileName}" ></s:url>
-            <s:a href="%{fileDownloadUrl}"> <s:property/> </s:a>
-                <br/>
-        </s:iterator>       
+        <s:iterator value="currentDirectory.fileList" var="file">
+            <s:url var="fileDownloadUrl" action="downloadFile?currentDirectory.currentFile.name=%{name}" >
 
+            </s:url>
+            <s:a href="%{fileDownloadUrl}"> <s:property value="name"/> </s:a>
+            <br/>
+        </s:iterator>      
+        <br/>
+        <br/>
+        <div class="result ui-widget-content ui-corner-all">
+            <s:form action="uploadFile?currentDirectory.currentFile.name" method="post" enctype="multipart/form-data" >
+                <s:file name="currentDirectory.currentFile.file" label="User file" />
+                <s:submit value="Upload"/>
+            </s:form>
+        </div>
     </body>
 
 </html>

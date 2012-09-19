@@ -8,11 +8,12 @@
 	http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
 
     <beans:import resource="spring-database.xml"/>
-
-    <http auto-config="true">
-        <intercept-url pattern="/directoryList" access="ROLE_USER"/>
+    
+    <http auto-config="true" >
+        <intercept-url pattern="/directoryList" access="ROLE_USER" />
         <form-login login-page="/jsp/login.jsp" default-target-url="/loginFtp"
                     authentication-failure-url="/jsp/warning.jsp"/>
+            
 
     </http>
 
@@ -23,7 +24,7 @@
     		      select username, password, enabled from users where username = ?"
                                authorities-by-username-query="
 		      select user.username, role.authority from users user, user_roles role
-		      where user.role_id = role.id and user.username = ?"/>
+		      where user.role_id = role.id and user.username = ?" />
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

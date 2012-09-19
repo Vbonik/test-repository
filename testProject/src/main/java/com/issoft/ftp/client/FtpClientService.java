@@ -4,21 +4,29 @@
  */
 package com.issoft.ftp.client;
 
+import java.io.ByteArrayOutputStream;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPConnectionClosedException;
 import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.log4j.Logger;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Random;
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.io.SocketInputStream;
+import org.apache.mina.core.RuntimeIoException;
 
 /**
  * @author slavabrodnitski
@@ -40,17 +48,6 @@ public class FtpClientService {
         this(InetAddress.getByName("localhost"), DEFAULT_FTP_LISTENER_PORT);
     }
 
-    public Boolean login(String login, String password) {
-        if (login != null) {
-            try {
-                return logged = client.login(login, password);
-            } catch (IOException ioEx) {
-                logger.error("Invalid login or password", ioEx);
-            }
-        }
-        return false;
-    }
-
     //TODO: catch exceptions if server is not running/start
     public FtpClientService(InetAddress host, Integer port) throws FtpException {
         if (host != null) {
@@ -70,13 +67,24 @@ public class FtpClientService {
         throw new FtpException("Connection failed.");
     }
 
+    public Boolean login(String login, String password) {
+        if (login != null) {
+            try {
+                return logged = client.login(login, password);
+            } catch (IOException ioEx) {
+                logger.error("Invalid login or password", ioEx);
+            }
+        }
+        return false;
+    }
+
     //TODO: resolve file size problem
     // something bad with this stuff  or something other.
     // Because i can't upload files, more than 2048
     public Boolean uploadFile(String remoteName, File file) {
         if ((remoteName != null) && (file != null)) {
             try {
-                return client.storeFile(remoteName, new FileInputStream((File) file));
+                return client.storeFile(remoteName, new FileInputStream(file));
             } catch (SocketException sEx) {
                 logger.error(sEx);
             } catch (IOException ioEx) {
@@ -86,28 +94,21 @@ public class FtpClientService {
         return false;
     }
 
-    //TODO: rename
-    public String[] getAllFileNamesOnFTPServer() {
-        String[] filesOnFTP = null;
-        try {
-            filesOnFTP = client.listNames();
-        } catch (IOException e) {
-            logger.error("No files on directory", e);
-        }
-        return filesOnFTP;
-    }
-
     public InputStream downloadFile(String filePath) throws FileNotFoundException {
 
         if ((logged) && (filePath != null)) {
             try {
                 ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
                 FileOutputStream outFileStream = null;
-                File tempFile = File.createTempFile(filePath, ".temp");
+                File tempFile = File.createTempFile(Integer.valueOf(new Random().nextInt()).toString(), ".temp");
                 try {
                     client.retrieveFile(filePath, byteStream);
                     byteStream.flush();
                     byte[] fileBytes = byteStream.toByteArray();
+                    if(fileBytes.length == 0) {
+                        return null;
+                    }
+                        
                     try {
                         outFileStream = new FileOutputStream(tempFile);
                         outFileStream.write(fileBytes);
@@ -130,6 +131,30 @@ public class FtpClientService {
             }
         }
         throw new FileNotFoundException(filePath + " file not found.");
+    }
+
+    public FTPFile[] getFileList(String pathname) {
+        FTPFile[] fileList = null;
+        try {
+            fileList = client.listFiles(pathname);
+        } catch (IOException e) {
+            logger.error("No files on directory", e);
+        }
+        return fileList;
+    }
+
+    public FTPFile[] getDirectoryList(String pathname) {
+        FTPFile[] files = null;
+        try {
+            if (pathname != null) {
+                files = client.mlistDir(pathname);
+            } else {
+                files = client.mlistDir();
+            }
+            return files;
+        } catch(IOException ioEx) {
+            throw new RuntimeIoException(ioEx);
+        }
     }
 
     public void close() {
