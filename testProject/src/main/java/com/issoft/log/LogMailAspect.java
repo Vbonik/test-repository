@@ -28,8 +28,8 @@ public class LogMailAspect {
     private static final String SPRING_SECURITY_AUTHENTICATION = "Spring security authentication";
     private static final String SUCCESS = "SUCCESS";
     private static final String FAILURE = "FAILURE";
-    private static final String UPLOAD = "Upload";
-    private static final String DOWNLOAD = "Download";
+    private static final String UPLOAD = "upload";
+    private static final String DOWNLOAD = "download";
 
 
     /**

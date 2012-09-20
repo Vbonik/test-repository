@@ -104,7 +104,7 @@ public class MailService implements Runnable {
 
     @Override
     public void run() {
-        for (UserEntity receiver : userEntityDAO.selectReceivers("download")) {
+        for (UserEntity receiver : userEntityDAO.selectReceivers(action)) {
             String messageTo = receiver.getEmail();
             String messageSubject = "FTP delivery";
             String messageBody = "Hello, " + receiver.getUserName() + "!\n" +
