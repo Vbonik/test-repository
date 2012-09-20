@@ -1,10 +1,16 @@
 package com.issoft.log.database;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author: AS
@@ -20,7 +26,7 @@ public class UserEntity {
     private boolean enabled;
     private Long roleId;
     private String email;
-    private String emailNotification;
+    Set<EmailNotification> notifications = new HashSet<EmailNotification>();
 
     @Id
     @GeneratedValue
@@ -78,12 +84,15 @@ public class UserEntity {
         this.email = email;
     }
 
-    @Column(name = "EMAIL_NOTIFICATION")
-    public String getEmailNotification() {
-        return emailNotification;
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "USERS_NOTIFICATIONS",
+            joinColumns = {@JoinColumn(name = "USER_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "NOTIFICATION_ID")})
+    public Set<EmailNotification> getNotifications() {
+        return notifications;
     }
 
-    public void setEmailNotification(String emailNotification) {
-        this.emailNotification = emailNotification;
+    public void setNotifications(Set<EmailNotification> notifications) {
+        this.notifications = notifications;
     }
 }

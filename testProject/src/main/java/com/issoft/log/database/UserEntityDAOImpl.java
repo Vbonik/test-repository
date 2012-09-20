@@ -12,20 +12,24 @@ public class UserEntityDAOImpl implements UserEntityDAO {
 
     private HibernateTemplate hibernateTemplate;
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.hibernateTemplate = new HibernateTemplate(sessionFactory);
-    }
-
     /**
-     * Returns list of users subscribed for certain action.
+     * Returns name and email of user subscribed for certain action.
      *
      * @param action
      */
     @Override
-    public List<UserEntity> selectReceivers(String action) {
-        String query = "FROM UserEntity user WHERE email_notification LIKE ?";
-        String[] queryParam = {"%" + action + "%"};
-        return (List<UserEntity>) hibernateTemplate.find(query, queryParam);
+    public List<Object[]> selectReceivers(String action) {
+        String query1 = "SELECT user.email, user.userName \n" +
+                "FROM UserEntity user \n" +
+                "JOIN user.notifications un \n" +
+                "WHERE un.notification = ?";
+
+        String[] queryParam = {action};
+        List<Object[]> sds = hibernateTemplate.find(query1, queryParam);
+        return sds;
     }
 
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+    }
 }

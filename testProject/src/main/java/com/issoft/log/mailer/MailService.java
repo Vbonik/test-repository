@@ -1,6 +1,5 @@
 package com.issoft.log.mailer;
 
-import com.issoft.log.database.UserEntity;
 import com.issoft.log.database.UserEntityDAO;
 
 import javax.mail.Message;
@@ -39,10 +38,10 @@ public class MailService implements Runnable {
         try {
             Properties properties = new Properties();
             properties.load(this.getClass().getResourceAsStream("/email-settings.properties"));
-            email = properties.getProperty("mail");
-            password = properties.getProperty("password");
-            smtp_server = properties.getProperty("smtp_server");
-            port = properties.getProperty("port");
+            email = properties.getProperty(EMAIL);
+            password = properties.getProperty(PASSWORD);
+            smtp_server = properties.getProperty(SMTP_SERVER);
+            port = properties.getProperty(PORT);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -65,8 +64,7 @@ public class MailService implements Runnable {
         });
 
         /*
-        * Если авторизоваться на сервере получилось,
-        * то создаем новое сообщение
+        * Authorized sucessfull? -> Create new message
         */
         try {
             Message message = new MimeMessage(session);
@@ -98,18 +96,19 @@ public class MailService implements Runnable {
         runner.start();
     }
 
-    public void setUserEntityDAO(UserEntityDAO userEntityDAO) {
-        this.userEntityDAO = userEntityDAO;
-    }
 
     @Override
-    public void run() {
-        for (UserEntity receiver : userEntityDAO.selectReceivers(action)) {
-            String messageTo = receiver.getEmail();
+    public synchronized void run() {
+        for (Object[] receiver : userEntityDAO.selectReceivers(action)) {
+            String messageTo = receiver[0].toString();
             String messageSubject = "FTP delivery";
-            String messageBody = "Hello, " + receiver.getUserName() + "!\n" +
+            String messageBody = "Hello, " + receiver[1].toString() + "!\n" +
                     "User: " + userName + "\n" + action + " file: " + filePath + "";
             sendEmail(messageTo, messageSubject, messageBody);
         }
+    }
+
+    public void setUserEntityDAO(UserEntityDAO userEntityDAO) {
+        this.userEntityDAO = userEntityDAO;
     }
 }

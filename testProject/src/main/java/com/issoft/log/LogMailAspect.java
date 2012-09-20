@@ -109,7 +109,7 @@ public class LogMailAspect {
         String action = "Starting download file: " + filePath;
         String status = (inputStream != null ? SUCCESS : FAILURE);
         logEntryDAO.saveEntry(user.getUsername(), getAuthorities(user), action, status);
-        mailService.mailFileChanges("Download", filePath, user.getUsername());
+        mailService.mailFileChanges(DOWNLOAD, filePath, user.getUsername());
     }
 
     /**
@@ -142,7 +142,7 @@ public class LogMailAspect {
         String action = "Starting upload file: " + filePath;
         String status = (result ? SUCCESS : FAILURE);
         logEntryDAO.saveEntry(user.getUsername(), getAuthorities(user), action, status);
-        mailService.mailFileChanges("Upload", filePath, user.getUsername());
+        mailService.mailFileChanges(UPLOAD, filePath, user.getUsername());
     }
 
     /**

@@ -12,6 +12,7 @@
             <list>
                 <value>com.issoft.log.database.LogEntry</value>
                 <value>com.issoft.log.database.UserEntity</value>
+                <value>com.issoft.log.database.EmailNotification</value>
             </list>
         </property>
         <property name="hibernateProperties">

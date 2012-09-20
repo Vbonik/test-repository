@@ -6,5 +6,5 @@ import java.util.List;
  * @author: AS
  */
 public interface UserEntityDAO {
-    List<UserEntity> selectReceivers(String action);
+    List<Object[]> selectReceivers(String action);
 }
