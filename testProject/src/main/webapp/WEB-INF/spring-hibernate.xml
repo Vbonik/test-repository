@@ -10,7 +10,8 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="annotatedClasses">
             <list>
-                <value>com.issoft.database.log.LogEntry</value>
+                <value>com.issoft.log.database.LogEntry</value>
+                <value>com.issoft.log.database.UserEntity</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -22,15 +23,24 @@
         </property>
     </bean>
 
-    <bean id="myLogEntryDAO" class="com.issoft.database.log.LogEntryDAOImpl">
+    <bean id="myLogEntryDAO" class="com.issoft.log.database.LogEntryDAOImpl">
+        <property name="sessionFactory" ref="mySessionFactory"/>
+    </bean>
+
+    <bean id="userDAO" class="com.issoft.log.database.UserEntityDAOImpl">
         <property name="sessionFactory" ref="mySessionFactory"/>
     </bean>
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <!-- Aspect -->
-    <bean id="customerAspect" class="com.issoft.ftp.util.LoggingAspect">
+    <bean id="customerAspect" class="com.issoft.log.LogMailAspect">
         <property name="logEntryDAO" ref="myLogEntryDAO"/>
+        <property name="mailService" ref="mailService"/>
+    </bean>
+
+    <bean id="mailService" class="com.issoft.log.mailer.MailService">
+        <property name="userEntityDAO" ref="userDAO"/>
     </bean>
 
 </beans>
