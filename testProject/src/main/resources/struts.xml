@@ -16,6 +16,9 @@
                 <param name="location">/directoryList</param>
                 <param name="currentDirectory.typeOfFile">1</param>
             </result>
+            <result name="FAILURE" type="redirect">
+                <param name="location">/index.jsp</param>
+            </result>
         </action>
 
         <action name="downloadFile" method="downloadFile" class="ftpAction">

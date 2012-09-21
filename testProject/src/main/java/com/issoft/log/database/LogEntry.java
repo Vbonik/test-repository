@@ -1,4 +1,4 @@
-package com.issoft.database.log;
+package com.issoft.log.database;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

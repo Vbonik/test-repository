@@ -64,7 +64,6 @@ public class FtpAction extends ActionSupport implements ParameterAware {
     }
 
     public String uploadFile() throws FtpException, UnknownHostException, IOException {
-        // login();
 //        ftpService = new FtpClientService();// to clean
 //        login();// to clean
         String tempPath = currentDirectory.getAbsolutePath().replace("_", "/");
