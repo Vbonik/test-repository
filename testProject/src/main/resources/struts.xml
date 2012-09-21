@@ -50,5 +50,13 @@
             </result>
             <result name="FAILURE">/index.jsp</result>
         </action>
+        <action name="deleteFiles" class="ftpAction" method="deleteFiles">
+            <result name="SUCCESS" type="redirect">
+                <param name="location">/directoryList</param>
+                <param name="currentDirectory.typeOfFile">1</param>
+
+            </result>
+
+        </action>
     </package>
 </struts>

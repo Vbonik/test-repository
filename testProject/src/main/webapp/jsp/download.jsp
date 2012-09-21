@@ -8,26 +8,30 @@
         <title>Download</title>
     </head>
     <body>
-        <script language="JavaScript" type="text/javascript">
-            function showFileDialog() {
-                var dHlpr = document.createElement( 'INPUT');
-                dHlpr.type = "dir";
-                dHlpr.style.display = 'none';
-                document.body.appendChild( dHlpr);
-                dHlpr.click();
-            }
-        </script>
-        <!--<input type="button" onclick="showFileDialog()" value="Показать стандартный диалог выбора файлов"><br>-->
 
-        <s:iterator value="currentDirectory.fileList" var="file">
-            <s:url var="fileDownloadUrl" action="downloadFile?currentDirectory.currentFile.name=%{name}" >
+        <form action="deleteFiles">
+            <input type="hidden" name="ttt" value="utrtrfhn">
+            <table>
+                <s:iterator value="currentDirectory.fileList" var="file">
+                    <tr>
+                        <td>                 
+                            <input type="checkbox" value="<s:property value="name"/>" name="delete">
+                            <s:url var="fileDownloadUrl" action="downloadFile?currentDirectory.currentFile.name=%{name}" >
+                            </s:url>
+                            <s:a href="%{fileDownloadUrl}"> <s:property value="name"/> </s:a>
+                            </td>
+                        </tr>
+                </s:iterator> 
+                <tr>
+                    <td>
+                        <input type="submit" value="delete">
+                    </td></tr>
+            </table>
+        </form>
 
-            </s:url>
-            <s:a href="%{fileDownloadUrl}"> <s:property value="name"/> </s:a>
-            <br/>
-        </s:iterator>      
         <br/>
         <br/>
+
         <div class="result ui-widget-content ui-corner-all">
             <s:form action="uploadFile?currentDirectory.currentFile.name" method="post" enctype="multipart/form-data" >
                 <s:file name="currentDirectory.currentFile.file" label="User file" />

@@ -23,6 +23,7 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.List;
 import java.util.Random;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.io.SocketInputStream;
@@ -81,65 +82,53 @@ public class FtpClientService {
     //TODO: resolve file size problem
     // something bad with this stuff  or something other.
     // Because i can't upload files, more than 2048
-    public Boolean uploadFile(String remoteName, File file) {
+    public Boolean uploadFile(String remoteName, File file) throws IOException {
         if ((remoteName != null) && (file != null)) {
-            try {
-                return client.storeFile(remoteName, new FileInputStream(file));
-            } catch (SocketException sEx) {
-                logger.error(sEx);
-            } catch (IOException ioEx) {
-                logger.error(ioEx);
-            }
+            return client.storeFile(remoteName, new FileInputStream(file));
         }
         return false;
     }
 
-    public InputStream downloadFile(String filePath) throws FileNotFoundException {
+    public InputStream downloadFile(String filePath) throws FileNotFoundException, IOException {
 
         if ((logged) && (filePath != null)) {
+
+            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+            FileOutputStream outFileStream = null;
+            File tempFile = File.createTempFile(Integer.valueOf(new Random().nextInt()).toString(), ".temp");
             try {
-                ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-                FileOutputStream outFileStream = null;
-                File tempFile = File.createTempFile(Integer.valueOf(new Random().nextInt()).toString(), ".temp");
+                client.retrieveFile(filePath, byteStream);
+                byteStream.flush();
+                byte[] fileBytes = byteStream.toByteArray();
+                if (fileBytes.length == 0) {
+                    return null;
+                }
                 try {
-                    client.retrieveFile(filePath, byteStream);
-                    byteStream.flush();
-                    byte[] fileBytes = byteStream.toByteArray();
-                    if(fileBytes.length == 0) {
-                        return null;
-                    }
-                        
-                    try {
-                        outFileStream = new FileOutputStream(tempFile);
-                        outFileStream.write(fileBytes);
-                        outFileStream.flush();
-                    } finally {
-                        if (outFileStream != null) {
-                            outFileStream.close();
-                        }
-                    }
+                    outFileStream = new FileOutputStream(tempFile);
+                    outFileStream.write(fileBytes);
+                    outFileStream.flush();
                 } finally {
-                    if (byteStream != null) {
-                        byteStream.close();
+                    if (outFileStream != null) {
+                        outFileStream.close();
                     }
                 }
-                FileInputStream inStr = new FileInputStream(tempFile);
-                return inStr;
-
-            } catch (IOException e) {
-                logger.error("File not found.", e);
+            } finally {
+                if (byteStream != null) {
+                    byteStream.close();
+                }
             }
+            FileInputStream inStr = new FileInputStream(tempFile);
+            return inStr;
+
+
         }
         throw new FileNotFoundException(filePath + " file not found.");
     }
 
-    public FTPFile[] getFileList(String pathname) {
+    public FTPFile[] getFileList(String pathname) throws IOException {
         FTPFile[] fileList = null;
-        try {
-            fileList = client.listFiles(pathname);
-        } catch (IOException e) {
-            logger.error("No files on directory", e);
-        }
+        fileList = client.listFiles(pathname);
+
         return fileList;
     }
 
@@ -152,20 +141,27 @@ public class FtpClientService {
                 files = client.mlistDir();
             }
             return files;
-        } catch(IOException ioEx) {
+        } catch (IOException ioEx) {
             throw new RuntimeIoException(ioEx);
         }
     }
 
-    public void close() {
-        try {
-            client.logout();
-            client.disconnect();
-        } catch (FTPConnectionClosedException e) {
-            logger.error("Logout client from FTP", e);
-        } catch (IOException e) {
-            logger.error("Disconnect client from FTP", e);
+    public void deleteFiles(String[] filePaths, String directoryPath) throws IOException {
+        if (filePaths != null) {
+            StringBuilder absPath = new StringBuilder();
+            for (String path : filePaths) {
+                absPath.append(directoryPath);
+                absPath.append("/");
+                absPath.append(path);
+                client.deleteFile(absPath.toString());
+                absPath.delete(0, absPath.length());
+            }
         }
+    }
+
+    public void close() throws IOException {
+        client.logout();
+        client.disconnect();
     }
 
     public Boolean isLogged() {

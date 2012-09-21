@@ -32,7 +32,7 @@ public class FtpAction extends ActionSupport implements ParameterAware {
     private InputStream fileInputStream;
     private TempDirectory currentDirectory = new TempDirectory();
     private FtpClientService ftpClientService;
-    Map<String, String[]> requestParams;
+    Map<String, String[]> parameters;
 
     public InputStream getFileInputStream() {
         return fileInputStream;
@@ -68,8 +68,8 @@ public class FtpAction extends ActionSupport implements ParameterAware {
 //        ftpService = new FtpClientService();// to clean
 //        login();// to clean
         String tempPath = currentDirectory.getAbsolutePath().replace("_", "/");
-        Boolean fileUpload = ftpClientService.uploadFile(tempPath+"/"+
-                currentDirectory.getCurrentFile().getFileFileName(),
+        Boolean fileUpload = ftpClientService.uploadFile(tempPath + "/"
+                + currentDirectory.getCurrentFile().getFileFileName(),
                 currentDirectory.getCurrentFile().getFile());
         if (fileUpload) {
             currentDirectory.setAbsolutePath("");
@@ -83,7 +83,7 @@ public class FtpAction extends ActionSupport implements ParameterAware {
     public String downloadFile() throws FtpException, UnknownHostException, IOException {
         try {
             String tempPath = currentDirectory.getAbsolutePath().replace("_", "/");
-            fileInputStream = (InputStream) ftpClientService.downloadFile(tempPath +"/"+ currentDirectory.getCurrentFile().getName());
+            fileInputStream = (InputStream) ftpClientService.downloadFile(tempPath + "/" + currentDirectory.getCurrentFile().getName());
             if (fileInputStream != null) {
                 return SUCCESS;
             }
@@ -102,7 +102,7 @@ public class FtpAction extends ActionSupport implements ParameterAware {
             currentDirectory.setAbsolutePath(tempPath);
             tempPath = tempPath.replace("_", "/");
         }
-        
+
         for (FTPFile file : ftpClientService.getFileList(tempPath)) {
             if (FILE_TYPE_ONLY.equals(typeOfFile)) {
                 if (file.isFile()) {
@@ -115,11 +115,11 @@ public class FtpAction extends ActionSupport implements ParameterAware {
                     files.add(tempDir);
                 }
             }
-        }        
-            // currentDirectory.setFileList(files);
+        }
+        // currentDirectory.setFileList(files);
         currentDirectory.setName("root");
         return SUCCESS;
-        
+
 
     }
 
@@ -134,9 +134,25 @@ public class FtpAction extends ActionSupport implements ParameterAware {
         }
     }
 
+    public String deleteFiles() throws IOException, FtpException {
+        if (parameters != null) {
+            String tempPath = currentDirectory.getAbsolutePath().replace("_", "/");
+            ftpClientService.deleteFiles(parameters.get("delete"), tempPath);
+            currentDirectory.setTypeOfFile(DIRECTORY_TYPE_ONLY);
+            currentDirectory.setAbsolutePath("");
+            getFileList();
+            return SUCCESS;
+        }
+        return FAILURE;
+    }
+
     @Override
     public void setParameters(Map<String, String[]> parameters) {
-        this.requestParams = parameters;
+        this.parameters = parameters;
+    }
+
+    public Map<String, String[]> getParameters() {
+        return parameters;
     }
 
     private TempDirectory buildDirTree(String name, String path) {

@@ -19,8 +19,8 @@
     nodeHref="%{echo}"
     nodeHrefParamName="currentDirectory.absolutePath"
     openAllOnLoad="true"
-    nodeTargets="result" >
-
+    nodeTargets="result"
+     >
 </sjt:tree>
 
 <strong>Files :</strong>
