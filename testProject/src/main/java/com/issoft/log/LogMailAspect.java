@@ -1,7 +1,8 @@
 package com.issoft.log;
 
 import com.issoft.log.database.LogEntryDAO;
-import com.issoft.log.mailer.MailService;
+import com.issoft.log.mailer.model.Mail;
+import com.issoft.log.mailer.model.MailStorage;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -17,6 +18,10 @@ import org.springframework.security.core.userdetails.User;
 import java.io.InputStream;
 
 /**
+ * Aspect that intercepts some ftp actions and:
+ * <li>logs them to database</li>
+ * <li>sends e-mail notifications to subscribed users</li>
+ *
  * @author: AS
  */
 @Aspect
@@ -24,12 +29,11 @@ public class LogMailAspect {
 
     private String filePath;
     private LogEntryDAO logEntryDAO;
-    private MailService mailService;
     private static final String SPRING_SECURITY_AUTHENTICATION = "Spring security authentication";
     private static final String SUCCESS = "SUCCESS";
     private static final String FAILURE = "FAILURE";
-    private static final String UPLOAD = "upload";
-    private static final String DOWNLOAD = "download";
+    private static final String UPLOAD = "Upload";
+    private static final String DOWNLOAD = "Download";
 
 
     /**
@@ -109,7 +113,9 @@ public class LogMailAspect {
         String action = "Starting download file: " + filePath;
         String status = (inputStream != null ? SUCCESS : FAILURE);
         logEntryDAO.saveEntry(user.getUsername(), getAuthorities(user), action, status);
-        mailService.mailFileChanges(DOWNLOAD, filePath, user.getUsername());
+
+        //Adds mail to storage for sent later
+        MailStorage.getInstance().addMail(new Mail(DOWNLOAD, filePath, user.getUsername()));
     }
 
     /**
@@ -142,7 +148,9 @@ public class LogMailAspect {
         String action = "Starting upload file: " + filePath;
         String status = (result ? SUCCESS : FAILURE);
         logEntryDAO.saveEntry(user.getUsername(), getAuthorities(user), action, status);
-        mailService.mailFileChanges(UPLOAD, filePath, user.getUsername());
+
+        //Adds mail to storage for sent later
+        MailStorage.getInstance().addMail(new Mail(UPLOAD, filePath, user.getUsername()));
     }
 
     /**
@@ -162,9 +170,5 @@ public class LogMailAspect {
 
     public void setLogEntryDAO(LogEntryDAO logEntryDAO) {
         this.logEntryDAO = logEntryDAO;
-    }
-
-    public void setMailService(MailService mailService) {
-        this.mailService = mailService;
     }
 }
