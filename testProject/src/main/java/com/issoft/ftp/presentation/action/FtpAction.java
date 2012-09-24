@@ -1,23 +1,22 @@
 package com.issoft.ftp.presentation.action;
 
+import com.issoft.entity.UsersDAO;
 import com.issoft.ftp.client.FtpClientService;
 import com.issoft.ftp.model.TempDirectory;
 import com.issoft.ftp.model.TempFile;
+import com.issoft.ftp.model.UserForm;
 import com.opensymphony.xwork2.ActionSupport;
-
+import org.apache.commons.net.ftp.FTPFile;
 import org.apache.ftpserver.ftplet.FtpException;
+import org.apache.struts2.interceptor.ParameterAware;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.net.ftp.FTPFile;
-import org.apache.struts2.interceptor.ParameterAware;
 
 /**
  * @author slavabrodnitski
@@ -29,11 +28,16 @@ public class FtpAction extends ActionSupport implements ParameterAware {
     public static final String TYPE_OF_FILE = "typeOfFile";
     private static final String SUCCESS = "SUCCESS";
     private static final String FAILURE = "FAILURE";
+
     private InputStream fileInputStream;
     private TempDirectory currentDirectory = new TempDirectory();
     private FtpClientService ftpClientService;
+    private UsersDAO usersDAO;
+    private UserForm userForm;
+
     Map<String, String[]> parameters;
 
+    //getters & setters
     public InputStream getFileInputStream() {
         return fileInputStream;
     }
@@ -58,14 +62,30 @@ public class FtpAction extends ActionSupport implements ParameterAware {
         this.currentDirectory = currentDirectory;
     }
 
+    public UsersDAO getUsersDAO() {
+        return usersDAO;
+    }
+
+    public void setUsersDAO(UsersDAO usersDAO) {
+        this.usersDAO = usersDAO;
+    }
+
+    public UserForm getUserForm() {
+        return userForm;
+    }
+
+    public void setUserForm(UserForm userForm) {
+        this.userForm = userForm;
+    }
+
+
     @Override
     public String execute() {
         return SUCCESS;
     }
 
-    public String uploadFile() throws FtpException, UnknownHostException, IOException {
-//        ftpService = new FtpClientService();// to clean
-//        login();// to clean
+    //file
+    public String uploadFile() throws FtpException, IOException {
         String tempPath = currentDirectory.getAbsolutePath().replace("_", "/");
         Boolean fileUpload = ftpClientService.uploadFile(tempPath + "/"
                 + currentDirectory.getCurrentFile().getFileFileName(),
@@ -79,10 +99,10 @@ public class FtpAction extends ActionSupport implements ParameterAware {
 
     }
 
-    public String downloadFile() throws FtpException, UnknownHostException, IOException {
+    public String downloadFile() throws FtpException, IOException {
         try {
             String tempPath = currentDirectory.getAbsolutePath().replace("_", "/");
-            fileInputStream = (InputStream) ftpClientService.downloadFile(tempPath + "/" + currentDirectory.getCurrentFile().getName());
+            fileInputStream = ftpClientService.downloadFile(tempPath + "/" + currentDirectory.getCurrentFile().getName());
             if (fileInputStream != null) {
                 return SUCCESS;
             }
@@ -91,8 +111,7 @@ public class FtpAction extends ActionSupport implements ParameterAware {
         return FAILURE;
     }
 
-    public String getFileList() throws FtpException, UnknownHostException, IOException {
-//      ftpService = new FtpClientService();
+    public String getFileList() throws FtpException, IOException {
         List files = new ArrayList();
         currentDirectory.setFileList(files);
         Integer typeOfFile = Integer.valueOf(currentDirectory.getTypeOfFile());
@@ -115,15 +134,65 @@ public class FtpAction extends ActionSupport implements ParameterAware {
                 }
             }
         }
-        // currentDirectory.setFileList(files);
         currentDirectory.setName("root");
         return SUCCESS;
-
-
     }
 
+
+    //administration
+    public String getUserFileList() {
+        try {
+            userForm.setUsersList(usersDAO.list());
+        } catch (NullPointerException e) {
+            return FAILURE;
+        }
+        return SUCCESS;
+    }
+
+    public String addUser() {
+        try {
+            if (userForm.getUser() != null) {
+                userForm.resetUser();
+            }
+            userForm.setUserRoleList(usersDAO.getUserRoles());
+        } catch (NullPointerException ex) {
+            return FAILURE;
+        }
+        return SUCCESS;
+    }
+
+    public String editUser() {
+        try {
+            //TODO: WTF???
+            userForm.setUser(usersDAO.getUserById(userForm.getId()));
+        } catch (NullPointerException ex) {
+            return FAILURE;
+        }
+        return SUCCESS;
+    }
+
+    public String updateUser() {
+        try {
+            //usersDAO.getUserRoleById(userForm.getUser().getId());
+            usersDAO.update(userForm.getUser());
+        } catch (NullPointerException ex) {
+            return FAILURE;
+        }
+        return SUCCESS;
+    }
+
+    public String deleteUser() {
+        try {
+            usersDAO.delete(userForm.getId());
+        } catch (NullPointerException ex) {
+            return FAILURE;
+        }
+        return SUCCESS;
+    }
+
+
+    //autorization
     public String login() throws FtpException, IOException {
-        //ftpService = new FtpClientService();
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Boolean isLoggined = ftpClientService.login(principal.getUsername(), principal.getPassword());
         if (isLoggined) {
@@ -144,6 +213,8 @@ public class FtpAction extends ActionSupport implements ParameterAware {
         }
         return FAILURE;
     }
+
+
 
     @Override
     public void setParameters(Map<String, String[]> parameters) {
@@ -167,4 +238,6 @@ public class FtpAction extends ActionSupport implements ParameterAware {
         }
         return tempDir;
     }
+
+
 }

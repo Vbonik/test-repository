@@ -5,6 +5,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
+    <bean:import resource="spring-hibernate.xml"/>
+
+    <!--<bean id="ftpFile" class="com.issoft.ftp.model.FTPFile"/>-->
+    <bean id="userForm" class="com.issoft.ftp.model.UserForm"/>
 
     <bean id="inetAddress" class="java.net.Inet4Address" factory-method="getByName">
         <constructor-arg value="localhost"/>
@@ -15,7 +19,10 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     </bean>
 
     <bean id="ftpAction" class="com.issoft.ftp.presentation.action.FtpAction">
+        <!--<property name="ftpFile" ref="ftpFile"/>-->
         <property name="ftpClientService" ref="ftpClientService"/>
+        <property name="userForm" ref="userForm"/>
+        <property name="usersDAO" ref="dao"/>
     </bean>
 
 </beans>

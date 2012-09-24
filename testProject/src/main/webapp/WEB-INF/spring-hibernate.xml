@@ -13,6 +13,8 @@
                 <value>com.issoft.log.database.LogEntry</value>
                 <value>com.issoft.log.database.UserEntity</value>
                 <value>com.issoft.log.database.EmailNotification</value>
+                <value>com.issoft.entity.Users</value>
+                <value>com.issoft.entity.UserRole</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -25,6 +27,10 @@
     </bean>
 
     <bean id="myLogEntryDAO" class="com.issoft.log.database.LogEntryDAOImpl">
+        <property name="sessionFactory" ref="mySessionFactory"/>
+    </bean>
+
+    <bean id="dao" class="com.issoft.entity.UsersDAOImpl">
         <property name="sessionFactory" ref="mySessionFactory"/>
     </bean>
 

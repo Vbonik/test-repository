@@ -8,12 +8,14 @@
 	http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
 
     <beans:import resource="spring-database.xml"/>
-    
     <http auto-config="true" >
-        <intercept-url pattern="/directoryList" access="ROLE_USER, ROLE_ADMIN" />
+
+        <intercept-url pattern="/admin" access="ROLE_ADMIN" />
         <form-login login-page="/jsp/login.jsp" default-target-url="/loginFtp"
                     authentication-failure-url="/jsp/warning.jsp"/>
-            
+        <logout logout-success-url="/admin" />
+
+
 
     </http>
 
