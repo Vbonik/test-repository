@@ -4,14 +4,14 @@
  */
 package com.issoft.ftp.client;
 
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.ftpserver.ftplet.FtpException;
+import org.junit.*;
+
 import java.io.File;
 import java.io.InputStream;
-import org.apache.commons.net.ftp.FTPFile;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import java.net.UnknownHostException;
+
 import static org.junit.Assert.*;
 
 /**
@@ -43,7 +43,7 @@ public class FtpClientServiceTest {
      * Test of login method, of class FtpClientService.
      */
     @Test
-    public void testLogin() {
+    public void testLogin() throws FtpException, UnknownHostException {
         System.out.println("login");
         String login = "";
         String password = "";
@@ -105,7 +105,7 @@ public class FtpClientServiceTest {
      * Test of getDirectoryList method, of class FtpClientService.
      */
     @Test
-    public void testGetDirectoryList() {
+    public void testGetDirectoryList() throws FtpException, UnknownHostException {
         System.out.println("getDirectoryList");
         String pathname = "";
         FtpClientService instance = new FtpClientService();
@@ -146,7 +146,7 @@ public class FtpClientServiceTest {
      * Test of isLogged method, of class FtpClientService.
      */
     @Test
-    public void testIsLogged() {
+    public void testIsLogged() throws FtpException, UnknownHostException {
         System.out.println("isLogged");
         FtpClientService instance = new FtpClientService();
         Boolean expResult = null;

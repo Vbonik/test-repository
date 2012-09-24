@@ -13,7 +13,7 @@
 </head>
 <body>
 <s:form action="uploadFile" method="post" enctype="multipart/form-data" >
-    <s:file name="ftpFile.userFile" label="User file" />
+    <s:file name="ftpForm.userFile" label="User file" />
     <s:submit value="Upload"/>
 </s:form>
 </body>
