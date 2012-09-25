@@ -1,10 +1,8 @@
 package com.issoft.ftp.presentation.action;
 
-import com.issoft.entity.UsersDAO;
 import com.issoft.ftp.client.FtpClientService;
 import com.issoft.ftp.model.TempDirectory;
 import com.issoft.ftp.model.TempFile;
-import com.issoft.ftp.model.UserForm;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.ftpserver.ftplet.FtpException;
@@ -18,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.issoft.ftp.util.Constants.FAILURE;
+
 /**
  * @author slavabrodnitski
  */
@@ -26,14 +26,10 @@ public class FtpAction extends ActionSupport implements ParameterAware {
     public static final Integer DIRECTORY_TYPE_ONLY = 1;
     public static final Integer FILE_TYPE_ONLY = 2;
     public static final String TYPE_OF_FILE = "typeOfFile";
-    private static final String SUCCESS = "SUCCESS";
-    private static final String FAILURE = "FAILURE";
 
     private InputStream fileInputStream;
     private TempDirectory currentDirectory = new TempDirectory();
     private FtpClientService ftpClientService;
-    private UsersDAO usersDAO;
-    private UserForm userForm;
 
     Map<String, String[]> parameters;
 
@@ -61,23 +57,6 @@ public class FtpAction extends ActionSupport implements ParameterAware {
     public void setCurrentDirectory(TempDirectory currentDirectory) {
         this.currentDirectory = currentDirectory;
     }
-
-    public UsersDAO getUsersDAO() {
-        return usersDAO;
-    }
-
-    public void setUsersDAO(UsersDAO usersDAO) {
-        this.usersDAO = usersDAO;
-    }
-
-    public UserForm getUserForm() {
-        return userForm;
-    }
-
-    public void setUserForm(UserForm userForm) {
-        this.userForm = userForm;
-    }
-
 
     @Override
     public String execute() {
@@ -137,61 +116,6 @@ public class FtpAction extends ActionSupport implements ParameterAware {
         currentDirectory.setName("root");
         return SUCCESS;
     }
-
-
-    //administration
-    public String getUserFileList() {
-        try {
-            userForm.setUsersList(usersDAO.list());
-        } catch (NullPointerException e) {
-            return FAILURE;
-        }
-        return SUCCESS;
-    }
-
-    public String addUser() {
-        try {
-            if (userForm.getUser() != null) {
-                userForm.resetUserAndDefaultRoleEnable();
-            }
-            userForm.setUserRoleList(usersDAO.getUserRoles());
-        } catch (NullPointerException ex) {
-            return FAILURE;
-        }
-        return SUCCESS;
-    }
-
-    public String editUser() {
-        try {
-            //TODO: getUserRoles - check only one time
-            userForm.setUserRoleList(usersDAO.getUserRoles());
-            userForm.setUser(usersDAO.getUserById(userForm.getId()));
-
-            userForm.setDefault(userForm.getUser());
-        } catch (NullPointerException ex) {
-            return FAILURE;
-        }
-        return SUCCESS;
-    }
-
-    public String updateUser() {
-        try {
-            usersDAO.update(userForm.getUser());
-        } catch (NullPointerException ex) {
-            return FAILURE;
-        }
-        return SUCCESS;
-    }
-
-    public String deleteUser() {
-        try {
-            usersDAO.delete(userForm.getId());
-        } catch (NullPointerException ex) {
-            return FAILURE;
-        }
-        return SUCCESS;
-    }
-
 
     //autorization
     public String login() throws FtpException, IOException {

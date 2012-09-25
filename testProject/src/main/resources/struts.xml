@@ -30,12 +30,17 @@
             </result>
         </action>
 
-
         <action name="loginFtp" method="login" class="ftpAction">
             <result name="SUCCESS" type="redirect">
                 <param name="location">/directoryList</param>
                 <param name="currentDirectory.typeOfFile">1</param>
+            </result>
+            <result name="FAILURE">/index.jsp</result>
+        </action>
 
+        <action name="loginAdmin" method="login" class="ftpAction">
+            <result name="SUCCESS" type="redirect">
+                <param name="location">/admin</param>
             </result>
             <result name="FAILURE">/index.jsp</result>
         </action>
@@ -46,27 +51,27 @@
             </result>
         </action>
 
-        <action name="admin" method="getUserFileList" class="ftpAction">
+        <action name="admin" method="getUserFileList" class="administrationAction">
             <result name="SUCCESS">jsp/admin.jsp</result>
             <result name="FAILURE">jsp/warning.jsp</result>
         </action>
 
-        <action name="addUser" method="addUser" class="ftpAction">
+        <action name="addUser" method="addUser" class="administrationAction">
             <result name="SUCCESS">jsp/user.jsp</result>
             <result name="FAILURE">jsp/warning.jsp</result>
         </action>
 
-        <action name="editUser" method="editUser" class="ftpAction">
+        <action name="editUser" method="editUser" class="administrationAction">
             <result name="SUCCESS">jsp/user.jsp</result>
             <result name="FAILURE">jsp/warning.jsp</result>
         </action>
 
-        <action name="deleteUser" method="deleteUser" class="ftpAction">
+        <action name="deleteUser" method="deleteUser" class="administrationAction">
             <result name="SUCCESS" type="redirect">admin</result>
             <result name="FAILURE">jsp/warning.jsp</result>
         </action>
 
-        <action name="updateUser" method="updateUser" class="ftpAction">
+        <action name="updateUser" method="updateUser" class="administrationAction">
             <result name="SUCCESS" type="redirect">admin</result>
             <result name="FAILURE">jsp/warning.jsp</result>
         </action>
@@ -74,17 +79,15 @@
         <action name="fileList" method="getDownloadFileList" class="ftpAction">
             <result name="SUCCESS">
                 <param name="location">/jsp/download.jsp</param>
-
             </result>
             <result name="FAILURE">/index.jsp</result>
         </action>
+
         <action name="deleteFiles" class="ftpAction" method="deleteFiles">
             <result name="SUCCESS" type="redirect">
                 <param name="location">/directoryList</param>
                 <param name="currentDirectory.typeOfFile">1</param>
-
             </result>
-
         </action>
     </package>
 
