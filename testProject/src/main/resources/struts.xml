@@ -12,17 +12,17 @@
             <interceptor-ref name="defaultStack">
                 <param name="fileUpload.maximumSize">500242880</param>
             </interceptor-ref>
-            <result name="SUCCESS" type="redirect">
+            <result name="success" type="redirect">
                 <param name="location">/directoryList</param>
                 <param name="currentDirectory.typeOfFile">1</param>
             </result>
-            <result name="FAILURE" type="redirect">
+            <result name="failure" type="redirect">
                 <param name="location">/index.jsp</param>
             </result>
         </action>
 
         <action name="downloadFile" method="downloadFile" class="ftpAction">
-            <result name="SUCCESS" type="stream">
+            <result name="success" type="stream">
                 <param name="contentType">application/octet-stream</param>
                 <param name="inputName">fileInputStream</param>
                 <param name="contentDisposition">attachment;filename="%{currentDirectory.currentFile.name}"</param>
@@ -31,60 +31,60 @@
         </action>
 
         <action name="loginFtp" method="login" class="ftpAction">
-            <result name="SUCCESS" type="redirect">
+            <result name="success" type="redirect">
                 <param name="location">/directoryList</param>
                 <param name="currentDirectory.typeOfFile">1</param>
             </result>
-            <result name="FAILURE">/index.jsp</result>
+            <result name="failure">/index.jsp</result>
         </action>
 
         <action name="loginAdmin" method="login" class="ftpAction">
-            <result name="SUCCESS" type="redirect">
+            <result name="success" type="redirect">
                 <param name="location">/admin</param>
             </result>
-            <result name="FAILURE">/index.jsp</result>
+            <result name="failure">/index.jsp</result>
         </action>
 
         <action name="directoryList" class="ftpAction" method="getFileList">
-            <result name="SUCCESS">
+            <result name="success">
                 /jsp/directoryList.jsp
             </result>
         </action>
 
         <action name="admin" method="getUserFileList" class="administrationAction">
-            <result name="SUCCESS">jsp/admin.jsp</result>
-            <result name="FAILURE">jsp/warning.jsp</result>
+            <result name="success">jsp/admin.jsp</result>
+            <result name="failure">jsp/warning.jsp</result>
         </action>
 
         <action name="addUser" method="addUser" class="administrationAction">
-            <result name="SUCCESS">jsp/user.jsp</result>
-            <result name="FAILURE">jsp/warning.jsp</result>
+            <result name="success">jsp/user.jsp</result>
+            <result name="failure">jsp/warning.jsp</result>
         </action>
 
         <action name="editUser" method="editUser" class="administrationAction">
-            <result name="SUCCESS">jsp/user.jsp</result>
-            <result name="FAILURE">jsp/warning.jsp</result>
+            <result name="success">jsp/user.jsp</result>
+            <result name="failure">jsp/warning.jsp</result>
         </action>
 
         <action name="deleteUser" method="deleteUser" class="administrationAction">
-            <result name="SUCCESS" type="redirect">admin</result>
-            <result name="FAILURE">jsp/warning.jsp</result>
+            <result name="success" type="redirect">admin</result>
+            <result name="failure">jsp/warning.jsp</result>
         </action>
 
         <action name="updateUser" method="updateUser" class="administrationAction">
-            <result name="SUCCESS" type="redirect">admin</result>
-            <result name="FAILURE">jsp/warning.jsp</result>
+            <result name="success" type="redirect">admin</result>
+            <result name="failure">jsp/warning.jsp</result>
         </action>
 
         <action name="fileList" method="getDownloadFileList" class="ftpAction">
-            <result name="SUCCESS">
+            <result name="success">
                 <param name="location">/jsp/download.jsp</param>
             </result>
-            <result name="FAILURE">/index.jsp</result>
+            <result name="failure">/index.jsp</result>
         </action>
 
         <action name="deleteFiles" class="ftpAction" method="deleteFiles">
-            <result name="SUCCESS" type="redirect">
+            <result name="success" type="redirect">
                 <param name="location">/directoryList</param>
                 <param name="currentDirectory.typeOfFile">1</param>
             </result>

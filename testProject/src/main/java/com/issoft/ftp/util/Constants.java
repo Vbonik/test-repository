@@ -5,5 +5,5 @@ package com.issoft.ftp.util;
  * Date: 9/25/12
  */
 public abstract class Constants {
-    public static final String FAILURE = "FAILURE";
+    public static final String FAILURE = "failure";
 }
