@@ -23,6 +23,7 @@ add users in table and some additional information about users actions<br>
         <th>id</th>
         <th>User name</th>
         <th>Password</th>
+        <th>Enabled</th>
         <th>User role</th>
         <th>Action</th>
     </tr>
@@ -43,6 +44,7 @@ add users in table and some additional information about users actions<br>
             <td><s:property value="#user.id"/></td>
             <td><s:property value="#user.userName"/></td>
             <td><s:property value="#user.password"/></td>
+            <td><s:property value="#user.enabled"/></td>
             <td><s:property value="#user.user_roles.authority"/></td>
             <td>
                 <s:a href="%{userEditURL}">

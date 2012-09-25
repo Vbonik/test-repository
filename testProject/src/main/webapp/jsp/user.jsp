@@ -9,6 +9,7 @@
     <script type="text/javascript" src="../js/jquery-1.8.1.js"></script>
     <script type="text/javascript" src="../js/kickstart.js"></script>
     <script type="text/javascript" src="../js/prettify.js"></script>
+    <script type="text/javascript" src="../js/valiadation.js"></script>
     <link href="../css/kickstart.css" rel="stylesheet" type="text/css"/>
     <title>User page</title>
 </head>
@@ -19,25 +20,29 @@
     <s:form action="Ftp" method="POST">
         <table width="100px">
             <tr>
-                <s:textfield key="userForm.user.userName" label="Name"/>
+                <s:textfield key="userForm.user.userName" label="Name" id="name"/>
             </tr>
             <tr>
-                <s:textfield key="userForm.user.password" label="Password"/>
+                <s:textfield key="userForm.user.password" label="Password" id="password"/>
             </tr>
             <tr>
-                    <%--<s:textfield key="userForm.user.user_roles.authority" label="User_roles"/>--%>
                 <s:select name="userForm.user.user_roles.id"
+                          id="role"
                           list="userForm.userRoleList"
-                          value="%{id}"
+                          value="userForm.defaultRole.id"
                           listKey="id"
                           listValue="authority"
                           label="User role"/>
             </tr>
             <tr>
-                <s:textfield key="userForm.user.info" label="Some info"/>
+                <s:select name="userForm.user.enabled"
+                          id="enable"
+                          list="#{'false':'false', 'true':'true'}"
+                          value="userForm.defaultEnable"
+                          label="Banned"/>
             </tr>
         </table>
-        <s:submit action="updateUser" value="Save or Update" theme="simple"/>
+        <s:submit action="updateUser" value="Save or Update" theme="simple" onclick="return userFormValidation()"/>
     </s:form>
 </div>
 </body>

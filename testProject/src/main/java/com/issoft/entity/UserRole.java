@@ -6,10 +6,6 @@ import javax.persistence.*;
  * User: nikitadavydov
  * Date: 9/17/12
  */
-/**
- * User: nikitadavydov
- * Date: 9/17/12
- */
 @Entity
 @Table(name = "USER_ROLES")
 public class UserRole {
@@ -19,10 +15,12 @@ public class UserRole {
     private long id;
     @Column(name = "authority")
     private String authority;
+
 //    you can add this info, if you need
 //    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    private Set<Users> users = new HashSet<Users>();
 
+    //getters & setters
     public long getId() {
         return id;
     }
@@ -38,6 +36,7 @@ public class UserRole {
     public void setAuthority(String authority) {
         this.authority = authority;
     }
+
 
     @Override
     public boolean equals(Object o) {

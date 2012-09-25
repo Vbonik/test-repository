@@ -21,4 +21,6 @@ public interface UsersDAO {
     public List<UserRole> getUserRoles();
 
     public UserRole getUserRoleById(long id);
+
+    public boolean getUserStatus(long id);
 }

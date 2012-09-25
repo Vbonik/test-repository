@@ -23,8 +23,8 @@ public class Users {
     @JoinColumn(name = "role_id")
     private UserRole user_roles = new UserRole();
 
-//getters & setters
 
+    //getters & setters
     public long getId() {
         return id;
     }
@@ -83,6 +83,14 @@ public class Users {
 
     public void resetUser_roles() {
         this.user_roles = null;
+    }
+
+    public void reset() {
+        resetId();
+        resetName();
+        resetPassword();
+        resetEnabled();
+        resetUser_roles();
     }
 
 

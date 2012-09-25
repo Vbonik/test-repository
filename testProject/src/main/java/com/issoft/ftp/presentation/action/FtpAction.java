@@ -152,7 +152,7 @@ public class FtpAction extends ActionSupport implements ParameterAware {
     public String addUser() {
         try {
             if (userForm.getUser() != null) {
-                userForm.resetUser();
+                userForm.resetUserAndDefaultRoleEnable();
             }
             userForm.setUserRoleList(usersDAO.getUserRoles());
         } catch (NullPointerException ex) {
@@ -163,8 +163,11 @@ public class FtpAction extends ActionSupport implements ParameterAware {
 
     public String editUser() {
         try {
-            //TODO: WTF???
+            //TODO: getUserRoles - check only one time
+            userForm.setUserRoleList(usersDAO.getUserRoles());
             userForm.setUser(usersDAO.getUserById(userForm.getId()));
+
+            userForm.setDefault(userForm.getUser());
         } catch (NullPointerException ex) {
             return FAILURE;
         }
@@ -173,7 +176,6 @@ public class FtpAction extends ActionSupport implements ParameterAware {
 
     public String updateUser() {
         try {
-            //usersDAO.getUserRoleById(userForm.getUser().getId());
             usersDAO.update(userForm.getUser());
         } catch (NullPointerException ex) {
             return FAILURE;
@@ -213,7 +215,6 @@ public class FtpAction extends ActionSupport implements ParameterAware {
         }
         return FAILURE;
     }
-
 
 
     @Override
