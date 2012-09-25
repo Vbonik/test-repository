@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -45,11 +46,10 @@ public class FtpClientService {
     //ex = org.apache.ftpserver.ftplet.FtpException
     //e.g. logger.error("Server is not started", ex);
     public FtpClientService() throws UnknownHostException, FtpException {
-        //TODO: must use try catch to this ex.
+
         this(InetAddress.getByName("localhost"), DEFAULT_FTP_LISTENER_PORT);
     }
 
-    //TODO: catch exceptions if server is not running/start
     public FtpClientService(InetAddress host, Integer port) throws FtpException {
         if (host != null) {
             this.host = host;
@@ -69,19 +69,26 @@ public class FtpClientService {
     }
 
     public Boolean login(String login, String password) {
+        String f = null;
         if (login != null) {
+
             try {
-                return logged = client.login(login, password);
+                //client.connect(host, port);
+                f = client.getReplyString();
+               //boolean r = client.doCommand("admin", " slava");
+                //r = client.doCommand("PASS", "b839cad9c2f9060c1bdfda98e06f2904");
+                return logged = client.login("slava", "admin");
             } catch (IOException ioEx) {
                 logger.error("Invalid login or password", ioEx);
+                try {
+                f = client.getStatus();
+                } catch(IOException e){}
+//                throw new RuntimeIoException(ioEx);
             }
         }
         return false;
     }
 
-    //TODO: resolve file size problem
-    // something bad with this stuff  or something other.
-    // Because i can't upload files, more than 2048
     public Boolean uploadFile(String remoteName, File file) throws IOException {
         if ((remoteName != null) && (file != null)) {
             return client.storeFile(remoteName, new FileInputStream(file));

@@ -40,7 +40,7 @@
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
-    <!-- Aspect -->
+    <!-- Aspect 
     <bean id="customerAspect" class="com.issoft.log.LogMailAspect">
         <property name="logEntryDAO" ref="myLogEntryDAO"/>
         <property name="mailService" ref="mailService"/>
@@ -48,6 +48,6 @@
 
     <bean id="mailService" class="com.issoft.log.mailer.MailService">
         <property name="userEntityDAO" ref="userDAO"/>
-    </bean>
+    </bean>-->
 
 </beans>
