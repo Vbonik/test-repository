@@ -8,7 +8,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import java.util.List;
 
 /**
-  * User: nikitadavydov
+ * User: nikitadavydov
  * Date: 9/17/12
  */
 public class UsersDAOImpl implements UsersDAO {
@@ -66,5 +66,13 @@ public class UsersDAOImpl implements UsersDAO {
         DetachedCriteria criteria = DetachedCriteria.forClass(UserRole.class);
         List<UserRole> result = hibernateTemplate.findByCriteria(criteria.add(Property.forName("id").eq(id)));
         return result.get(0);
+    }
+
+    @Override
+    public boolean getUserStatus(long id) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(UserRole.class);
+        Integer intId = (int) (long) id;
+        Users user = getUserById(intId);
+        return user.isEnabled();
     }
 }

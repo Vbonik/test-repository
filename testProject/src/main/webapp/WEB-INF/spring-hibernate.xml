@@ -10,9 +10,9 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="annotatedClasses">
             <list>
-                <value>com.issoft.log.database.LogEntry</value>
-                <value>com.issoft.log.database.UserEntity</value>
-                <value>com.issoft.log.database.EmailNotification</value>
+                <value>com.issoft.log.database.entity.LogEntry</value>
+                <value>com.issoft.log.database.entity.UserEntity</value>
+                <value>com.issoft.log.database.entity.EmailNotification</value>
                 <value>com.issoft.entity.Users</value>
                 <value>com.issoft.entity.UserRole</value>
             </list>
@@ -43,7 +43,6 @@
     <!-- Aspect 
     <bean id="customerAspect" class="com.issoft.log.LogMailAspect">
         <property name="logEntryDAO" ref="myLogEntryDAO"/>
-        <property name="mailService" ref="mailService"/>
     </bean>
 
     <bean id="mailService" class="com.issoft.log.mailer.MailService">

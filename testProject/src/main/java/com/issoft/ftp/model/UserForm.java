@@ -15,6 +15,8 @@ public class UserForm {
     private int id;
     private List<Users> usersList;
     private List<UserRole> userRoleList;
+    private UserRole defaultRole;
+    private boolean defaultEnable;
 
     public UserForm(Users user, int id, List<Users> usersList, List<UserRole> userRoleList) {
         this.user = user;
@@ -50,12 +52,15 @@ public class UserForm {
         this.id = id;
     }
 
-    public void resetUser() {
-        this.user.resetId();
-        this.user.resetName();
-        this.user.resetPassword();
-        this.user.resetEnabled();
-        this.user.resetUser_roles();
+    public void resetUserAndDefaultRoleEnable() {
+//        this.user.resetId();
+//        this.user.resetName();
+//        this.user.resetPassword();
+//        this.user.resetEnabled();
+//        this.user.resetUser_roles();
+        user.reset();
+        resetDefaultEnable();
+        resetDefaultRole();
     }
 
     public List<UserRole> getUserRoleList() {
@@ -66,6 +71,34 @@ public class UserForm {
         this.userRoleList = userRoleList;
     }
 
+    public UserRole getDefaultRole() {
+        return defaultRole;
+    }
+
+    public void setDefaultRole(UserRole defaultRole) {
+        this.defaultRole = defaultRole;
+    }
+
+    public void resetDefaultRole() {
+        this.defaultRole = null;
+    }
+
+    public boolean isDefaultEnable() {
+        return defaultEnable;
+    }
+
+    public void setDefaultEnable(boolean defaultEnable) {
+        this.defaultEnable = defaultEnable;
+    }
+
+    public void resetDefaultEnable() {
+        this.defaultEnable = false;
+    }
+
+    public void setDefault(Users user) {
+        setDefaultEnable(user.isEnabled());
+        setDefaultRole(user.getUser_roles());
+    }
 
     @Override
     public boolean equals(Object o) {
