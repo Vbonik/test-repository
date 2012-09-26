@@ -19,8 +19,10 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     </bean>
 
     <bean id="ftpAction" class="com.issoft.ftp.presentation.action.FtpAction">
-        <!--<property name="ftpFile" ref="ftpFile"/>-->
         <property name="ftpClientService" ref="ftpClientService"/>
+    </bean>
+
+    <bean id="administrationAction" class="com.issoft.ftp.presentation.action.AdministrationAction">
         <property name="userForm" ref="userForm"/>
         <property name="usersDAO" ref="dao"/>
     </bean>
@@ -42,10 +44,8 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
     <!-- Cron Trigger, run every 20 minutes -->
     <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-
         <property name="jobDetail" ref="runMeJob"/>
         <property name="cronExpression" value="0 0/20 * * * ?"/>
-
     </bean>
 
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
