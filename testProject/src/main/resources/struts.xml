@@ -76,8 +76,9 @@
             <result name="failure">jsp/warning.jsp</result>
         </action>
 
-        <action name="fileList" method="getDownloadFileList" class="ftpAction">
-            <result name="success">
+
+        <action name="fileList" method="getFileList" class="ftpAction">
+            <result name="SUCCESS">
                 <param name="location">/jsp/download.jsp</param>
             </result>
             <result name="failure">/index.jsp</result>

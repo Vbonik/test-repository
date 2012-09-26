@@ -27,5 +27,3 @@
 
 <div id="result" class="result ui-widget-content ui-corner-all">  </div>
 
-
-<a href="<c:url value="j_spring_security_logout"/>">Logout</a>
