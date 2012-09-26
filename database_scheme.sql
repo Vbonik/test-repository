@@ -6,17 +6,22 @@ CREATE TABLE `user_roles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `users` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
-  `password` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
-  `enabled` tinyint(1) DEFAULT NULL,
+  `userid` varchar(64) NOT NULL,
+  `userpassword` varchar(64) DEFAULT NULL,
+  `homedirectory` varchar(128) DEFAULT NULL,
+  `enableflag` tinyint(1) DEFAULT '1',
+  `writepermission` tinyint(1) DEFAULT '0',
+  `idletime` int(11) DEFAULT '0',
+  `uploadrate` int(11) DEFAULT '0',
+  `downloadrate` int(11) DEFAULT '0',
+  `maxloginnumber` int(11) DEFAULT '0',
+  `maxloginperip` int(11) DEFAULT '0',
   `role_id` int(11) NOT NULL,
   `email` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
+  PRIMARY KEY (`userid`),
   KEY `fk_users_user_roles_idx` (`role_id`),
   CONSTRAINT `fk_users_user_roles` FOREIGN KEY (`role_id`) REFERENCES `user_roles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `log_table` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

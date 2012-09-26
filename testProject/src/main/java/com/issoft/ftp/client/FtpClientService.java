@@ -71,13 +71,9 @@ public class FtpClientService {
     public Boolean login(String login, String password) {
         String f = null;
         if (login != null) {
-
             try {
-                //client.connect(host, port);
                 f = client.getReplyString();
-               //boolean r = client.doCommand("admin", " slava");
-                //r = client.doCommand("PASS", "b839cad9c2f9060c1bdfda98e06f2904");
-                return logged = client.login("slava", "admin");
+                return logged = client.login(login, password);
             } catch (IOException ioEx) {
                 logger.error("Invalid login or password", ioEx);
                 try {

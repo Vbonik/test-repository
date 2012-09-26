@@ -18,16 +18,13 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
         <constructor-arg value="2121"/>
     </bean>
 
+    <!-- Struts actions-->
     <bean id="ftpAction" class="com.issoft.ftp.presentation.action.FtpAction">
-        <!--<property name="ftpFile" ref="ftpFile"/>-->
         <property name="ftpClientService" ref="ftpClientService"/>
-        <property name="userForm" ref="userForm"/>
-        <property name="usersDAO" ref="dao"/>
     </bean>
 
-    <bean id="mailService" class="com.issoft.log.mailer.MailService"/>
-
-    <!-- Spring Quartz -->
+    
+    <!-- Spring Quartz --><!--
     <bean name="runMeJob" class="org.springframework.scheduling.quartz.JobDetailBean">
 
         <property name="jobClass" value="com.issoft.log.mailer.QuartzMailJob"/>
@@ -40,7 +37,8 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
     </bean>
 
-    <!-- Cron Trigger, run every 20 minutes -->
+    <bean id="mailService" class="com.issoft.log.mailer.MailService"/>
+ Cron Trigger, run every 20 minutes 
     <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 
         <property name="jobDetail" ref="runMeJob"/>
@@ -61,5 +59,5 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
             </list>
         </property>
     </bean>
-
+-->
 </beans>

@@ -119,7 +119,7 @@ public class FtpAction extends ActionSupport implements ParameterAware {
 
     //autorization
     public String login() throws FtpException, IOException {
-        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User principal =  (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Boolean isLoggined = ftpClientService.login(principal.getUsername(), principal.getPassword());
         if (isLoggined) {
             return SUCCESS;
