@@ -8,19 +8,17 @@ import java.util.List;
   */
 public interface UsersDAO {
 
-    public boolean add(Users user);
+    public boolean add(User user);
 
-    public boolean delete(int id);
+    public boolean delete(String user_id);
 
-    public boolean update(Users user);
+    public boolean update(User user);
 
     public List list();
 
-    public Users getUserById(int id);
+    public User getUserById(String user_id);
 
     public List<UserRole> getUserRoles();
 
     public UserRole getUserRoleById(long id);
-
-    public boolean getUserStatus(long id);
 }

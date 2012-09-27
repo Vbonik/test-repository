@@ -18,42 +18,40 @@ public class UsersDAOImpl implements UsersDAO {
         this.hibernateTemplate = new HibernateTemplate(sessionFactory);
     }
 
-    //TODO: work with this classes
     @Override
-    public boolean add(Users user) {
+    public boolean add(User user) {
         hibernateTemplate.saveOrUpdate(user);
         return true;
     }
 
     @Override
-    public boolean delete(int id) {
-        Users user = getUserById(id);
+    public boolean delete(String user_id) {
+        User user = getUserById(user_id);
         hibernateTemplate.delete(user);
         return true;
     }
 
     @Override
-    public boolean update(Users user) {
-        //Users user = getUserById(id);
+    public boolean update(User user) {
         hibernateTemplate.saveOrUpdate(user);
         return true;
     }
 
     @Override
-    public List<Users> list() {
-        DetachedCriteria criteria = DetachedCriteria.forClass(Users.class);
-        List<Users> result = hibernateTemplate.findByCriteria(criteria);
+    public List<User> list() {
+        DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
+        List<User> result = hibernateTemplate.findByCriteria(criteria);
         return result;
     }
 
+    //TODO: find user by string id
     @Override
-    public Users getUserById(int id) {
-        DetachedCriteria criteria = DetachedCriteria.forClass(Users.class);
-        List<Users> result = hibernateTemplate.findByCriteria(criteria.add(Property.forName("id").eq(Long.valueOf(id))));
+    public User getUserById(String user_id) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
+        List<User> result = hibernateTemplate.findByCriteria(criteria.add(Property.forName("user_id").eq(user_id)));
         return result.get(0);
     }
 
-    //TODO: move to UserRolesImpl???
     @Override
     public List<UserRole> getUserRoles() {
         DetachedCriteria criteria = DetachedCriteria.forClass(UserRole.class);
@@ -66,13 +64,5 @@ public class UsersDAOImpl implements UsersDAO {
         DetachedCriteria criteria = DetachedCriteria.forClass(UserRole.class);
         List<UserRole> result = hibernateTemplate.findByCriteria(criteria.add(Property.forName("id").eq(id)));
         return result.get(0);
-    }
-
-    @Override
-    public boolean getUserStatus(long id) {
-        DetachedCriteria criteria = DetachedCriteria.forClass(UserRole.class);
-        Integer intId = (int) (long) id;
-        Users user = getUserById(intId);
-        return user.isEnabled();
     }
 }

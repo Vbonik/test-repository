@@ -18,7 +18,8 @@ public class UserRole {
 
 //    you can add this info, if you need
 //    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private Set<Users> users = new HashSet<Users>();
+//    private Set<User> users = new HashSet<User>();
+
 
     //getters & setters
     public long getId() {
