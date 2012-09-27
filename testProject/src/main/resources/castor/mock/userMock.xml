@@ -1,0 +1,19 @@
+<user>
+    <userId>testuser</userId>
+    <userPassword>anton</userPassword>
+    <homeDirectory>d:\temp\</homeDirectory>
+    <enableFlag>1</enableFlag>
+    <writePermission>1</writePermission>
+    <idleTime>0</idleTime>
+    <uploadRate>0</uploadRate>
+    <downloadRate>0</downloadRate>
+    <maxLoginNumber>100</maxLoginNumber>
+    <maxLoginPerIp>100</maxLoginPerIp>
+
+    <userRole>
+        <id>1</id>
+        <authority>ROLE_ADMIN</authority>
+    </userRole>
+
+    <email>toshaskywalker@gmail.com</email>
+</user>

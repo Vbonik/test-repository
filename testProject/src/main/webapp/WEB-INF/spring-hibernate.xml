@@ -13,7 +13,7 @@
                 <value>com.issoft.log.database.entity.LogEntry</value>
                 <value>com.issoft.log.database.entity.UserEntity</value>
                 <value>com.issoft.log.database.entity.EmailNotification</value>
-                <value>com.issoft.entity.Users</value>
+                <value>com.issoft.entity.User</value>
                 <value>com.issoft.entity.UserRole</value>
             </list>
         </property>

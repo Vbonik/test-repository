@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE mapping PUBLIC "-//EXOLAB/Castor Mapping DTD Version 1.0//EN"
+        "http://castor.org/mapping.dtd">
+
+<mapping>
+    <class name="com.issoft.entity.User">
+        <map-to xml="user"/>
+
+        <field name="user_id" type="java.lang.String">
+            <bind-xml name="userId" node="element"/>
+        </field>
+
+        <field name="user_password" type="java.lang.String">
+            <bind-xml name="userPassword" node="element"/>
+        </field>
+
+        <field name="home_directory" type="java.lang.String">
+            <bind-xml name="homeDirectory" node="element"/>
+        </field>
+
+        <field name="enableflag" type="boolean">
+            <bind-xml name="enableFlag" node="element"/>
+        </field>
+
+        <field name="write_permission" type="boolean">
+            <bind-xml name="writePermission" node="element"/>
+        </field>
+
+        <field name="idle_time" type="int">
+            <bind-xml name="idleTime" node="element"/>
+        </field>
+
+        <field name="upload_rate" type="int">
+            <bind-xml name="uploadRate" node="element"/>
+        </field>
+
+        <field name="download_rate" type="int">
+            <bind-xml name="downloadRate" node="element"/>
+        </field>
+
+        <field name="max_login_number" type="int">
+            <bind-xml name="maxLoginNumber" node="element"/>
+        </field>
+
+        <field name="max_login_per_ip" type="int">
+            <bind-xml name="maxLoginPerIp" node="element"/>
+        </field>
+
+        <field name="email" type="java.lang.String">
+            <bind-xml name="email" node="element"/>
+        </field>
+
+        <field name="user_roles" type="com.issoft.entity.UserRole">
+            <bind-xml name="userRole" />
+        </field>
+    </class>
+
+    <class name="com.issoft.entity.UserRole">
+        <map-to xml="userRole"/>
+
+        <field name="id" type="long">
+            <bind-xml name="id" node="element"/>
+        </field>
+        <field name="authority" type="java.lang.String">
+            <bind-xml name="authority" node="element"/>
+        </field>
+    </class>
+
+</mapping>

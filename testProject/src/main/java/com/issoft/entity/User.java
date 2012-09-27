@@ -1,6 +1,9 @@
 package com.issoft.entity;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -11,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
  */
 @Entity
 @Table(name = "USERS")
-public class User {
+public class User implements Serializable {
     @Id
     @Column(name = "userid")
     private String user_id;
@@ -35,6 +38,7 @@ public class User {
     private int max_login_per_ip;
     @Column(name = "email")
     private String email;
+    @Cascade({ org.hibernate.annotations.CascadeType.ALL })
     @ManyToOne
     @JoinColumn(name = "role_id")
     private UserRole user_roles = new UserRole();
