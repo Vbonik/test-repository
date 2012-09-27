@@ -1,7 +1,7 @@
 package com.issoft.ftp.model;
 
+import com.issoft.entity.User;
 import com.issoft.entity.UserRole;
-import com.issoft.entity.Users;
 
 import java.util.List;
 
@@ -11,16 +11,16 @@ import java.util.List;
  */
 
 public class UserForm {
-    private Users user;
-    private int id;
-    private List<Users> usersList;
+    private User user;
+    private String user_id;
+    private List<User> usersList;
     private List<UserRole> userRoleList;
     private UserRole defaultRole;
     private boolean defaultEnable;
 
-    public UserForm(Users user, int id, List<Users> usersList, List<UserRole> userRoleList) {
+    public UserForm(com.issoft.entity.User user, String user_id, List<User> usersList, List<UserRole> userRoleList) {
         this.user = user;
-        this.id = id;
+        this.user_id = user_id;
         this.usersList = usersList;
         this.userRoleList = userRoleList;
     }
@@ -28,37 +28,33 @@ public class UserForm {
     public UserForm() {
     }
 
-    public Users getUser() {
+    //getters & setters
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Users user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
-    public List<Users> getUsersList() {
+    public List<User> getUsersList() {
         return usersList;
     }
 
-    public void setUsersList(List<Users> usersList) {
+    public void setUsersList(List<User> usersList) {
         this.usersList = usersList;
     }
 
-    public int getId() {
-        return id;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public void resetUserAndDefaultRoleEnable() {
-//        this.user.resetId();
-//        this.user.resetName();
-//        this.user.resetPassword();
-//        this.user.resetEnabled();
-//        this.user.resetUser_roles();
-        user.reset();
+        user.resetUser();
         resetDefaultEnable();
         resetDefaultRole();
     }
@@ -95,10 +91,12 @@ public class UserForm {
         this.defaultEnable = false;
     }
 
-    public void setDefault(Users user) {
-        setDefaultEnable(user.isEnabled());
+    public void setDefault(User user) {
+        setDefaultEnable(user.isEnableflag());
         setDefaultRole(user.getUser_roles());
     }
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -107,10 +105,13 @@ public class UserForm {
 
         UserForm userForm = (UserForm) o;
 
-        if (id != userForm.id) return false;
+        if (defaultEnable != userForm.defaultEnable) return false;
+        if (defaultRole != null ? !defaultRole.equals(userForm.defaultRole) : userForm.defaultRole != null)
+            return false;
         if (user != null ? !user.equals(userForm.user) : userForm.user != null) return false;
         if (userRoleList != null ? !userRoleList.equals(userForm.userRoleList) : userForm.userRoleList != null)
             return false;
+        if (user_id != null ? !user_id.equals(userForm.user_id) : userForm.user_id != null) return false;
         if (usersList != null ? !usersList.equals(userForm.usersList) : userForm.usersList != null) return false;
 
         return true;
@@ -119,9 +120,11 @@ public class UserForm {
     @Override
     public int hashCode() {
         int result = user != null ? user.hashCode() : 0;
-        result = 31 * result + id;
+        result = 31 * result + (user_id != null ? user_id.hashCode() : 0);
         result = 31 * result + (usersList != null ? usersList.hashCode() : 0);
         result = 31 * result + (userRoleList != null ? userRoleList.hashCode() : 0);
+        result = 31 * result + (defaultRole != null ? defaultRole.hashCode() : 0);
+        result = 31 * result + (defaultEnable ? 1 : 0);
         return result;
     }
 }
