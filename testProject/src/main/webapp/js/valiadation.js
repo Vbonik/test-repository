@@ -26,6 +26,12 @@ function notNull(fieldName) {
     }
 }
 
+function confirmDelete() {
+    if (confirm("Are you sure you want to delete this user?"))
+        return true;
+    else return false;
+}
+
 function onlyCharacters() {
 }
 
