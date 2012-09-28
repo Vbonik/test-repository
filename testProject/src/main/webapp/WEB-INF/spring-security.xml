@@ -10,7 +10,7 @@
     <beans:import resource="spring-database.xml"/>
     
     <http auto-config="true" >
-        <intercept-url pattern="/directoryList" access="ROLE_USER" />
+        <intercept-url pattern="/directoryList" access="ROLE_USER, ROLE_ADMIN" />
         <form-login login-page="/jsp/login.jsp" default-target-url="/loginFtp"
                     authentication-failure-url="/jsp/warning.jsp"/>
         <logout logout-success-url="/admin" />

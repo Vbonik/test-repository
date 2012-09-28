@@ -28,8 +28,8 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
         <property name="usersDAO" ref="dao"/>
     </bean>
 
-    
-    <!--Spring Quartz--> 
+
+    <!--Spring Quartz-->
     <bean name="runMeJob" class="org.springframework.scheduling.quartz.JobDetailBean">
 
         <property name="jobClass" value="com.issoft.log.mailer.QuartzMailJob"/>
@@ -43,8 +43,10 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     </bean>
 
     <bean id="mailService" class="com.issoft.log.mailer.MailService"/>
+
     <!--Cron Trigger, run every 20 minutes-->
     <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+
         <property name="jobDetail" ref="runMeJob"/>
         <property name="cronExpression" value="0 0/20 * * * ?"/>
     </bean>

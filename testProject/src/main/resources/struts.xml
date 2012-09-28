@@ -78,7 +78,7 @@
 
 
         <action name="fileList" method="getFileList" class="ftpAction">
-            <result name="SUCCESS">
+            <result name="success">
                 <param name="location">/jsp/download.jsp</param>
             </result>
             <result name="failure">/index.jsp</result>

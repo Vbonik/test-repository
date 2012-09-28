@@ -1,5 +1,6 @@
 package com.issoft.log;
 
+import com.issoft.ftp.util.Constants;
 import com.issoft.log.database.LogEntryDAO;
 import com.issoft.log.mailer.model.Mail;
 import com.issoft.log.mailer.model.MailStorage;
@@ -27,13 +28,11 @@ import java.io.InputStream;
 @Aspect
 public class LogMailAspect {
 
-    private String filePath;
     private LogEntryDAO logEntryDAO;
     private static final String SPRING_SECURITY_AUTHENTICATION = "Spring security authentication";
-    private static final String SUCCESS = "SUCCESS";
-    private static final String FAILURE = "FAILURE";
     private static final String UPLOAD = "Upload";
     private static final String DOWNLOAD = "Download";
+    private static final String DELETE = "Delete";
 
 
     /**
@@ -49,7 +48,7 @@ public class LogMailAspect {
         Authentication authentication = exception.getAuthentication();
         String principalName = (String) authentication.getPrincipal();
         String action = SPRING_SECURITY_AUTHENTICATION;
-        String status = FAILURE + ": " + exception.getMessage();
+        String status = Constants.FAILURE + ": " + exception.getMessage();
         logEntryDAO.saveEntry(principalName, "", action, status);
     }
 
@@ -65,7 +64,7 @@ public class LogMailAspect {
         Authentication authentication = (Authentication) paramValues[2];
         User user = (User) authentication.getPrincipal();
         String action = SPRING_SECURITY_AUTHENTICATION;
-        String status = SUCCESS;
+        String status = Constants.SUCCESS;
         logEntryDAO.saveEntry(user.getUsername(), getAuthorities(user), action, status);
     }
 
@@ -86,17 +85,24 @@ public class LogMailAspect {
     }
 
     /**
-     * Ftp. Download file.
+     * Ftp. Download file pointcut.
      */
     @Pointcut("execution(* com.issoft.ftp.client.FtpClientService.downloadFile(..)))")
     public void download() {
     }
 
     /**
-     * Ftp. Upload file.
+     * Ftp. Upload file pointcut.
      */
     @Pointcut("execution(* com.issoft.ftp.client.FtpClientService.uploadFile(..)))")
     public void upload() {
+    }
+
+    /**
+     * Ftp. Delete file pointcut.
+     */
+    @Pointcut("execution(* com.issoft.ftp.client.FtpClientService.deleteFiles(..)))")
+    public void delete() {
     }
 
     /**
@@ -108,10 +114,10 @@ public class LogMailAspect {
     @AfterReturning(pointcut = "download()",
             returning = "inputStream")
     public void downloadStart(JoinPoint joinPoint, InputStream inputStream) {
-        filePath = (String) joinPoint.getArgs()[0];
+        String filePath = (String) joinPoint.getArgs()[0];
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String action = "Starting download file: " + filePath;
-        String status = (inputStream != null ? SUCCESS : FAILURE);
+        String action = "Download file: " + filePath;
+        String status = (inputStream != null ? Constants.SUCCESS : Constants.FAILURE);
         logEntryDAO.saveEntry(user.getUsername(), getAuthorities(user), action, status);
 
         //Adds mail to storage for sent later
@@ -124,13 +130,13 @@ public class LogMailAspect {
      * @param joinPoint
      * @param exception
      */
-    @AfterThrowing(pointcut = "download() || upload()",
+    @AfterThrowing(pointcut = "download() || upload() || delete()",
             throwing = "exception")
     public void downloadStartException(JoinPoint joinPoint, Throwable exception) {
-        filePath = (String) joinPoint.getArgs()[0];
+        String filePath = (String) joinPoint.getArgs()[0];
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String action = "Operation: " + joinPoint.getSignature().getName() + "\nFile: " + filePath;
-        String status = FAILURE + ": " + exception.getMessage();
+        String action = "Operation: " + joinPoint.getSignature().getName();
+        String status = Constants.FAILURE + ": " + exception.getMessage();
         logEntryDAO.saveEntry(user.getUsername(), getAuthorities(user), action, status);
     }
 
@@ -143,14 +149,34 @@ public class LogMailAspect {
     @AfterReturning(pointcut = "upload()",
             returning = "result")
     public void uploadStart(JoinPoint joinPoint, Boolean result) {
-        filePath = (String) joinPoint.getArgs()[0];
+        String filePath = (String) joinPoint.getArgs()[0];
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String action = "Starting upload file: " + filePath;
-        String status = (result ? SUCCESS : FAILURE);
+        String action = "Upload file: " + filePath;
+        String status = (result ? Constants.SUCCESS : Constants.FAILURE);
         logEntryDAO.saveEntry(user.getUsername(), getAuthorities(user), action, status);
 
         //Adds mail to storage for sent later
         MailStorage.getInstance().addMail(new Mail(UPLOAD, filePath, user.getUsername()));
+    }
+
+    /**
+     * Ftp. Delete files.
+     *
+     * @param joinPoint
+     */
+    @After(value = "delete()")
+    public void deleteFiles(JoinPoint joinPoint) {
+        String[] filePaths = (String[]) joinPoint.getArgs()[0];
+        String directory = (String) joinPoint.getArgs()[1];
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        StringBuffer action = new StringBuffer("Delete files from directory " + directory + ": ");
+        for (String path : filePaths) {
+            action.append(path + ", ");
+        }
+        logEntryDAO.saveEntry(user.getUsername(), getAuthorities(user), action.toString(), Constants.SUCCESS);
+
+        //Adds mail to storage for sent later
+        MailStorage.getInstance().addMail(new Mail(DELETE, action.toString(), user.getUsername()));
     }
 
     /**
