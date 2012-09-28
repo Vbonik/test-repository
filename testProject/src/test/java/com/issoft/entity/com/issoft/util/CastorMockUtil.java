@@ -1,4 +1,4 @@
-package com.issoft.ftp.util;
+package com.issoft.entity.com.issoft.util;
 
 import com.issoft.entity.UserRole;
 import org.apache.log4j.Logger;
@@ -43,7 +43,7 @@ public class CastorMockUtil {
     /**
      * Castor mapping file path
      */
-    private static final String CASTOR_MAPPING_FILE_PATH = "src/main/resources/castor/mapping.xml";
+    private static final String CASTOR_MAPPING_FILE_PATH = "src/test/resources/castor/mapping.xml";
     /**
      * Map with paths to mock xml files
      */
@@ -53,8 +53,8 @@ public class CastorMockUtil {
      * Initialization of paths map
      */
     static {
-        pathMap.put(MockEntity.USER, "src/main/resources/castor/mock/userMock.xml");
-        pathMap.put(MockEntity.USER_ROLE, "src/main/resources/castor/mock/userRoleMock.xml");
+        pathMap.put(MockEntity.USER, "src/test/resources/castor/mock/userMock.xml");
+        pathMap.put(MockEntity.USER_ROLE, "src/test/resources/castor/mock/userRoleMock.xml");
     }
 
     /**
