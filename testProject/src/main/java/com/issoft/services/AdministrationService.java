@@ -12,7 +12,7 @@ import java.util.List;
  * User: nikitadavydov
  * Date: 10/1/12
  */
-public class AdministrationService extends ActionSupport implements Service{
+public class AdministrationService extends ActionSupport implements Service {
 
     private static final Logger logger = Logger.getLogger(AdministrationService.class);
 
@@ -21,7 +21,7 @@ public class AdministrationService extends ActionSupport implements Service{
     public AdministrationService() {
     }
 
-    public List<User> getUserList() throws NullPointerException{
+    public List<User> getUserList() {
         return dao.list();
     }
 

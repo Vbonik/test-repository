@@ -8,6 +8,25 @@
 
     <package name="default" namespace="/" extends="struts-default">
 
+        <interceptors>
+            <interceptor-stack name="appDefault">
+                <interceptor-ref name="defaultStack">
+                    <param name="exception.logEnabled">true</param>
+                    <param name="exception.logLevel">ERROR</param>
+                </interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="appDefault" />
+
+        <global-results>
+            <result name="error">/jsp/error.jsp</result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="error" />
+        </global-exception-mappings>
+
         <action name="uploadFile" method="uploadFile" class="ftpAction">
             <interceptor-ref name="defaultStack">
                 <param name="fileUpload.maximumSize">500242880</param>
@@ -75,7 +94,6 @@
             <result name="success" type="redirect">admin</result>
             <result name="failure">jsp/warning.jsp</result>
         </action>
-
 
         <action name="fileList" method="getFileList" class="ftpAction">
             <result name="success">

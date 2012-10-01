@@ -16,11 +16,7 @@ public class AdministrationAction extends ActionSupport {
     private Service service;
 
     public String getUserFileList() {
-        try {
-            userForm.setUsersList(service.getUserList());
-        } catch (Exception ex) {
-            logger.error(ex);
-        }
+        userForm.setUsersList(service.getUserList());
         return SUCCESS;
     }
 
