@@ -18,6 +18,6 @@ public class QuartzMailJob extends QuartzJobBean {
 
     protected void executeInternal(JobExecutionContext context)
             throws JobExecutionException {
-        runMeTask.sendEmail();
+        runMeTask.prepareMail();
     }
 }

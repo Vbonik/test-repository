@@ -92,40 +92,11 @@ public class FtpClientService {
         return false;
     }
 
-    public InputStream downloadFile(String filePath) throws FileNotFoundException, IOException {
-
+    public InputStream downloadFile(String filePath) throws IOException {
         if ((logged) && (filePath != null)) {
-
-            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-            FileOutputStream outFileStream = null;
-            File tempFile = File.createTempFile(Integer.valueOf(new Random().nextInt()).toString(), ".temp");
-            try {
-                client.retrieveFile(filePath, byteStream);
-                byteStream.flush();
-                byte[] fileBytes = byteStream.toByteArray();
-                if (fileBytes.length == 0) {
-                    return null;
-                }
-                try {
-                    outFileStream = new FileOutputStream(tempFile);
-                    outFileStream.write(fileBytes);
-                    outFileStream.flush();
-                } finally {
-                    if (outFileStream != null) {
-                        outFileStream.close();
-                    }
-                }
-            } finally {
-                if (byteStream != null) {
-                    byteStream.close();
-                }
-            }
-            FileInputStream inStr = new FileInputStream(tempFile);
-            return inStr;
-
-
+            return client.retrieveFileStream(filePath);                  
         }
-        throw new FileNotFoundException(filePath + " file not found.");
+       return null;
     }
 
     public FTPFile[] getFileList(String pathname) throws IOException {

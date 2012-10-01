@@ -3,7 +3,6 @@ package com.issoft.log.database.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -20,50 +19,38 @@ import java.util.Set;
 
 public class UserEntity {
 
-    private Long id;
-    private String userName;
-    private String password;
-    private boolean enabled;
+    private String userId;
+    private String userpassword;
+    private boolean enableflag;
+    private String homedirectory;
+    private boolean writepermission;
+    private Long idletime;
+    private Long uploadrate;
+    private Long downloadrate;
+    private Long maxloginnumber;
+    private Long maxloginperip;
     private Long roleId;
     private String email;
     Set<EmailNotification> notifications = new HashSet<EmailNotification>();
 
+
     @Id
-    @GeneratedValue
-    @Column(name = "ID")
-    public Long getId() {
-        return id;
+    @Column(name = "USERID")
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(String userid) {
+        this.userId = userid;
     }
 
-    @Column(name = "USERNAME")
-    public String getUserName() {
-        return userName;
+    @Column(name = "USERPASSWORD")
+    public String getUserpassword() {
+        return userpassword;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    @Column(name = "PASSWORD")
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Column(name = "ENABLED")
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setUserpassword(String userpassword) {
+        this.userpassword = userpassword;
     }
 
     @Column(name = "ROLE_ID")
@@ -94,5 +81,77 @@ public class UserEntity {
 
     public void setNotifications(Set<EmailNotification> notifications) {
         this.notifications = notifications;
+    }
+
+    @Column(name = "DOWNLOADRATE")
+    public Long getDownloadrate() {
+        return downloadrate;
+    }
+
+    public void setDownloadrate(Long downloadrate) {
+        this.downloadrate = downloadrate;
+    }
+
+    @Column(name = "ENABLEFLAG")
+    public boolean isEnableflag() {
+        return enableflag;
+    }
+
+    public void setEnableflag(boolean enableflag) {
+        this.enableflag = enableflag;
+    }
+
+    @Column(name = "HOMEDIRECTORY")
+    public String getHomedirectory() {
+        return homedirectory;
+    }
+
+    public void setHomedirectory(String homedirectory) {
+        this.homedirectory = homedirectory;
+    }
+
+    @Column(name = "IDLETIME")
+    public Long getIdletime() {
+        return idletime;
+    }
+
+    public void setIdletime(Long idletime) {
+        this.idletime = idletime;
+    }
+
+    @Column(name = "MAXLOGINNUMBER")
+    public Long getMaxloginnumber() {
+        return maxloginnumber;
+    }
+
+    public void setMaxloginnumber(Long maxloginnumber) {
+        this.maxloginnumber = maxloginnumber;
+    }
+
+    @Column(name = "MAXLOGINPERIP")
+    public Long getMaxloginperip() {
+        return maxloginperip;
+    }
+
+    public void setMaxloginperip(Long maxloginperip) {
+        this.maxloginperip = maxloginperip;
+    }
+
+    @Column(name = "UPLOADRATE")
+    public Long getUploadrate() {
+        return uploadrate;
+    }
+
+    public void setUploadrate(Long uploadrate) {
+        this.uploadrate = uploadrate;
+    }
+
+    @Column(name = "WRITEPERMISSION")
+    public boolean isWritepermission() {
+        return writepermission;
+    }
+
+    public void setWritepermission(boolean writepermission) {
+        this.writepermission = writepermission;
     }
 }

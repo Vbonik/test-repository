@@ -1,12 +1,11 @@
 package com.issoft.entity;
 
-import com.issoft.ftp.util.CastorMockUtil;
+import com.issoft.entity.com.issoft.util.CastorMockUtil;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
-import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;

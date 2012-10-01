@@ -19,7 +19,7 @@ public class UserEntityDAOImpl implements UserEntityDAO {
      */
     @Override
     public List<Object[]> selectReceivers(String action) {
-        String query1 = "SELECT user.email, user.userName \n" +
+        String query1 = "SELECT user.email, user.userId \n" +
                 "FROM UserEntity user \n" +
                 "JOIN user.notifications un \n" +
                 "WHERE un.notification = ?";

@@ -12,8 +12,12 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Mailing service.
@@ -35,6 +39,8 @@ public class MailService {
 
     private Mail mail;
     private Session session;
+
+    private Map<String, List<Mail>> mailsToSend;
 
     MailService() {
         try {
@@ -69,44 +75,58 @@ public class MailService {
     /**
      * Sends e-mail to receivers.
      */
-    public void sendEmail() {
+    public void prepareMail() {
 
-        try {
-            MailStorage mailStorage = MailStorage.getInstance();
+        mailsToSend = new ConcurrentHashMap<String, List<Mail>>();
+        MailStorage mailStorage = MailStorage.getInstance();
 
-            while (!mailStorage.isEmpty()) {
-                mail = mailStorage.getMail();
-                Transport.send(createMessage(mail));
-                System.out.println("Your message has been sent");
-            }
+        while (!mailStorage.isEmpty()) {
+            mail = mailStorage.getMail();
+            addMessageForSending(mail);
+        }
 
-        } catch (MessagingException e) {
-            e.printStackTrace();
+        for (String email : mailsToSend.keySet()) {
+            byte[] report = JasperReporter.generateJasperReport(mailsToSend.get(email));
+            sendMessage(report, email);
         }
     }
 
     /**
-     * Composes message to send.
+     * Groups <code>Mail</code> objects by receivers for further sending.
      */
-    public Message createMessage(Mail mail) throws MessagingException {
+    public void addMessageForSending(Mail mail) {
 
         List<Object[]> receivers = userEntityDAO.selectReceivers(mail.getAction());
-        StringBuffer receiversAddresses = new StringBuffer();
 
-        //Selects receivers depending on committed action with file
+        //Select receivers depending on committed action with file
         for (Object[] receiver : receivers) {
-            receiversAddresses.append(receiver[0].toString() + ",");
+            String receiverEmail = receiver[0].toString();
+            if (mailsToSend.get(receiverEmail) != null) {
+                mailsToSend.get(receiverEmail).add(mail);
+            } else {
+                mailsToSend.put(receiverEmail, new ArrayList<Mail>(Arrays.asList(mail)));
+            }
         }
+    }
 
-        //Creates message
-        Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(email));
-        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiversAddresses.toString()));
-        message.setSubject("FTP delivery");
-        message.setText("User: " + mail.getUserName() + "\n" +
-                mail.getAction() + " file: " + mail.getFilePath());
-        return message;
-
+    /**
+     * Sends message with PDF report attached.
+     *
+     * @param attach
+     * @param address
+     */
+    public void sendMessage(byte[] attach, String address) {
+        try {
+            //Creates message
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(email));
+            message.setSubject("FTP delivery");
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
+            message.setContent(attach, "application/pdf");
+            Transport.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     public void setUserEntityDAO(UserEntityDAO userEntityDAO) {
