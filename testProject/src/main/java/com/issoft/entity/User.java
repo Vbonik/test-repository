@@ -1,8 +1,10 @@
 package com.issoft.entity;
 
-import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -38,7 +40,7 @@ public class User implements Serializable {
     private int max_login_per_ip;
     @Column(name = "email")
     private String email;
-    @Cascade({ org.hibernate.annotations.CascadeType.ALL })
+    @Cascade({ org.hibernate.annotations.CascadeType.SAVE_UPDATE })
     @ManyToOne
     @JoinColumn(name = "role_id")
     private UserRole user_roles = new UserRole();

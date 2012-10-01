@@ -9,10 +9,12 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
     <!--<bean id="ftpFile" class="com.issoft.ftp.model.FTPFile"/>-->
     <bean id="userForm" class="com.issoft.ftp.model.UserForm"/>
+    <bean id="service" class="com.issoft.services.AdministrationService"/>
 
     <bean id="inetAddress" class="java.net.Inet4Address" factory-method="getByName">
         <constructor-arg value="localhost"/>
     </bean>
+
     <bean id="ftpClientService" class="com.issoft.ftp.client.FtpClientService">
         <constructor-arg ref="inetAddress"/>
         <constructor-arg value="2121"/>
@@ -25,21 +27,21 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
     <bean id="administrationAction" class="com.issoft.ftp.presentation.action.AdministrationAction">
         <property name="userForm" ref="userForm"/>
-        <property name="usersDAO" ref="dao"/>
+        <property name="service">
+            <bean id="administrationService" class="com.issoft.services.AdministrationService">
+                <property name="dao" ref="dao"/>
+            </bean>
+        </property>
     </bean>
 
-    
-    <!--Spring Quartz--> 
+    <!--Spring Quartz-->
     <bean name="runMeJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-
         <property name="jobClass" value="com.issoft.log.mailer.QuartzMailJob"/>
-
         <property name="jobDataAsMap">
             <map>
                 <entry key="runMeTask" value-ref="mailService"/>
             </map>
         </property>
-
     </bean>
 
     <bean id="mailService" class="com.issoft.log.mailer.MailService"/>

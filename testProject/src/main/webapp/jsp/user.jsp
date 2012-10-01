@@ -18,64 +18,39 @@
 
 <div class="inner">
     <s:form action="Ftp" method="POST">
-        <table width="100px">
-            <tr>
-                <s:textfield key="userForm.user.user_id" label="Name" id="name"/>
-            </tr>
-            <tr>
-                <s:textfield key="userForm.user.user_password" label="Password" id="password"/>
-            </tr>
-            <tr>
-                <s:textfield key="userForm.user.home_directory" label="Home directory" id="home_directory"/>
-            </tr>
-            <tr><s:select name="userForm.user.user_roles.id"
-                          id="role"
-                          list="userForm.userRoleList"
-                          value="userForm.defaultRole.id"
-                          listKey="id"
-                          listValue="authority"
-                          label="User role"/>
-            </tr>
-            <tr><s:select name="userForm.user.enableflag"
-                          id="enableflag"
-                          list="#{'false':'false', 'true':'true'}"
-                          value="userForm.defaultEnable"
-                          label="Banned"/>
-            </tr>
-            <tr><s:select name="userForm.user.write_permission"
-                          id="write_permission"
-                          list="#{'false':'false', 'true':'true'}"
-                          value="userForm.defaultWritePermission"
-                          label="Write"/>
-            </tr>
-            <tr>
-                <s:textfield key="userForm.user.idle_time" label="idle_time" id="idle_time"/>
-            </tr>
-            <tr>
-                <s:textfield key="userForm.user.upload_rate" label="upload_rate" id="upload_rate"/>
-            </tr>
+        <s:textfield key="userForm.user.user_id" label="Name" id="name"/>
+        <s:textfield key="userForm.user.user_password" label="Password" id="password"/>
+        <s:textfield key="userForm.user.home_directory" label="Home directory" id="home_directory"/>
 
-            <tr>
-                <s:textfield key="userForm.user.download_rate" label="download_rate" id="download_rate"/>
-            </tr>
+        <s:select name="userForm.user.user_roles.id"
+                  id="role"
+                  list="userForm.userRoleList"
+                  value="userForm.defaultRole.id"
+                  listKey="id"
+                  listValue="authority"
+                  label="User role"/>
 
-            <tr>
-                <s:textfield key="userForm.user.max_login_number" label="max_login_number" id="max_login_number"/>
-            </tr>
+        <s:select name="userForm.user.enableflag"
+                  id="enableflag"
+                  list="#{'false':'false', 'true':'true'}"
+                  value="userForm.defaultEnable"
+                  label="Enabed"/>
 
-            <tr>
-                <s:textfield key="userForm.user.max_login_per_ip" label="max_login_per_ip" id="max_login_per_ip"/>
-            </tr>
+        <s:select name="userForm.user.write_permission"
+                  id="write_permission"
+                  list="#{'false':'false', 'true':'true'}"
+                  value="userForm.defaultWritePermission"
+                  label="Write"/>
 
-            <tr>
-                <s:textfield key="userForm.user.email" label="email" id="email"/>
-            </tr>
-            <tr>
-                <s:submit action="updateUser" value="Save or Update" theme="simple"
-                          onclick="return userFormValidation()"/>
-            </tr>
-        </table>
-        <s:submit action="updateUser" value="Save or Update" theme="simple" onclick="return userFormValidation()"/>
+        <s:textfield key="userForm.user.idle_time" label="Idle time" id="idle_time"/>
+        <s:textfield key="userForm.user.upload_rate" label="Upload rate" id="upload_rate"/>
+        <s:textfield key="userForm.user.download_rate" label="Download rate" id="download_rate"/>
+        <s:textfield key="userForm.user.max_login_number" label="Max login number" id="max_login_number"/>
+        <s:textfield key="userForm.user.max_login_per_ip" label="Max login per IP" id="max_login_per_ip"/>
+        <s:textfield key="userForm.user.email" label="Email" id="email"/>
+
+        <td><s:submit action="updateUser" value="Save or Update" theme="simple"
+                      onclick="return userFormValidation()"/></td>
     </s:form>
 </div>
 </body>

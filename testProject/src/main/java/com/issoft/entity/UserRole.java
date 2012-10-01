@@ -1,6 +1,7 @@
 package com.issoft.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * User: nikitadavydov
@@ -8,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "USER_ROLES")
-public class UserRole {
+public class UserRole implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID")

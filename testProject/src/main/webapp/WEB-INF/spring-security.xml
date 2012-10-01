@@ -8,26 +8,23 @@
 	http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
     <beans:import resource="spring-database.xml"/>
-    
-    <http auto-config="true" >
-        <intercept-url pattern="/directoryList" access="ROLE_USER" />
+
+    <http auto-config="true">
+        <intercept-url pattern="/directoryList" access="ROLE_USER"/>
         <form-login login-page="/jsp/login.jsp" default-target-url="/loginFtp"
                     authentication-failure-url="/jsp/warning.jsp"/>
-        <logout logout-success-url="/admin" />
-
+        <logout logout-success-url="/admin"/>
     </http>
-
-
 
     <authentication-manager alias="authenticationManager" erase-credentials="false">
         <authentication-provider>
-           <password-encoder hash="md5"/>
+            <password-encoder hash="md5"/>
             <jdbc-user-service data-source-ref="dataSource"
                                users-by-username-query="
     		      select userid, userpassword, enableflag from users where userid = ?"
                                authorities-by-username-query="
 		      select user.userid, role.authority from users user, user_roles role
-		      where user.role_id = role.id and user.userid = ?" />
+		      where user.role_id = role.id and user.userid = ?"/>
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

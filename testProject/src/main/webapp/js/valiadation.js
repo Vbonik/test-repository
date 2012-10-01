@@ -10,7 +10,14 @@ var flag = true;
 function userFormValidation() {
     resetCountFlagArray();
     notNull('name');
-    notNull('password');
+    notNull('home_directory');
+    notNull('idle_time');
+    notNull('idle_time');
+    notNull('upload_rate');
+    notNull('download_rate');
+    notNull('max_login_number');
+    notNull('max_login_per_ip');
+    notNull('email');
 
     if (flag == false) {
         alert(errorScope);
@@ -26,10 +33,16 @@ function notNull(fieldName) {
     }
 }
 
-function confirmDelete() {
-    if (confirm("Are you sure you want to delete this user?"))
-        return true;
-    else return false;
+function confirmDelete(name) {
+    var deleteFlag = false;
+    if (confirm("Are you sure you want to delete this user?")) {
+        deleteFlag = true;
+        if (name == 'admin') {
+            alert("You can't delete admin.")
+            deleteFlag = false;
+        }
+    }
+    return deleteFlag;
 }
 
 function onlyCharacters() {

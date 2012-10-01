@@ -10,6 +10,7 @@
 <head>
     <script type="text/javascript" src="../js/prettify.js"></script>
     <script type="text/javascript" src="../js/kickstart.js"></script>
+    <script type="text/javascript" src="../js/valiadation.js"></script>
     <link href="../css/kickstart.css" rel="stylesheet" type="text/css"/>
     <title>Administrator panel</title>
 </head>
@@ -62,12 +63,13 @@ add users in table and some additional information about users actions<br>
             <td><s:property value="#user.user_roles.authority"/></td>
             <td>
                 <s:a href="%{userEditURL}">
-                    <span class="icon gray small" data-icon="7" title="Edit" style="display: inline-block; ">
+                    <span class="icon gray small" data-icon="7" title="Edit" style="display: inline-block;">
                             <span aria-hidden="true">7</span>
                     </span>
                 </s:a>
-                <s:a href="%{userDeleteURL}" onclick="return confirmDelete">
-                    <span class="icon gray small" data-icon="m" title="Delete" style="display: inline-block; ">
+                <s:a href="%{userDeleteURL}">
+                    <span class="icon red small" data-icon="m" title="Delete" style="display: inline-block; "
+                          onclick="return confirmDelete('<s:property value="#user.user_id"/>');">
                             <span aria-hidden="true">m</span>
                     </span>
                 </s:a>
@@ -79,7 +81,7 @@ add users in table and some additional information about users actions<br>
 
 <s:url var="userAddURL" action="addUser"/>
 <s:a href="%{userAddURL}">
-    <span class="icon gray large" data-icon="p" title="Add" style="display: inline-block; ">
+    <span class="icon green large" data-icon="p" title="Add" style="display: inline-block; ">
         <span aria-hidden="true">p</span>
     </span>
 </s:a>

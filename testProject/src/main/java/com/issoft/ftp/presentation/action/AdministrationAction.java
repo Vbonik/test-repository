@@ -1,81 +1,56 @@
 package com.issoft.ftp.presentation.action;
 
-import com.issoft.entity.UsersDAO;
 import com.issoft.ftp.model.UserForm;
+import com.issoft.services.Service;
 import com.opensymphony.xwork2.ActionSupport;
-
-import static com.issoft.ftp.util.Constants.FAILURE;
+import org.apache.log4j.Logger;
 
 /**
  * User: nikitadavydov
  * Date: 9/25/12
  */
 public class AdministrationAction extends ActionSupport {
-    private UsersDAO usersDAO;
+    private static final Logger logger = Logger.getLogger(AdministrationAction.class);
+
     private UserForm userForm;
+    private Service service;
 
     public String getUserFileList() {
         try {
-            userForm.setUsersList(usersDAO.list());
-        } catch (NullPointerException e) {
-            return FAILURE;
+            userForm.setUsersList(service.getUserList());
+        } catch (Exception ex) {
+            logger.error(ex);
         }
         return SUCCESS;
     }
 
     public String addUser() {
-        try {
-            if (userForm.getUser() != null) {
-                userForm.resetUserAndDefaultRoleEnable();
-            }
-            userForm.setUserRoleList(usersDAO.getUserRoles());
-        } catch (NullPointerException ex) {
-            return FAILURE;
+        if (userForm.getUser() != null) {
+            userForm.resetUserAndDefaultRoleEnable();
         }
+        userForm.setUserRoleList(service.getUserRoleList());
         return SUCCESS;
     }
 
     public String editUser() {
-        try {
-            //TODO: getUserRoles - check only one time
-            userForm.setUserRoleList(usersDAO.getUserRoles());
-            userForm.setUser(usersDAO.getUserById(userForm.getUser_id()));
-
-            userForm.setDefault(userForm.getUser());
-        } catch (NullPointerException ex) {
-            return FAILURE;
-        }
+        userForm.setUserRoleList(service.getUserRoleList());
+        userForm.setUser(service.getUserById(userForm.getUser_id()));
+        userForm.setDefault(userForm.getUser());
         return SUCCESS;
     }
 
     public String updateUser() {
-        try {
-            usersDAO.update(userForm.getUser());
-        } catch (NullPointerException ex) {
-            return FAILURE;
-        }
+        service.updateUser(userForm.getUser());
         return SUCCESS;
     }
 
     public String deleteUser() {
-        try {
-            usersDAO.delete(userForm.getUser_id());
-        } catch (NullPointerException ex) {
-            return FAILURE;
-        }
+        service.deleteUser(userForm.getUser_id());
         return SUCCESS;
     }
 
 
     //gettets and setters
-    public UsersDAO getUsersDAO() {
-        return usersDAO;
-    }
-
-    public void setUsersDAO(UsersDAO usersDAO) {
-        this.usersDAO = usersDAO;
-    }
-
     public UserForm getUserForm() {
         return userForm;
     }
@@ -84,5 +59,11 @@ public class AdministrationAction extends ActionSupport {
         this.userForm = userForm;
     }
 
+    public Service getService() {
+        return service;
+    }
 
+    public void setService(Service service) {
+        this.service = service;
+    }
 }
