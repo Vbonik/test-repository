@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+    <definition name="baseLayout" template="/jsp/layout/baseLayout.jsp">
+        <put-attribute name="title" value="Title"/>
+        <put-attribute name="header" value="/jsp/layout/header.jsp"/>
+        <put-attribute name="body" value="/jsp/layout/body.jsp"/>
+        <put-attribute name="footer" value="/jsp/layout/footer.jsp"/>
+        <put-list-attribute name="styles">
+            <add-attribute value="/css/style-common.css"/>
+        </put-list-attribute>
+        <put-list-attribute name="scripts"/>
+    </definition>
+    
+    <definition name="/login.tiles" extends="baseLayout">
+        <put-attribute name="title" value="Login"/>
+        <put-attribute name="body" value="/jsp/login.jsp"/>
+    </definition>
+
+    <definition name="/admin.tiles" extends="baseLayout">
+        <put-attribute name="title" value="Admin"/>
+        <put-attribute name="body" value="/jsp/admin.jsp"/>
+        <put-list-attribute name="styles">
+            <add-attribute value="/css/kickstart.css"/>
+            <add-attribute value="/css/style-common.css"/>
+            <add-attribute value="/css/style-admin.css"/>
+        </put-list-attribute>
+        <put-list-attribute name="scripts">
+            <add-attribute value="/js/jquery-1.8.1.js"/>
+            <add-attribute value="/js/prettify.js"/>
+            <add-attribute value="/js/kickstart.js"/>
+        </put-list-attribute>
+    </definition>
+
+    <definition name="/list.tiles" extends="baseLayout">
+       <put-attribute name="title" value="User"/>
+       <put-attribute name="body" value="/jsp/directoryList.jsp"/>
+    </definition>
+
+    <definition name="/userInfo.tiles" extends="baseLayout">
+        <put-attribute name="title" value="User Info"/>
+        <put-attribute name="body" value="/jsp/user.jsp"/>
+        <put-list-attribute name="scripts">
+            <add-attribute value="/js/jquery-1.8.1.js"/>
+            <add-attribute value="/js/kickstart.js"/>
+            <add-attribute value="/js/prettify.js"/>
+            <add-attribute value="/js/validation.js"/>
+        </put-list-attribute>
+        <put-list-attribute name="styles">
+            <add-attribute value="/css/kickstart.css"/>
+            <add-attribute value="/css/style-common.css"/>
+        </put-list-attribute>
+    </definition>
+
+</tiles-definitions>

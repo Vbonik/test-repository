@@ -1,0 +1,135 @@
+/*
+CSS Reset
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+/*
+End CSS Reset
+*/
+h1 {
+    font-size: 25px;
+    padding: 5px;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 15px;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.wrapper {
+    width: 1300px;
+    margin: 0 auto;
+}
+
+.header, .footer {
+    height: 50px;
+    color: #ccc;
+}
+
+.header h1 {
+    padding-top: 10px;
+    font-weight: bold;
+    float: left;
+    color: #888;
+}
+
+.footer {
+    text-align: center;
+}
+
+.footer h3 {
+    padding-top: 15px;
+}
+
+.body {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    min-height: 300px;
+}
+
+form#login {
+    padding: 100px 0;
+    width: 100%;
+    text-align: center;
+}
+
+form#login table {
+    display: inline-block;
+}
+
+.header span {
+    display: block;
+    padding: 20px 10px;
+}
+
+.header span a {
+    float: right;
+    color: #ccc;
+}
+
+.header span a:hover {
+    color: #888;
+}
+
+.errorblock {
+    color: #ff0000;
+    background-color: #ffEEEE;
+    border: 3px solid #ff0000;
+    padding: 8px;
+    margin: 16px;
+}
+
+.header, .footer {
+    padding: 0 10px;
+}
+
+.body {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+input, select {
+    margin: 5px;
+}
