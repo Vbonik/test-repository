@@ -17,14 +17,18 @@
             </interceptor-stack>
         </interceptors>
 
-        <default-interceptor-ref name="appDefault" />
+        <default-interceptor-ref name="appDefault"/>
 
         <global-results>
-            <result name="error">/jsp/error.jsp</result>
+            <result name="connectionError">/jsp/error/connectionError.jsp</result>
+            <result name="loginError">/jsp/error/loginError.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
         </global-results>
 
         <global-exception-mappings>
-            <exception-mapping exception="java.lang.Exception" result="error" />
+            <exception-mapping exception="java.lang.NullPointerException" result="connectionError"/>
+            <exception-mapping exception="java.io.IOException" result="loginError"/>
+            <exception-mapping exception="java.lang.Exception" result="error"/>
         </global-exception-mappings>
 
         <action name="uploadFile" method="uploadFile" class="ftpAction">
