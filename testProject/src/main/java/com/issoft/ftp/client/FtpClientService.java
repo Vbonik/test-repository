@@ -38,11 +38,23 @@ public class FtpClientService {
         this(InetAddress.getByName("localhost"), DEFAULT_FTP_LISTENER_PORT);
     }
 
-    public FtpClientService(InetAddress host, Integer port) throws FtpException {
+    /**
+     * Ftp client service initialization
+     * @param host Host value to use
+     * @param port Port number to use
+     */
+    public FtpClientService(InetAddress host, Integer port) {
         this.host = host;
         this.port = port;
     }
 
+    /**
+     * Connect and login to FTP Server
+     * @param login User login
+     * @param password User password
+     * @return <code>true</code> - in case of success login, <code>false</code> - otherwise
+     * @throws FtpException In case of connection error
+     */
     public Boolean login(String login, String password) throws FtpException {
         if (host != null) {
             try {
@@ -66,6 +78,10 @@ public class FtpClientService {
         return false;
     }
 
+    /**
+     * Logout and disconnect from FTP Server
+     * @return <code>true</code> - in case of success logout and disconnect, <code>false</code> - otherwise
+     */
     public Boolean logout() {
         try {
             return client.logout();

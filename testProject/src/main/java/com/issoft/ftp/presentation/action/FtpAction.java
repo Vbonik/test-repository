@@ -117,8 +117,13 @@ public class FtpAction extends ActionSupport implements ParameterAware {
         return SUCCESS;
     }
 
-    //autorization
-    public String login() throws FtpException, IOException {
+    /**
+     * Login to FTP Server after succes spring-security login
+     * Define users role and return appropriate result to redirect
+     * @return Result name
+     * @throws FtpException In case of FTP login error
+     */
+    public String login() throws FtpException {
         User principal =  (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Boolean isLoggined = ftpClientService.login(principal.getUsername(), principal.getPassword());
         if (isLoggined) {
@@ -133,6 +138,10 @@ public class FtpAction extends ActionSupport implements ParameterAware {
         }
     }
 
+    /**
+     * Logout from FTP Server
+     * @return Result name
+     */
     public String logout() {
         boolean isLogoutSuccess = ftpClientService.logout();
         if (isLogoutSuccess) {
