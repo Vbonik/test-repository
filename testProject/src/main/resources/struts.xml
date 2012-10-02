@@ -5,6 +5,8 @@
 <struts>
 
     <constant name="struts.multipart.maxSize" value="9999999999999"/>
+    <constant name="struts.objectFactory" value="spring"/>
+    <constant name="struts.devMode" value="true"/>
 
     <package name="default" namespace="/" extends="struts-default">
         <result-types>
@@ -51,11 +53,6 @@
             </result>
         </action>
 
-        <action name="admin" method="getUserFileList" class="administrationAction">
-            <result name="success" type="tiles">/admin.tiles</result>
-            <result name="failure">jsp/warning.jsp</result>
-        </action>
-
         <action name="list" class="ftpAction" method="getFileList">
             <result name="success" type="tiles">/list.tiles</result>
             <result name="failure">jsp/warning.jsp</result>
@@ -67,9 +64,19 @@
             </result>
         </action>
 
-        <action name="addUser" method="addUser" class="administrationAction">
-            <result name="success" type="tiles">/userInfo.tiles</result>
+        <action name="admin">
+            <result name="success" type="tiles">/admin.tiles</result>
             <result name="failure">jsp/warning.jsp</result>
+        </action>
+
+        <action name="userList" method="getUserFileList" class="administrationAction">
+            <result>jsp/userList.jsp</result>
+            <result name="input">jsp/userList.jsp</result>
+        </action>
+
+        <action name="logList" method="getLogList" class="administrationLogAction">
+            <result>jsp/logList.jsp</result>
+            <result name="input">jsp/logList.jsp</result>
         </action>
 
         <action name="updateUser" method="updateUser" class="administrationAction">

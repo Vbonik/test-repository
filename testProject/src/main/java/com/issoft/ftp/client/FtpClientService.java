@@ -4,18 +4,31 @@
  */
 package com.issoft.ftp.client;
 
+import java.io.ByteArrayOutputStream;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPConnectionClosedException;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.log4j.Logger;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.List;
+import java.util.Random;
 import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.io.SocketInputStream;
 import org.apache.mina.core.RuntimeIoException;
 
 /**

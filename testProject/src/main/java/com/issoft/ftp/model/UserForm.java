@@ -2,6 +2,7 @@ package com.issoft.ftp.model;
 
 import com.issoft.entity.User;
 import com.issoft.entity.UserRole;
+import com.issoft.log.database.entity.LogEntry;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class UserForm {
     private List<UserRole> userRoleList;
     private UserRole defaultRole;
     private boolean defaultEnable;
+    private List<LogEntry> logEntryList;
 
     public UserForm(com.issoft.entity.User user, String user_id, List<User> usersList, List<UserRole> userRoleList) {
         this.user = user;
@@ -96,7 +98,13 @@ public class UserForm {
         setDefaultRole(user.getUser_roles());
     }
 
+    public List<LogEntry> getLogEntryList() {
+        return logEntryList;
+    }
 
+    public void setLogEntryList(List<LogEntry> logEntryList) {
+        this.logEntryList = logEntryList;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -113,7 +121,8 @@ public class UserForm {
             return false;
         if (user_id != null ? !user_id.equals(userForm.user_id) : userForm.user_id != null) return false;
         if (usersList != null ? !usersList.equals(userForm.usersList) : userForm.usersList != null) return false;
-
+        if (logEntryList != null ? !logEntryList.equals(userForm.logEntryList)
+                : userForm.logEntryList != null) return false;
         return true;
     }
 
@@ -125,6 +134,7 @@ public class UserForm {
         result = 31 * result + (userRoleList != null ? userRoleList.hashCode() : 0);
         result = 31 * result + (defaultRole != null ? defaultRole.hashCode() : 0);
         result = 31 * result + (defaultEnable ? 1 : 0);
+        result = 31 * result + (logEntryList != null ? logEntryList.hashCode() : 0);
         return result;
     }
 }
