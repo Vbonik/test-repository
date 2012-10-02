@@ -1,6 +1,6 @@
 package com.issoft.entity;
 
-import com.issoft.entity.com.issoft.util.CastorMockUtil;
+import com.issoft.util.CastorMockUtil;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;

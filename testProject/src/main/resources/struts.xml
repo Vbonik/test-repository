@@ -7,6 +7,9 @@
     <constant name="struts.multipart.maxSize" value="9999999999999"/>
 
     <package name="default" namespace="/" extends="struts-default">
+        <result-types>
+            <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
+        </result-types>
 
         <interceptors>
             <interceptor-stack name="appDefault">
@@ -31,17 +34,72 @@
             <exception-mapping exception="java.lang.Exception" result="error"/>
         </global-exception-mappings>
 
+        <action name="login">
+            <result type="tiles">/login.tiles</result>
+        </action>
+
+        <action name="loginFtp" method="login" class="ftpAction">
+            <result name="userLogin" type="redirectAction">
+                <param name="actionName">list</param>
+                <param name="currentDirectory.typeOfFile">1</param>
+            </result>
+            <result name="adminLogin" type="redirectAction">
+                <param name="actionName">admin</param>
+            </result>
+            <result name="failure" type="redirectAction">
+                <param name="actionName">login</param>
+            </result>
+        </action>
+
+        <action name="admin" method="getUserFileList" class="administrationAction">
+            <result name="success" type="tiles">/admin.tiles</result>
+            <result name="failure">jsp/warning.jsp</result>
+        </action>
+
+        <action name="list" class="ftpAction" method="getFileList">
+            <result name="success" type="tiles">/list.tiles</result>
+            <result name="failure">jsp/warning.jsp</result>
+        </action>
+
+        <action name="logout" class="ftpAction" method="logout">
+            <result name="success" type="redirectAction">
+                <param name="actionName">login</param>
+            </result>
+        </action>
+
+        <action name="addUser" method="addUser" class="administrationAction">
+            <result name="success" type="tiles">/userInfo.tiles</result>
+            <result name="failure">jsp/warning.jsp</result>
+        </action>
+
+        <action name="updateUser" method="updateUser" class="administrationAction">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin</param>
+            </result>
+            <result name="failure">jsp/warning.jsp</result>
+        </action>
+
+        <action name="editUser" method="editUser" class="administrationAction">
+            <result name="success" type="tiles">/userInfo.tiles</result>
+            <result name="failure">jsp/warning.jsp</result>
+        </action>
+
+        <action name="deleteUser" method="deleteUser" class="administrationAction">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin</param>
+            </result>
+            <result name="failure">jsp/warning.jsp</result>
+        </action>
+
         <action name="uploadFile" method="uploadFile" class="ftpAction">
             <interceptor-ref name="defaultStack">
                 <param name="fileUpload.maximumSize">500242880</param>
             </interceptor-ref>
-            <result name="success" type="redirect">
-                <param name="location">/directoryList</param>
+            <result name="success" type="redirectAction">
+                <param name="actionName">list</param>
                 <param name="currentDirectory.typeOfFile">1</param>
             </result>
-            <result name="failure" type="redirect">
-                <param name="location">/index.jsp</param>
-            </result>
+            <result name="failure">jsp/warning.jsp</result>
         </action>
 
         <action name="downloadFile" method="downloadFile" class="ftpAction">
@@ -53,52 +111,6 @@
             </result>
         </action>
 
-        <action name="loginFtp" method="login" class="ftpAction">
-            <result name="success" type="redirect">
-                <param name="location">/directoryList</param>
-                <param name="currentDirectory.typeOfFile">1</param>
-            </result>
-            <result name="failure">/index.jsp</result>
-        </action>
-
-        <action name="loginAdmin" method="login" class="ftpAction">
-            <result name="success" type="redirect">
-                <param name="location">/admin</param>
-            </result>
-            <result name="failure">/index.jsp</result>
-        </action>
-
-        <action name="directoryList" class="ftpAction" method="getFileList">
-            <result name="success">
-                /jsp/directoryList.jsp
-            </result>
-        </action>
-
-        <action name="admin" method="getUserFileList" class="administrationAction">
-            <result name="success">jsp/admin.jsp</result>
-            <result name="failure">jsp/warning.jsp</result>
-        </action>
-
-        <action name="addUser" method="addUser" class="administrationAction">
-            <result name="success">jsp/user.jsp</result>
-            <result name="failure">jsp/warning.jsp</result>
-        </action>
-
-        <action name="editUser" method="editUser" class="administrationAction">
-            <result name="success">jsp/user.jsp</result>
-            <result name="failure">jsp/warning.jsp</result>
-        </action>
-
-        <action name="deleteUser" method="deleteUser" class="administrationAction">
-            <result name="success" type="redirect">admin</result>
-            <result name="failure">jsp/warning.jsp</result>
-        </action>
-
-        <action name="updateUser" method="updateUser" class="administrationAction">
-            <result name="success" type="redirect">admin</result>
-            <result name="failure">jsp/warning.jsp</result>
-        </action>
-
         <action name="fileList" method="getFileList" class="ftpAction">
             <result name="success">
                 <param name="location">/jsp/download.jsp</param>
@@ -107,12 +119,10 @@
         </action>
 
         <action name="deleteFiles" class="ftpAction" method="deleteFiles">
-            <result name="success" type="redirect">
-                <param name="location">/directoryList</param>
+            <result name="success" type="redirectAction">
+                <param name="actionName">list</param>
                 <param name="currentDirectory.typeOfFile">1</param>
             </result>
         </action>
     </package>
-
-
 </struts>

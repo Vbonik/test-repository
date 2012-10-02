@@ -7,6 +7,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.struts2.interceptor.ParameterAware;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
@@ -25,7 +26,6 @@ public class FtpAction extends ActionSupport implements ParameterAware {
 
     public static final Integer DIRECTORY_TYPE_ONLY = 1;
     public static final Integer FILE_TYPE_ONLY = 2;
-    public static final String TYPE_OF_FILE = "typeOfFile";
 
     private InputStream fileInputStream;
     private TempDirectory currentDirectory = new TempDirectory();
@@ -122,8 +122,23 @@ public class FtpAction extends ActionSupport implements ParameterAware {
         User principal =  (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Boolean isLoggined = ftpClientService.login(principal.getUsername(), principal.getPassword());
         if (isLoggined) {
+            if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+                return "adminLogin";
+            } else if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+                return "userLogin";
+            }
+            return FAILURE;
+        } else {
+            return FAILURE;
+        }
+    }
+
+    public String logout() {
+        boolean isLogoutSuccess = ftpClientService.logout();
+        if (isLogoutSuccess) {
             return SUCCESS;
         } else {
+            LOG.error("Error on logout");
             return FAILURE;
         }
     }

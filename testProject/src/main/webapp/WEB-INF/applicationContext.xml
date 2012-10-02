@@ -29,7 +29,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
         <property name="userForm" ref="userForm"/>
         <property name="service">
             <bean id="administrationService" class="com.issoft.services.AdministrationService">
-                <!--<property name="dao" ref="dao"/>-->
+                <property name="dao" ref="dao"/>
             </bean>
         </property>
     </bean>

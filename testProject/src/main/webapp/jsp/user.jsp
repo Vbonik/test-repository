@@ -1,19 +1,5 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%--
-  User: nikitadavydov
-  Date: 9/19/12
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <script type="text/javascript" src="../js/jquery-1.8.1.js"></script>
-    <script type="text/javascript" src="../js/kickstart.js"></script>
-    <script type="text/javascript" src="../js/prettify.js"></script>
-    <script type="text/javascript" src="../js/valiadation.js"></script>
-    <link href="../css/kickstart.css" rel="stylesheet" type="text/css"/>
-    <title>User page</title>
-</head>
-<body>
+
 <h1>Here you can add/edit user information</h1>
 
 <div class="inner">
@@ -53,5 +39,3 @@
                       onclick="return userFormValidation()"/></td>
     </s:form>
 </div>
-</body>
-</html>

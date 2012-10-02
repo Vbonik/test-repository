@@ -1,24 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: nikitadavydov
-  Date: 9/14/12
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<html>
-<head>
-    <script type="text/javascript" src="../js/prettify.js"></script>
-    <script type="text/javascript" src="../js/kickstart.js"></script>
-    <script type="text/javascript" src="../js/valiadation.js"></script>
-    <link href="../css/kickstart.css" rel="stylesheet" type="text/css"/>
-    <title>Administrator panel</title>
-</head>
-<body>
-<h1>Good morning administrator</h1>
+
 User list:<br>
 add users in table and some additional information about users actions<br>
-<table class="sortable" width="100px;">
+<table class="sortable">
     <thead>
     <tr>
         <th>User name</th>
@@ -64,13 +49,13 @@ add users in table and some additional information about users actions<br>
             <td>
                 <s:a href="%{userEditURL}">
                     <span class="icon gray small" data-icon="7" title="Edit" style="display: inline-block;">
-                            <span aria-hidden="true">7</span>
+
                     </span>
                 </s:a>
                 <s:a href="%{userDeleteURL}">
                     <span class="icon red small" data-icon="m" title="Delete" style="display: inline-block; "
                           onclick="return confirmDelete('<s:property value="#user.user_id"/>');">
-                            <span aria-hidden="true">m</span>
+
                     </span>
                 </s:a>
             </td>
@@ -82,10 +67,7 @@ add users in table and some additional information about users actions<br>
 <s:url var="userAddURL" action="addUser"/>
 <s:a href="%{userAddURL}">
     <span class="icon green large" data-icon="p" title="Add" style="display: inline-block; ">
-        <span aria-hidden="true">p</span>
+
     </span>
 </s:a>
 <br>
-<a href="<c:url value="j_spring_security_logout"/>">Logout</a>
-</body>
-</html>

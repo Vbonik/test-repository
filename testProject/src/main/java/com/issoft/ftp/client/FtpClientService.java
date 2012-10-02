@@ -4,30 +4,18 @@
  */
 package com.issoft.ftp.client;
 
-import java.io.ByteArrayOutputStream;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPConnectionClosedException;
+import org.apache.commons.net.ftp.FTPReply;
 import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.log4j.Logger;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.List;
-import java.util.Random;
 import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.io.SocketInputStream;
 import org.apache.mina.core.RuntimeIoException;
 
 /**
@@ -51,38 +39,48 @@ public class FtpClientService {
     }
 
     public FtpClientService(InetAddress host, Integer port) throws FtpException {
+        this.host = host;
+        this.port = port;
+    }
+
+    public Boolean login(String login, String password) throws FtpException {
         if (host != null) {
-            this.host = host;
             try {
-                this.port = port;
                 if (port != null) {
                     client.connect(host, port);
                 } else {
                     client.connect(host);
                 }
-                return;
-            } catch (IOException ioEx) {
-                logger.error("Connection failed.");
-            }
-        }
-        throw new FtpException("Connection failed.");
-    }
+                int reply = client.getReplyCode();
 
-    public Boolean login(String login, String password) {
-        String f = null;
-        if (login != null) {
-            try {
-                f = client.getReplyString();
-                return logged = client.login(login, password);
-            } catch (IOException ioEx) {
-                logger.error("Invalid login or password", ioEx);
-                try {
-                f = client.getStatus();
-                } catch(IOException e){}
-//                throw new RuntimeIoException(ioEx);
+                if(!FTPReply.isPositiveCompletion(reply)) {
+                    client.disconnect();
+                    throw new FtpException("FTP server refused connection.");
+                }
+
+                return client.login(login, password);
+            } catch (IOException exception) {
+                logger.error("Connection failed.", exception);
             }
         }
         return false;
+    }
+
+    public Boolean logout() {
+        try {
+            return client.logout();
+        } catch (IOException e) {
+            logger.error("Error occurred on logout from FTP Server", e);
+            return false;
+        } finally {
+            if(client.isConnected()) {
+                try {
+                    client.disconnect();
+                } catch(IOException exception) {
+                    logger.error("Connection failed.", exception);
+                }
+            }
+        }
     }
 
     public Boolean uploadFile(String remoteName, File file) throws IOException {
@@ -100,9 +98,7 @@ public class FtpClientService {
     }
 
     public FTPFile[] getFileList(String pathname) throws IOException {
-        FTPFile[] fileList = null;
-        fileList = client.listFiles(pathname);
-
+        FTPFile[] fileList = client.listFiles(pathname);
         return fileList;
     }
 
@@ -131,14 +127,5 @@ public class FtpClientService {
                 absPath.delete(0, absPath.length());
             }
         }
-    }
-
-    public void close() throws IOException {
-        client.logout();
-        client.disconnect();
-    }
-
-    public Boolean isLogged() {
-        return logged;
     }
 }

@@ -1,6 +1,6 @@
 package com.issoft.entity;
 
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
