@@ -36,11 +36,12 @@ public class LogEntryDAOImpl implements LogEntryDAO {
     @Override
     public List<LogEntry> list() {
         DetachedCriteria criteria = DetachedCriteria.forClass(LogEntry.class);
-        List<LogEntry> result = hibernateTemplate.findByCriteria(criteria);
+        List result = hibernateTemplate.findByCriteria(criteria);
         return result;
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+        hibernateTemplate.setCacheQueries(true);
     }
 }
