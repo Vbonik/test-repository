@@ -25,6 +25,18 @@ function userFormValidation() {
     return flag;
 }
 
+function registrationFormValidation() {
+    resetCountFlagArray();
+    notNull('name');
+    notNull('home_directory');
+    notNull('email');
+
+    if (flag == false) {
+        alert(errorScope);
+    }
+    return flag;
+}
+
 function notNull(fieldName) {
     if (document.getElementById(fieldName).value.length == 0) {
         errorScope[count] = fieldName + " can't be null" + '\n';

@@ -34,6 +34,9 @@ public class AdministrationService extends ActionSupport implements Service {
     }
 
     public boolean updateUser(User user) {
+        if (user.getUser_roles().getId() == 0) {
+            user.setUser_roles(dao.getUserRoleById(1));
+        }
         return dao.update(user);
     }
 

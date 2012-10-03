@@ -10,7 +10,7 @@
 
     <package name="default" namespace="/" extends="struts-default">
         <result-types>
-            <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
+            <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
         </result-types>
 
         <interceptors>
@@ -86,8 +86,23 @@
             <result name="failure">jsp/warning.jsp</result>
         </action>
 
+        <action name="updateUserRegistration" method="updateUser" class="administrationAction">
+            <result name="success" type="tiles">/waitApprove.tiles</result>
+            <result name="failure">jsp/warning.jsp</result>
+        </action>
+
         <action name="editUser" method="editUser" class="administrationAction">
             <result name="success" type="tiles">/userInfo.tiles</result>
+            <result name="failure">jsp/warning.jsp</result>
+        </action>
+
+        <action name="addUser" method="addUser" class="administrationAction">
+            <result name="success" type="tiles">/addUser.tiles</result>
+            <result name="failure">jsp/warning.jsp</result>
+        </action>
+
+        <action name="userRegistration" method="addUser" class="administrationAction">
+            <result name="success" type="tiles">/registration.tiles</result>
             <result name="failure">jsp/warning.jsp</result>
         </action>
 

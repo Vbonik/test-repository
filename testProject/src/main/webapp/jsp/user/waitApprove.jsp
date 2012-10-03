@@ -1,0 +1,1 @@
+<h2>Thx for registration, wait until admin approve your email.</h2>

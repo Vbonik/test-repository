@@ -6,7 +6,7 @@
 
 <div id="tabvanilla" class="widget">
 
-    <ul class="tabnav">
+    <ul class="tabnav" style="width: 60%;">
         <li><a href="#userManagement">User management</a></li>
         <li><a href="#log">Log</a></li>
     </ul>

@@ -21,7 +21,7 @@ body {
 }
 
 .widget {
-    width: auto;
+    width: 85%;
     margin: 20px;
     padding: 10px;
     background: #f3f1eb;
