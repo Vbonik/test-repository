@@ -1,35 +1,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+<%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 
-<sx:head parseContent="true"/>
+<sj:head/>
 
-<div id="tabvanilla" class="widget">
+<s:url id="user" value="/userList"/>
+<s:url id="log" value="/logList"/>
 
-    <ul class="tabnav" style="width: 60%;">
-        <li><a href="#userManagement">User management</a></li>
-        <li><a href="#log">Log</a></li>
-    </ul>
+<sj:tabbedpanel id="adminTabPanel" animate="true">
+    <sj:tab href="%{user}" id="userTab" target="usersDiv" label="Users"/>
+    <sj:tab id="logTab" target="logsDiv" label="Logs"/>
 
-    <%--User management tab--%>
-    <div id="userManagement" class="tabdiv">
-        <s:url action="userList" id="userListUrl"/>
-        <div style="text-align: left;">
-            <sx:a notifyTopics="/refreshUsers">Refresh</sx:a>
-        </div>
-        </br>
-        <sx:div preload="true" id="users" theme="ajax" href="%{userListUrl}" loadingText="Loading..."
-                listenTopics="/refreshUsers"/>
+    <div id="usersDiv">
     </div>
 
-    <%--Log tab--%>
-    <div id="log" class="tabdiv">
-        <s:url action="logList" id="logListUrl"/>
-        <div style="text-align: left;">
-            <sx:a notifyTopics="/refreshLog">Show</sx:a>
-        </div>
-        </br>
-        <sx:div preload="false" id="logs" theme="ajax" href="%{logListUrl}" loadingText="Loading..."
-                listenTopics="/refreshLog"/>
+    <div id="logsDiv">
+        <sj:a href="%{log}" targets="logTableContainer" onCompleteTopics="completeDiv">
+            Update Log
+        </sj:a>
+
+        <sj:div id="logTableContainer"></sj:div>
     </div>
-</div>
+
+</sj:tabbedpanel>

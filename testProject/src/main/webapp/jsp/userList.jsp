@@ -2,7 +2,7 @@
 
 User list:<br>
 add users in table and some additional information about users actions<br>
-<table class="sortable" width="100px;">
+<table class="sortable">
     <thead>
     <tr>
         <th>User name</th>

@@ -5,4 +5,40 @@ table {
 
 th, td {
     padding: 10px 5px !important;
+    max-width: 100px;
+    word-wrap: break-word;
+}
+
+table tr:nth-child(2n) {
+    background: #f0f0f0;
+}
+
+.ui-widget-content {
+     font-size: 11px;
+}
+
+.ui-tabs .ui-tabs-nav {
+    height: 30px;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a,
+.ui-tabs .ui-tabs-nav li.ui-state-disabled a,
+.ui-tabs .ui-tabs-nav li.ui-state-processing a {
+    font-size: 12px;
+}
+
+.ui-tabs .ui-tabs-nav li a,
+.ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
+    font-size: 12px;
+}
+
+table.sortable thead th {
+    color: #222222;
+    height: 20px;
+    text-align: center;
+    background: #E5ECF9;
+}
+
+table.sortable thead th:hover {
+    background: #B0C4DE;
 }
