@@ -20,18 +20,19 @@
         <put-attribute name="title" value="Login"/>
         <put-attribute name="body" value="/jsp/login.jsp"/>
     </definition>
+
     <definition name="/admin.tiles" extends="baseLayout">
         <put-attribute name="title" value="Admin"/>
         <put-attribute name="body" value="/jsp/admin.jsp"/>
         <put-list-attribute name="styles">
-            <add-attribute value="/css/tabs.css"/>
             <add-attribute value="/css/kickstart.css"/>
             <add-attribute value="/css/style-common.css"/>
             <add-attribute value="/css/style-admin.css"/>
+            <add-attribute value="/css/jquery.dataTables.css"/>
         </put-list-attribute>
         <put-list-attribute name="scripts">
             <add-attribute value="/js/administration.js"/>
-            <add-attribute value="/js/jquery.tablesorter.js"/>
+            <add-attribute value="/js/jquery.dataTables.js"/>
         </put-list-attribute>
     </definition>
 
