@@ -1,4 +1,3 @@
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <table class="sortable" id="logTable">
