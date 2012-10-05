@@ -20,14 +20,14 @@ add users in table and some additional information about users actions<br>
         <th>Action</th>
     </tr>
     </thead>
-    <s:iterator value="userForm.usersList" var="user">
+    <s:iterator value="administrationForm.usersList" var="user">
         <s:url var="userEditURL" action="editUser">
-            <s:param name="userForm.user_id">
+            <s:param name="administrationForm.user_id">
                 <s:property value="#user.user_id"/>
             </s:param>
         </s:url>
         <s:url var="userDeleteURL" action="deleteUser">
-            <s:param name="userForm.user_id">
+            <s:param name="administrationForm.user_id">
                 <s:property value="#user.user_id"/>
             </s:param>
         </s:url>

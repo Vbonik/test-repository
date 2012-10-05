@@ -11,7 +11,7 @@
     </tr>
     </thead>
     <tbody>
-    <s:iterator value="userForm.logEntryList" var="logEntry">
+    <s:iterator value="administrationForm.logEntryList" var="logEntry">
         <tr>
             <td><s:property value="#logEntry.userName"/></td>
             <td><s:property value="#logEntry.authorities"/></td>

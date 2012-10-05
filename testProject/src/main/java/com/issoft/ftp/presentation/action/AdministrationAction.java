@@ -1,6 +1,6 @@
 package com.issoft.ftp.presentation.action;
 
-import com.issoft.ftp.model.UserForm;
+import com.issoft.ftp.model.AdministrationForm;
 import com.issoft.services.Service;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.log4j.Logger;
@@ -12,47 +12,47 @@ import org.apache.log4j.Logger;
 public class AdministrationAction extends ActionSupport {
     private static final Logger logger = Logger.getLogger(AdministrationAction.class);
 
-    private UserForm userForm;
+    private AdministrationForm administrationForm;
     private Service service;
 
     public String getUserFileList() {
-        userForm.setUsersList(service.getUserList());
+        administrationForm.setUsersList(service.getUserList());
         return SUCCESS;
     }
 
     public String addUser() {
-        if (userForm.getUser() != null) {
-            userForm.resetUserAndDefaultRoleEnable();
+        if (administrationForm.getUser() != null) {
+            administrationForm.resetUserAndDefaultRoleEnable();
         }
-        userForm.setUserRoleList(service.getUserRoleList());
+        administrationForm.setUserRoleList(service.getUserRoleList());
         return SUCCESS;
     }
 
     public String editUser() {
-        userForm.setUserRoleList(service.getUserRoleList());
-        userForm.setUser(service.getUserById(userForm.getUser_id()));
-        userForm.setDefault(userForm.getUser());
+        administrationForm.setUserRoleList(service.getUserRoleList());
+        administrationForm.setUser(service.getUserById(administrationForm.getUser_id()));
+        administrationForm.setDefault(administrationForm.getUser());
         return SUCCESS;
     }
 
     public String updateUser() {
-        service.updateUser(userForm.getUser());
+        service.updateUser(administrationForm.getUser());
         return SUCCESS;
     }
 
     public String deleteUser() {
-        service.deleteUser(userForm.getUser_id());
+        service.deleteUser(administrationForm.getUser_id());
         return SUCCESS;
     }
 
 
     //gettets and setters
-    public UserForm getUserForm() {
-        return userForm;
+    public AdministrationForm getAdministrationForm() {
+        return administrationForm;
     }
 
-    public void setUserForm(UserForm userForm) {
-        this.userForm = userForm;
+    public void setAdministrationForm(AdministrationForm administrationForm) {
+        this.administrationForm = administrationForm;
     }
 
     public Service getService() {

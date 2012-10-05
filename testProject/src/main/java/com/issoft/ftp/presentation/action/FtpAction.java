@@ -79,13 +79,10 @@ public class FtpAction extends ActionSupport implements ParameterAware {
     }
 
     public String downloadFile() throws FtpException, IOException {
-        try {
-            String tempPath = currentDirectory.getAbsolutePath().replace("_", "/");
-            fileInputStream = ftpClientService.downloadFile(tempPath + "/" + currentDirectory.getCurrentFile().getName());
-            if (fileInputStream != null) {
-                return SUCCESS;
-            }
-        } catch (NullPointerException e) {
+        String tempPath = currentDirectory.getAbsolutePath().replace("_", "/");
+        fileInputStream = ftpClientService.downloadFile(tempPath + "/" + currentDirectory.getCurrentFile().getName());
+        if (fileInputStream != null) {
+            return SUCCESS;
         }
         return FAILURE;
     }
@@ -120,11 +117,12 @@ public class FtpAction extends ActionSupport implements ParameterAware {
     /**
      * Login to FTP Server after succes spring-security login
      * Define users role and return appropriate result to redirect
+     *
      * @return Result name
      * @throws FtpException In case of FTP login error
      */
     public String login() throws FtpException {
-        User principal =  (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Boolean isLoggined = ftpClientService.login(principal.getUsername(), principal.getPassword());
         if (isLoggined) {
             if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
@@ -140,6 +138,7 @@ public class FtpAction extends ActionSupport implements ParameterAware {
 
     /**
      * Logout from FTP Server
+     *
      * @return Result name
      */
     public String logout() {

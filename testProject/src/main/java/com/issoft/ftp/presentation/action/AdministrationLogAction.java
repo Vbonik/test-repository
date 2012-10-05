@@ -1,6 +1,6 @@
 package com.issoft.ftp.presentation.action;
 
-import com.issoft.ftp.model.UserForm;
+import com.issoft.ftp.model.AdministrationForm;
 import com.issoft.log.database.LogEntryDAO;
 import com.opensymphony.xwork2.Action;
 
@@ -9,10 +9,10 @@ import com.opensymphony.xwork2.Action;
  */
 public class AdministrationLogAction {
     private LogEntryDAO logEntryDAO;
-    private UserForm userForm;
+    private AdministrationForm administrationForm;
 
     public String getLogList() {
-        userForm.setLogEntryList(logEntryDAO.list());
+        administrationForm.setLogEntryList(logEntryDAO.list());
         return Action.SUCCESS;
     }
 
@@ -24,12 +24,12 @@ public class AdministrationLogAction {
         this.logEntryDAO = logEntryDAO;
     }
 
-    public UserForm getUserForm() {
-        return userForm;
+    public AdministrationForm getAdministrationForm() {
+        return administrationForm;
     }
 
-    public void setUserForm(UserForm userForm) {
-        this.userForm = userForm;
+    public void setAdministrationForm(AdministrationForm administrationForm) {
+        this.administrationForm = administrationForm;
     }
 
 }

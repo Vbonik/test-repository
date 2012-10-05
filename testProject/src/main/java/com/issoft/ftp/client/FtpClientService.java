@@ -4,32 +4,19 @@
  */
 package com.issoft.ftp.client;
 
-import java.io.ByteArrayOutputStream;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPConnectionClosedException;
+import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.log4j.Logger;
-import org.springframework.web.multipart.MultipartFile;
+import org.apache.mina.core.RuntimeIoException;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.List;
-import java.util.Random;
-import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.io.SocketInputStream;
-import org.apache.mina.core.RuntimeIoException;
 
 /**
  * @author slavabrodnitski
@@ -53,6 +40,7 @@ public class FtpClientService {
 
     /**
      * Ftp client service initialization
+     *
      * @param host Host value to use
      * @param port Port number to use
      */
@@ -63,7 +51,8 @@ public class FtpClientService {
 
     /**
      * Connect and login to FTP Server
-     * @param login User login
+     *
+     * @param login    User login
      * @param password User password
      * @return <code>true</code> - in case of success login, <code>false</code> - otherwise
      * @throws FtpException In case of connection error
@@ -78,12 +67,12 @@ public class FtpClientService {
                 }
                 int reply = client.getReplyCode();
 
-                if(!FTPReply.isPositiveCompletion(reply)) {
+                if (!FTPReply.isPositiveCompletion(reply)) {
                     client.disconnect();
                     throw new FtpException("FTP server refused connection.");
                 }
 
-                return client.login(login, password);
+                return logged = client.login(login, password);
             } catch (IOException exception) {
                 logger.error("Connection failed.", exception);
             }
@@ -93,6 +82,7 @@ public class FtpClientService {
 
     /**
      * Logout and disconnect from FTP Server
+     *
      * @return <code>true</code> - in case of success logout and disconnect, <code>false</code> - otherwise
      */
     public Boolean logout() {
@@ -102,10 +92,10 @@ public class FtpClientService {
             logger.error("Error occurred on logout from FTP Server", e);
             return false;
         } finally {
-            if(client.isConnected()) {
+            if (client.isConnected()) {
                 try {
                     client.disconnect();
-                } catch(IOException exception) {
+                } catch (IOException exception) {
                     logger.error("Connection failed.", exception);
                 }
             }
@@ -121,9 +111,10 @@ public class FtpClientService {
 
     public InputStream downloadFile(String filePath) throws IOException {
         if ((logged) && (filePath != null)) {
-            return client.retrieveFileStream(filePath);                  
+            System.out.println(client.printWorkingDirectory());
+            return client.retrieveFileStream(filePath);
         }
-       return null;
+        return null;
     }
 
     public FTPFile[] getFileList(String pathname) throws IOException {
