@@ -54,9 +54,12 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.spri
 
     <bean id="mailService" class="com.issoft.log.mailer.MailService"/>
 
+    <bean id="jsonTable" class="com.issoft.ftp.presentation.action.JsonTable">
+        <property name="logEntryDAO" ref="myLogEntryDAO"/>
+    </bean>
+
     <!--Cron Trigger, run every 20 minutes-->
     <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-
         <property name="jobDetail" ref="runMeJob"/>
         <property name="cronExpression" value="0 0/20 * * * ?"/>
     </bean>

@@ -8,7 +8,7 @@
     <constant name="struts.objectFactory" value="spring"/>
     <constant name="struts.devMode" value="true"/>
 
-    <package name="default" namespace="/" extends="struts-default">
+    <package name="default" namespace="/" extends="struts-default,json-default">
         <result-types>
             <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
         </result-types>
@@ -79,6 +79,10 @@
             <result name="input">jsp/logList.jsp</result>
         </action>
 
+        <action name="jsontable" method="getJSON" class="jsonTable">
+            <result name="success" type="json">jsp/admin.jsp</result>
+        </action>
+
         <action name="updateUser" method="updateUser" class="administrationAction">
             <result name="success" type="redirectAction">
                 <param name="actionName">admin</param>
@@ -146,5 +150,5 @@
                 <param name="currentDirectory.typeOfFile">1</param>
             </result>
         </action>
-    </package>
+  </package>
 </struts>

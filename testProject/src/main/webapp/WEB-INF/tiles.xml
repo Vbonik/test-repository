@@ -28,11 +28,8 @@
             <add-attribute value="/css/kickstart.css"/>
             <add-attribute value="/css/style-common.css"/>
             <add-attribute value="/css/style-admin.css"/>
-            <add-attribute value="/css/jquery.dataTables.css"/>
         </put-list-attribute>
         <put-list-attribute name="scripts">
-            <add-attribute value="/js/administration.js"/>
-            <add-attribute value="/js/jquery.dataTables.js"/>
         </put-list-attribute>
     </definition>
 
