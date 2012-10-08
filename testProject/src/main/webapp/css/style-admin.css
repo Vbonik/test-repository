@@ -1,3 +1,5 @@
+/*Administration. Users table custom CSS*/
+
 table {
     width: 100%;
     margin: 10px 0;
@@ -32,13 +34,60 @@ table tr:nth-child(2n) {
     font-size: 12px;
 }
 
-table.sortable thead th {
-    color: #222222;
-    height: 20px;
-    text-align: center;
-    background: #E5ECF9;
+/* End of Administration. Users table custom CSS*/
+
+/* Administration table grid custom CSS */
+
+.ui-widget .ui-widget {
+    width: 100% !important;
 }
 
-table.sortable thead th:hover {
-    background: #B0C4DE;
+.ui-jqgrid .ui-jqgrid-view {
+    width: 100% !important;
 }
+
+.ui-jqgrid .ui-jqgrid-bdiv {
+    width: 100% !important;
+}
+
+.ui-jqgrid .ui-jqgrid-btable {
+    width: 100% !important;
+}
+
+.ui-jqgrid .ui-jqgrid-hdiv {
+    width: 100% !important;
+}
+
+.ui-jqgrid .ui-jqgrid-htable {
+    width: 100% !important;
+}
+
+
+.ui-jqgrid .ui-jqgrid-hbox {
+    padding-right: 0 !important;
+}
+
+.ui-jqgrid .ui-jqgrid-pager {
+    width: 100% !important;
+    overflow: visible !important;
+}
+
+.ui-jqgrid .ui-pg-input {
+    height: 20px !important;
+    width: 30px !important;
+}
+
+.ui-jqgrid .ui-jqgrid-pager {
+    height: 60px !important;
+}
+
+.ui-jqgrid .ui-pg-selbox {
+    height: 20px !important;
+}
+
+.ui-pg-table .ui-state-hover, .ui-pg-table .ui-state-focus {
+    background: none !important;
+    border: none !important;
+}
+
+/* End of Administration table grid custom CSS */
