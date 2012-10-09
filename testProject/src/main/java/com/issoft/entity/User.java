@@ -1,14 +1,16 @@
 package com.issoft.entity;
 
-import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Set;
 
 /**
  * User: nikitadavydov
@@ -44,9 +46,38 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private UserRole user_roles = new UserRole();
-
+    /**
+     * Users notification types
+     */
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "users_notifications",
+               joinColumns = {@JoinColumn(name = "user_id")},
+               inverseJoinColumns = {@JoinColumn(name = "notification_id")})
+    private Set<Notification> notifications;
 
     //getters & setters
+
+    public Set<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(Set<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    /**
+     * Gets notifications ids of current user
+     * @return Notification id array
+     */
+    public int[] getNotificationsId() {
+        int[] notificationsId = new int[notifications.size()];
+        int index = 0;
+        for (Notification notification : notifications) {
+            notificationsId[index] = notification.getId();
+            index++;
+        }
+        return notificationsId;
+    }
 
     public String getUser_id() {
         return user_id;

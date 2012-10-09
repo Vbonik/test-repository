@@ -13,6 +13,3 @@
     <s:password name="j_password" label="password" placeholder="password"/>
     <s:submit label="enter"/>
 </s:form>
-
-<s:url var="userRegistrationURL" action="userRegistration"/>
-<s:a href="%{userRegistrationURL}">Registration</s:a>

@@ -28,7 +28,6 @@ function userFormValidation() {
 function registrationFormValidation() {
     resetCountFlagArray();
     notNull('name');
-    notNull('home_directory');
     notNull('email');
 
     if (flag == false) {

@@ -105,7 +105,7 @@ public class AdministrationForm {
     public void setLogEntryList(List<LogEntry> logEntryList) {
         this.logEntryList = logEntryList;
     }
-
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

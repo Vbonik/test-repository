@@ -150,5 +150,24 @@
                 <param name="currentDirectory.typeOfFile">1</param>
             </result>
         </action>
-  </package>
+
+        <action name="profile" class="userProfileAction" method="prepareProfile">
+            <result name="success" type="tiles">/profile.tiles</result>
+            <result name="failure">/jsp/warning.jsp</result>
+        </action>
+
+        <action name="updateUserNotifications" class="userProfileAction" method="updateNotifications">
+            <result name="success" type="redirectAction">
+                <param name="actionName">profile</param>
+            </result>
+            <result name="failure">/jsp/warning.jsp</result>
+        </action>
+
+        <action name="changePassword" class="userProfileAction" method="changePassword">
+            <result name="success" type="redirectAction">
+                <param name="actionName">profile</param>
+            </result>
+            <result name="failure">/jsp/warning.jsp</result>
+        </action>
+    </package>
 </struts>

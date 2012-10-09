@@ -43,12 +43,9 @@
         <put-attribute name="body" value="/jsp/user.jsp"/>
         <put-list-attribute name="scripts">
             <add-attribute value="/js/jquery-1.8.1.js"/>
-            <add-attribute value="/js/kickstart.js"/>
-            <add-attribute value="/js/prettify.js"/>
             <add-attribute value="/js/validation.js"/>
         </put-list-attribute>
         <put-list-attribute name="styles">
-            <add-attribute value="/css/kickstart.css"/>
             <add-attribute value="/css/style-common.css"/>
         </put-list-attribute>
     </definition>
@@ -58,12 +55,9 @@
         <put-attribute name="body" value="/jsp/user.jsp"/>
         <put-list-attribute name="scripts">
             <add-attribute value="/js/jquery-1.8.1.js"/>
-            <add-attribute value="/js/kickstart.js"/>
-            <add-attribute value="/js/prettify.js"/>
             <add-attribute value="/js/validation.js"/>
         </put-list-attribute>
         <put-list-attribute name="styles">
-            <add-attribute value="/css/kickstart.css"/>
             <add-attribute value="/css/style-common.css"/>
         </put-list-attribute>
     </definition>
@@ -73,12 +67,9 @@
         <put-attribute name="body" value="/jsp/user/registration.jsp"/>
         <put-list-attribute name="scripts">
             <add-attribute value="/js/jquery-1.8.1.js"/>
-            <add-attribute value="/js/kickstart.js"/>
-            <add-attribute value="/js/prettify.js"/>
             <add-attribute value="/js/validation.js"/>
         </put-list-attribute>
         <put-list-attribute name="styles">
-            <add-attribute value="/css/kickstart.css"/>
             <add-attribute value="/css/style-common.css"/>
         </put-list-attribute>
     </definition>
@@ -88,13 +79,20 @@
         <put-attribute name="body" value="/jsp/user/waitApprove.jsp"/>
         <put-list-attribute name="scripts">
             <add-attribute value="/js/jquery-1.8.1.js"/>
-            <add-attribute value="/js/kickstart.js"/>
-            <add-attribute value="/js/prettify.js"/>
             <add-attribute value="/js/validation.js"/>
         </put-list-attribute>
         <put-list-attribute name="styles">
-            <add-attribute value="/css/kickstart.css"/>
             <add-attribute value="/css/style-common.css"/>
+        </put-list-attribute>
+    </definition>
+
+    <definition name="/profile.tiles" extends="baseLayout">
+        <put-attribute name="title" value="Profile"/>
+        <put-attribute name="body" value="/jsp/user/profile.jsp"/>
+        <put-list-attribute name="scripts">
+            <add-attribute value="/js/jquery-1.8.1.js"/>
+            <add-attribute value="/js/jquery.validate.js"/>
+            <add-attribute value="/js/userProfileValidation.js"/>
         </put-list-attribute>
     </definition>
 

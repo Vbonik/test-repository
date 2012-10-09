@@ -40,7 +40,6 @@ public class FtpClientService {
 
     /**
      * Ftp client service initialization
-     *
      * @param host Host value to use
      * @param port Port number to use
      */
@@ -51,8 +50,7 @@ public class FtpClientService {
 
     /**
      * Connect and login to FTP Server
-     *
-     * @param login    User login
+     * @param login User login
      * @param password User password
      * @return <code>true</code> - in case of success login, <code>false</code> - otherwise
      * @throws FtpException In case of connection error
@@ -67,7 +65,7 @@ public class FtpClientService {
                 }
                 int reply = client.getReplyCode();
 
-                if (!FTPReply.isPositiveCompletion(reply)) {
+                if(!FTPReply.isPositiveCompletion(reply)) {
                     client.disconnect();
                     throw new FtpException("FTP server refused connection.");
                 }
@@ -82,7 +80,6 @@ public class FtpClientService {
 
     /**
      * Logout and disconnect from FTP Server
-     *
      * @return <code>true</code> - in case of success logout and disconnect, <code>false</code> - otherwise
      */
     public Boolean logout() {
@@ -111,10 +108,9 @@ public class FtpClientService {
 
     public InputStream downloadFile(String filePath) throws IOException {
         if ((logged) && (filePath != null)) {
-            System.out.println(client.printWorkingDirectory());
             return client.retrieveFileStream(filePath);
         }
-        return null;
+       return null;
     }
 
     public FTPFile[] getFileList(String pathname) throws IOException {

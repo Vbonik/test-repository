@@ -113,6 +113,10 @@ form#login table {
     color: #888;
 }
 
+.header span a {
+    margin-left: 5px;
+}
+
 .errorblock {
     color: #ff0000;
     background-color: #ffEEEE;
@@ -132,4 +136,35 @@ form#login table {
 
 input, select {
     margin: 5px;
+}
+
+div.setting-area {
+    border-bottom: 1px dotted #CCCCCC;
+    margin: 0 auto;
+    padding: 10px 0;
+    width: 700px;
+}
+
+div.setting-area:last-child {
+    border-bottom: none;
+}
+
+div.setting-area h2 {
+    font-size: 21px;
+    font-weight: bold;
+    padding: 10px 0;
+}
+
+div.setting-area span {
+    display: block;
+    font-weight: bold;
+    padding: 10px 0;
+}
+
+label.error {
+    color: red;
+    font-style: italic;
+}
+input.error {
+    border: 1px dotted #f00;
 }

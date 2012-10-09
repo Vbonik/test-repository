@@ -15,6 +15,7 @@
                 <value>com.issoft.log.database.entity.EmailNotification</value>
                 <value>com.issoft.entity.User</value>
                 <value>com.issoft.entity.UserRole</value>
+                <value>com.issoft.entity.Notification</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -41,6 +42,8 @@
     <bean id="userDAO" class="com.issoft.log.database.UserEntityDAOImpl">
         <property name="sessionFactory" ref="mySessionFactory"/>
     </bean>
+
+    <bean id="notificationDAO" class="com.issoft.entity.NotificationDAOImpl"/>
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 

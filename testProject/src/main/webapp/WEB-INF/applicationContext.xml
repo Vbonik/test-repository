@@ -6,11 +6,16 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
+    <context:annotation-config />
+
     <bean:import resource="spring-hibernate.xml"/>
 
     <!--<bean id="ftpFile" class="com.issoft.ftp.model.FTPFile"/>-->
     <bean id="administrationForm" class="com.issoft.ftp.model.AdministrationForm"/>
+    <bean id="userForm" class="com.issoft.ftp.model.UserForm"/>
     <bean id="service" class="com.issoft.services.AdministrationService"/>
+
+    <bean id="notificationService" class="com.issoft.services.NotificationService"/>
 
     <bean id="inetAddress" class="java.net.Inet4Address" factory-method="getByName">
         <constructor-arg value="localhost"/>
@@ -28,15 +33,17 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.spri
     <bean id="administrationAction" class="com.issoft.ftp.presentation.action.AdministrationAction">
         <property name="administrationForm" ref="administrationForm"/>
         <property name="service">
-            <bean id="administrationService" class="com.issoft.services.AdministrationService">
-                <property name="dao" ref="dao"/>
-            </bean>
+            <bean id="administrationService" class="com.issoft.services.AdministrationService"/>
         </property>
     </bean>
 
     <bean id="administrationLogAction" class="com.issoft.ftp.presentation.action.AdministrationLogAction">
         <property name="administrationForm" ref="administrationForm"/>
         <property name="logEntryDAO" ref="myLogEntryDAO"/>
+    </bean>
+
+    <bean id="userProfileAction" class="com.issoft.ftp.presentation.action.UserProfileAction">
+        <property name="userForm" ref="userForm"/>
     </bean>
 
     <!--Spring Quartz-->

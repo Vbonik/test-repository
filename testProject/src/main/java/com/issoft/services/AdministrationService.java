@@ -5,6 +5,8 @@ import com.issoft.entity.UserRole;
 import com.issoft.entity.UsersDAO;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class AdministrationService extends ActionSupport implements Service {
 
     public boolean updateUser(User user) {
         if (user.getUser_roles().getId() == 0) {
-            user.setUser_roles(dao.getUserRoleById(1));
+            user.setUser_roles(dao.getUserRoleById(3));
         }
         return dao.update(user);
     }
@@ -52,6 +54,8 @@ public class AdministrationService extends ActionSupport implements Service {
         return dao;
     }
 
+    @Autowired
+    @Qualifier(value = "dao")
     public void setDao(UsersDAO dao) {
         this.dao = dao;
     }
