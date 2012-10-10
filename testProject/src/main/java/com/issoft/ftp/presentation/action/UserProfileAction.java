@@ -9,6 +9,7 @@ import com.issoft.services.AdministrationService;
 import com.issoft.services.NotificationService;
 import com.opensymphony.xwork2.ActionSupport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
@@ -41,6 +42,7 @@ public class UserProfileAction extends ActionSupport {
     }
 
     @Autowired
+    @Qualifier(value = "service")
     public void setAdministrationService(AdministrationService administrationService) {
         this.administrationService = administrationService;
     }

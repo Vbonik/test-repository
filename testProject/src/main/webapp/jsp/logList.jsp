@@ -1,7 +1,13 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sjg" uri="/struts-jquery-grid-tags" %>
+<%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 
 <s:url id="remoteurl" value="/jsontable"/>
+
+<div id="logDatepicker" class="hide">
+    <sj:datepicker />
+</div>
+
 <sjg:grid
         id="gridtable"
         caption="Logs"
@@ -34,6 +40,6 @@
                     searchoptions="{sopt:['cn']}"/>
     <sjg:gridColumn name="date" index="date" title="Date" sortable="true" search="true"
                     formatter="date"
-                    formatoptions="{newformat : 'd.m.Y H:i', srcformat : 'Y-m-d H:i:s'}"
-                    searchoptions="{sopt:['cn'] , dataInit:datePick, attr:{title:'Your Search Date'}}"/>
+                    formatoptions="{newformat : 'm.d.Y H:i', srcformat : 'Y-m-d H:i:s'}"
+                    searchoptions="{sopt:['cn'], dataInit:datePick}"/>
 </sjg:grid>

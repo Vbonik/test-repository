@@ -38,7 +38,6 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.spri
     </bean>
 
     <bean id="userProfileAction" class="com.issoft.ftp.presentation.action.UserProfileAction">
-        <property name="userForm" ref="userForm"/>
     </bean>
 
     <!--Spring Quartz-->
