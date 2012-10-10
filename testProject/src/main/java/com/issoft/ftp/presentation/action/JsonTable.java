@@ -8,50 +8,71 @@ import java.util.List;
 
 public class JsonTable extends ActionSupport {
 
-    //Your result List
+    //Result list
     private List<LogEntry> gridModel;
 
-    //get how many rows we want to have into the grid - rowNum attribute in the grid
+    //How many rows we want to have into the grid - rowNum attribute in the grid
     private Integer rows = 0;
 
-    //Get the requested page. By default grid sets this to 1.
+    //Requested page. By default grid sets this to 1.
     private Integer page = 0;
 
-    // sorting order - asc or desc
+    //Sorting order - asc or desc
     private String sord;
 
-    // get index row - i.e. user click to sort.
+    //Get index row - i.e. user click to sort.
     private String sidx;
 
-    // Search Field
+    //Search field
     private String searchField;
 
-    // The Search String
+    //Search string
     private String searchString;
 
-    // The Search Operation ['eq','ne','lt','le','gt','ge','bw','bn','in','ni','ew','en','cn','nc']
+    /*Search operation ['eq','ne','lt','le','gt','ge','bw','bn','in','ni','ew','en','cn','nc']
+        eq - equal ( = )
+        ne - not equal ( <> )
+        lt - little ( < )
+        le - little or equal ( <= )
+        gt - greater ( > )
+        ge - greater or equal ( >= )
+        bw - begins with ( LIKE val% )
+        ew - ends with (LIKE %val )
+        cn - contain (LIKE %val% )
+        bn - does not begins with
+        in - is in
+        ni - is not in
+        en - does not ends with
+        nc - does not contain
+        */
     private String searchOper;
 
-    // Your Total Pages
+    //Total pages
     private Integer total = 0;
 
-    // All Record
+    //All records quantity
     private Integer records = 0;
 
     LogEntryDAO logEntryDAO;
 
     public String execute() {
 
-        int to = (rows * page);
-        int from = to - rows;
+        records = logEntryDAO.count(searchOper, searchField, searchString);
 
-        //Count Rows (select count(*) from custumer)
-        records = logEntryDAO.list().size();
+        int to;
+        int from;
+        if (rows * page <= records) {
+            to = rows * page;
+            from = to - rows;
+        } else {
+            to = records;
+            from = records - to % rows;
+        }
 
-        //Your logic to search and select the required data.
-        gridModel = logEntryDAO.list().subList(from, to);
+        //Search and select the required data.
+        gridModel = logEntryDAO.search(from, rows, sord, sidx, searchOper, searchField, searchString);
 
-        //calculate the total pages for the query
+        //Calculate the total pages for the query
         total = (int) Math.ceil((double) records / (double) rows);
 
         return SUCCESS;

@@ -24,12 +24,12 @@ public class UserEntity {
     private boolean enableflag;
     private String homedirectory;
     private boolean writepermission;
-    private Long idletime;
-    private Long uploadrate;
-    private Long downloadrate;
-    private Long maxloginnumber;
-    private Long maxloginperip;
-    private Long roleId;
+    private int idletime;
+    private int uploadrate;
+    private int downloadrate;
+    private int maxloginnumber;
+    private int maxloginperip;
+    private int roleId;
     private String email;
     Set<EmailNotification> notifications = new HashSet<EmailNotification>();
 
@@ -54,11 +54,11 @@ public class UserEntity {
     }
 
     @Column(name = "ROLE_ID")
-    public Long getRoleId() {
+    public int getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Long roleId) {
+    public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
 
@@ -84,11 +84,11 @@ public class UserEntity {
     }
 
     @Column(name = "DOWNLOADRATE")
-    public Long getDownloadrate() {
+    public int getDownloadrate() {
         return downloadrate;
     }
 
-    public void setDownloadrate(Long downloadrate) {
+    public void setDownloadrate(int downloadrate) {
         this.downloadrate = downloadrate;
     }
 
@@ -111,38 +111,38 @@ public class UserEntity {
     }
 
     @Column(name = "IDLETIME")
-    public Long getIdletime() {
+    public int getIdletime() {
         return idletime;
     }
 
-    public void setIdletime(Long idletime) {
+    public void setIdletime(int idletime) {
         this.idletime = idletime;
     }
 
     @Column(name = "MAXLOGINNUMBER")
-    public Long getMaxloginnumber() {
+    public int getMaxloginnumber() {
         return maxloginnumber;
     }
 
-    public void setMaxloginnumber(Long maxloginnumber) {
+    public void setMaxloginnumber(int maxloginnumber) {
         this.maxloginnumber = maxloginnumber;
     }
 
     @Column(name = "MAXLOGINPERIP")
-    public Long getMaxloginperip() {
+    public int getMaxloginperip() {
         return maxloginperip;
     }
 
-    public void setMaxloginperip(Long maxloginperip) {
+    public void setMaxloginperip(int maxloginperip) {
         this.maxloginperip = maxloginperip;
     }
 
     @Column(name = "UPLOADRATE")
-    public Long getUploadrate() {
+    public int getUploadrate() {
         return uploadrate;
     }
 
-    public void setUploadrate(Long uploadrate) {
+    public void setUploadrate(int uploadrate) {
         this.uploadrate = uploadrate;
     }
 

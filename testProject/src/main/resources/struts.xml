@@ -74,13 +74,13 @@
             <result name="input">jsp/userList.jsp</result>
         </action>
 
-        <action name="logList" method="getLogList" class="administrationLogAction">
+        <action name="logList">
             <result>jsp/logList.jsp</result>
             <result name="input">jsp/logList.jsp</result>
         </action>
 
         <action name="jsontable" method="getJSON" class="jsonTable">
-            <result name="success" type="json">jsp/admin.jsp</result>
+            <result name="success" type="json"/>
         </action>
 
         <action name="updateUser" method="updateUser" class="administrationAction">

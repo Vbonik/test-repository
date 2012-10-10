@@ -16,18 +16,18 @@ import java.util.Set;
 @Table(name = "EMAIL_NOTIFICATIONS")
 public class EmailNotification {
 
-    private Long notificationId;
+    private int notificationId;
     private String notification;
     private Set<UserEntity> users = new HashSet<UserEntity>();
 
     @Id
     @Column(name = "NOTIFICATION_ID")
     @GeneratedValue
-    public Long getNotificationId() {
+    public int getNotificationId() {
         return notificationId;
     }
 
-    public void setNotificationId(Long notificationId) {
+    public void setNotificationId(int notificationId) {
         this.notificationId = notificationId;
     }
 

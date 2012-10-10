@@ -37,11 +37,6 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.spri
         </property>
     </bean>
 
-    <bean id="administrationLogAction" class="com.issoft.ftp.presentation.action.AdministrationLogAction">
-        <property name="administrationForm" ref="administrationForm"/>
-        <property name="logEntryDAO" ref="myLogEntryDAO"/>
-    </bean>
-
     <bean id="userProfileAction" class="com.issoft.ftp.presentation.action.UserProfileAction">
         <property name="userForm" ref="userForm"/>
     </bean>

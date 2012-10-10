@@ -3,11 +3,7 @@ package com.issoft.log.database.entity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -18,9 +14,9 @@ import java.util.Date;
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "LOG_TABLE")
-public class LogEntry {
+public class LogEntry implements Comparable {
 
-    private Long id;
+    private int id;
     private String userName;
     private String authorities;
     private String action;
@@ -30,11 +26,11 @@ public class LogEntry {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -47,7 +43,7 @@ public class LogEntry {
         this.userName = userName;
     }
 
-    @Column(name = "AUTHORITIES")
+    @Column(name = "AUTHORITIES", columnDefinition = "longtext")
     public String getAuthorities() {
         return authorities;
     }
@@ -56,7 +52,7 @@ public class LogEntry {
         this.authorities = authorities;
     }
 
-    @Column(name = "ACTION")
+    @Column(name = "ACTION", columnDefinition = "longtext")
     public String getAction() {
         return action;
     }
@@ -65,7 +61,7 @@ public class LogEntry {
         this.action = action;
     }
 
-    @Column(name = "STATUS")
+    @Column(name = "STATUS", columnDefinition = "longtext")
     public String getStatus() {
         return status;
     }
@@ -81,5 +77,10 @@ public class LogEntry {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

@@ -15,7 +15,7 @@
         </put-list-attribute>
         <put-list-attribute name="scripts"/>
     </definition>
-    
+
     <definition name="/login.tiles" extends="baseLayout">
         <put-attribute name="title" value="Login"/>
         <put-attribute name="body" value="/jsp/login.jsp"/>
@@ -30,12 +30,13 @@
             <add-attribute value="/css/style-admin.css"/>
         </put-list-attribute>
         <put-list-attribute name="scripts">
+            <add-attribute value="/js/administration.js"/>
         </put-list-attribute>
     </definition>
 
     <definition name="/list.tiles" extends="baseLayout">
-       <put-attribute name="title" value="User"/>
-       <put-attribute name="body" value="/jsp/directoryList.jsp"/>
+        <put-attribute name="title" value="User"/>
+        <put-attribute name="body" value="/jsp/directoryList.jsp"/>
     </definition>
 
     <definition name="/userInfo.tiles" extends="baseLayout">

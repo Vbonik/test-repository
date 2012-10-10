@@ -13,7 +13,7 @@ public class UserRole implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    private long id;
+    private int id;
     @Column(name = "authority")
     private String authority;
 
@@ -23,11 +23,11 @@ public class UserRole implements Serializable {
 
 
     //getters & setters
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -54,7 +54,7 @@ public class UserRole implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
+        int result =  id ^ (id >>> 32);
         result = 31 * result + (authority != null ? authority.hashCode() : 0);
         return result;
     }
