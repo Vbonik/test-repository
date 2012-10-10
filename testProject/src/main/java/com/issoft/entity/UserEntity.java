@@ -1,6 +1,8 @@
 package com.issoft.entity;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.math.BigInteger;
@@ -88,6 +90,7 @@ public class UserEntity {
     @JoinTable(name = "USERS_NOTIFICATIONS",
             joinColumns = {@JoinColumn(name = "USER_ID")},
             inverseJoinColumns = {@JoinColumn(name = "NOTIFICATION_ID")})
+    @Fetch(value = FetchMode.SELECT)
     public Set<EmailNotification> getNotifications() {
         return notifications;
     }
