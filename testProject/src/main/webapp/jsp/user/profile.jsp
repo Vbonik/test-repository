@@ -7,7 +7,7 @@
     <div>
         <s:form action="updateUserNotifications" method="post">
             <s:checkboxlist list="userForm.notifications"
-                            listKey="id"
+                            listKey="notificationId"
                             listValue="notification"
                             label="Choose notifications:"
                             value="userForm.checkedNotifications"

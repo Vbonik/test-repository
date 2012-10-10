@@ -1,7 +1,7 @@
-package com.issoft.log.database;
+package com.issoft.entity.dao;
 
 import com.issoft.ftp.util.SearchOperation;
-import com.issoft.log.database.entity.LogEntry;
+import com.issoft.entity.LogEntry;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.*;
 import org.springframework.orm.hibernate3.HibernateTemplate;

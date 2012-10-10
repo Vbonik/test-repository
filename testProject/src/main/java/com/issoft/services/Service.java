@@ -1,6 +1,6 @@
 package com.issoft.services;
 
-import com.issoft.entity.User;
+import com.issoft.entity.UserEntity;
 import com.issoft.entity.UserRole;
 
 import java.util.List;
@@ -10,13 +10,13 @@ import java.util.List;
  * Date: 10/1/12
  */
 public interface Service {
-    public List<User> getUserList();
+    public List<UserEntity> getUserList();
 
     public List<UserRole> getUserRoleList();
 
-    public User getUserById(String id);
+    public UserEntity getUserById(String id);
 
-    public boolean updateUser(User user);
+    public boolean updateUser(UserEntity user);
 
     public boolean deleteUser(String id);
 }

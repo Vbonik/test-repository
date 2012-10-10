@@ -10,12 +10,10 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="annotatedClasses">
             <list>
-                <value>com.issoft.log.database.entity.LogEntry</value>
-                <value>com.issoft.log.database.entity.UserEntity</value>
-                <value>com.issoft.log.database.entity.EmailNotification</value>
-                <value>com.issoft.entity.User</value>
+                <value>com.issoft.entity.LogEntry</value>
+                <value>com.issoft.entity.UserEntity</value>
+                <value>com.issoft.entity.EmailNotification</value>
                 <value>com.issoft.entity.UserRole</value>
-                <value>com.issoft.entity.Notification</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -31,19 +29,15 @@
         </property>
     </bean>
 
-    <bean id="myLogEntryDAO" class="com.issoft.log.database.LogEntryDAOImpl">
+    <bean id="myLogEntryDAO" class="com.issoft.entity.dao.LogEntryDAOImpl">
         <property name="sessionFactory" ref="mySessionFactory"/>
     </bean>
 
-    <bean id="dao" class="com.issoft.entity.UsersDAOImpl">
+    <bean id="userDAO" class="com.issoft.entity.dao.UserEntityDAOImpl">
         <property name="sessionFactory" ref="mySessionFactory"/>
     </bean>
 
-    <bean id="userDAO" class="com.issoft.log.database.UserEntityDAOImpl">
-        <property name="sessionFactory" ref="mySessionFactory"/>
-    </bean>
-
-    <bean id="notificationDAO" class="com.issoft.entity.NotificationDAOImpl"/>
+    <bean id="notificationDAO" class="com.issoft.entity.dao.EmailNotificationDAOImpl"/>
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 

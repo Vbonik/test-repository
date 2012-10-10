@@ -1,7 +1,7 @@
 package com.issoft.log;
 
 import com.issoft.ftp.util.Constants;
-import com.issoft.log.database.LogEntryDAO;
+import com.issoft.entity.dao.LogEntryDAO;
 import com.issoft.log.mailer.model.Mail;
 import com.issoft.log.mailer.model.MailStorage;
 import org.aspectj.lang.JoinPoint;

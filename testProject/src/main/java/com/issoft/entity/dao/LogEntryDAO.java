@@ -1,6 +1,6 @@
-package com.issoft.log.database;
+package com.issoft.entity.dao;
 
-import com.issoft.log.database.entity.LogEntry;
+import com.issoft.entity.LogEntry;
 
 import java.util.List;
 

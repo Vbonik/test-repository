@@ -4,15 +4,15 @@
     <user_roles id="2" authority="ROLE_USER" />
 
     <users userid="testuser"
-           userpassword="784742a66a3a0c271feced5b149ff8db"
-           homedirectory="d:\temp\"
-           enableflag="1"
-           writepermission="1"
-           idletime="0"
-           uploadrate="0"
-           downloadrate="0"
-           maxloginnumber="100"
-           maxloginperip="100"
+           userPassword="784742a66a3a0c271feced5b149ff8db"
+           homeDirectory="d:\temp\"
+           enableFlag="1"
+           writePermission="1"
+           idleTime="0"
+           uploadRate="0"
+           downloadRate="0"
+           maxLoginNumber="100"
+           maxLoginPerIP="100"
            role_id="1"
            email="toshaskywalker@gmail.com" />
 </dataset>

@@ -1,13 +1,13 @@
 package com.issoft.services;
 
-import com.issoft.entity.CommonDAO;
-import com.issoft.entity.Notification;
+import com.issoft.entity.EmailNotification;
+import com.issoft.entity.dao.CommonDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
 
-public class NotificationService extends CommonService<Notification, Integer> {
+public class NotificationService extends CommonService<EmailNotification, Integer> {
     @Autowired
     @Qualifier("notificationDAO")
     public void setDao(CommonDAO dao) {
@@ -20,8 +20,8 @@ public class NotificationService extends CommonService<Notification, Integer> {
      * @return Entities list
      */
     @Override
-    public List<Notification> list() {
-         return dao.list();
+    public List<EmailNotification> list() {
+        return dao.list();
     }
 
     /**
@@ -31,7 +31,7 @@ public class NotificationService extends CommonService<Notification, Integer> {
      * @return Entity with specified id
      */
     @Override
-    public Notification getById(Integer id) {
+    public EmailNotification getById(Integer id) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
@@ -42,7 +42,7 @@ public class NotificationService extends CommonService<Notification, Integer> {
      * @return <code>true</code> in success case, <code>false</code> - otherwise
      */
     @Override
-    public boolean update(Notification entity) {
+    public boolean update(EmailNotification entity) {
         return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 

@@ -1,8 +1,8 @@
 package com.issoft.ftp.model;
 
-import com.issoft.entity.User;
+import com.issoft.entity.LogEntry;
+import com.issoft.entity.UserEntity;
 import com.issoft.entity.UserRole;
-import com.issoft.log.database.entity.LogEntry;
 
 import java.util.List;
 
@@ -12,15 +12,15 @@ import java.util.List;
  */
 
 public class AdministrationForm {
-    private User user;
+    private UserEntity user;
     private String user_id;
-    private List<User> usersList;
+    private List<UserEntity> usersList;
     private List<UserRole> userRoleList;
     private UserRole defaultRole;
     private boolean defaultEnable;
     private List<LogEntry> logEntryList;
 
-    public AdministrationForm(com.issoft.entity.User user, String user_id, List<User> usersList, List<UserRole> userRoleList) {
+    public AdministrationForm(UserEntity user, String user_id, List<UserEntity> usersList, List<UserRole> userRoleList) {
         this.user = user;
         this.user_id = user_id;
         this.usersList = usersList;
@@ -31,19 +31,19 @@ public class AdministrationForm {
     }
 
     //getters & setters
-    public User getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 
-    public List<User> getUsersList() {
+    public List<UserEntity> getUsersList() {
         return usersList;
     }
 
-    public void setUsersList(List<User> usersList) {
+    public void setUsersList(List<UserEntity> usersList) {
         this.usersList = usersList;
     }
 
@@ -93,8 +93,8 @@ public class AdministrationForm {
         this.defaultEnable = false;
     }
 
-    public void setDefault(User user) {
-        setDefaultEnable(user.isEnableflag());
+    public void setDefault(UserEntity user) {
+        setDefaultEnable(user.isEnableFlag());
         setDefaultRole(user.getUser_roles());
     }
 
@@ -105,7 +105,7 @@ public class AdministrationForm {
     public void setLogEntryList(List<LogEntry> logEntryList) {
         this.logEntryList = logEntryList;
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -119,8 +119,10 @@ public class AdministrationForm {
         if (user != null ? !user.equals(administrationForm.user) : administrationForm.user != null) return false;
         if (userRoleList != null ? !userRoleList.equals(administrationForm.userRoleList) : administrationForm.userRoleList != null)
             return false;
-        if (user_id != null ? !user_id.equals(administrationForm.user_id) : administrationForm.user_id != null) return false;
-        if (usersList != null ? !usersList.equals(administrationForm.usersList) : administrationForm.usersList != null) return false;
+        if (user_id != null ? !user_id.equals(administrationForm.user_id) : administrationForm.user_id != null)
+            return false;
+        if (usersList != null ? !usersList.equals(administrationForm.usersList) : administrationForm.usersList != null)
+            return false;
         if (logEntryList != null ? !logEntryList.equals(administrationForm.logEntryList)
                 : administrationForm.logEntryList != null) return false;
         return true;

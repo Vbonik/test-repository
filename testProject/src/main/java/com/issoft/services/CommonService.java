@@ -1,8 +1,6 @@
 package com.issoft.services;
 
-import com.issoft.entity.CommonDAO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.issoft.entity.dao.CommonDAO;
 
 import java.util.List;
 

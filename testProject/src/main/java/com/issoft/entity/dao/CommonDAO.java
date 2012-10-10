@@ -1,4 +1,4 @@
-package com.issoft.entity;
+package com.issoft.entity.dao;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

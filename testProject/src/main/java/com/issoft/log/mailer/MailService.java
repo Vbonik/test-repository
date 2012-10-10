@@ -1,6 +1,6 @@
 package com.issoft.log.mailer;
 
-import com.issoft.log.database.UserEntityDAO;
+import com.issoft.entity.dao.UserEntityDAO;
 import com.issoft.log.mailer.model.Mail;
 import com.issoft.log.mailer.model.MailStorage;
 

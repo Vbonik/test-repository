@@ -22,21 +22,21 @@ add users in table and some additional information about users actions<br>
     </thead>
     <s:iterator value="administrationForm.usersList" var="user">
         <s:url var="userEditURL" action="editUser">
-            <s:param name="administrationForm.user_id">
-                <s:property value="#user.user_id"/>
+            <s:param name="administrationForm.userId">
+                <s:property value="#user.userId"/>
             </s:param>
         </s:url>
         <s:url var="userDeleteURL" action="deleteUser">
-            <s:param name="administrationForm.user_id">
-                <s:property value="#user.user_id"/>
+            <s:param name="administrationForm.userId">
+                <s:property value="#user.userId"/>
             </s:param>
         </s:url>
         <tbody>
         <tr>
-            <td><s:property value="#user.user_id"/></td>
-            <td><s:property value="#user.user_password"/></td>
+            <td><s:property value="#user.userId"/></td>
+            <td><s:property value="#user.userPassword"/></td>
             <td><s:property value="#user.home_directory"/></td>
-            <td><s:property value="#user.enableflag"/></td>
+            <td><s:property value="#user.enableFlag"/></td>
             <td><s:property value="#user.write_permission"/></td>
             <td><s:property value="#user.idle_time"/></td>
             <td><s:property value="#user.upload_rate"/></td>
@@ -53,7 +53,7 @@ add users in table and some additional information about users actions<br>
                 </s:a>
                 <s:a href="%{userDeleteURL}">
                     <span class="icon red small" data-icon="m" title="Delete" style="display: inline-block; "
-                          onclick="return confirmDelete('<s:property value="#user.user_id"/>');">
+                          onclick="return confirmDelete('<s:property value="#user.userId"/>');">
                     <span aria-hidden="true">m</span>
                     </span>
                 </s:a>

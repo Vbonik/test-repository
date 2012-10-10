@@ -1,4 +1,4 @@
-package com.issoft.log.database.entity;
+package com.issoft.entity;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;

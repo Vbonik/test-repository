@@ -18,7 +18,7 @@
             <bind-xml name="homeDirectory" node="element"/>
         </field>
 
-        <field name="enableflag" type="boolean">
+        <field name="enableFlag" type="boolean">
             <bind-xml name="enableFlag" node="element"/>
         </field>
 

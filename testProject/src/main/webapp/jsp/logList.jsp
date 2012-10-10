@@ -32,7 +32,8 @@
                     searchoptions="{sopt:['cn']}"/>
     <sjg:gridColumn name="status" index="status" title="Status" sortable="true" search="true"
                     searchoptions="{sopt:['cn']}"/>
-    <sjg:gridColumn name="date" index="date" title="Date" sortable="true" search="false"
+    <sjg:gridColumn name="date" index="date" title="Date" sortable="true" search="true"
                     formatter="date"
-                    formatoptions="{newformat : 'd.m.Y H:i', srcformat : 'Y-m-d H:i:s'}"/>
+                    formatoptions="{newformat : 'd.m.Y H:i', srcformat : 'Y-m-d H:i:s'}"
+                    searchoptions="{sopt:['cn'] , dataInit:datePick, attr:{title:'Your Search Date'}}"/>
 </sjg:grid>

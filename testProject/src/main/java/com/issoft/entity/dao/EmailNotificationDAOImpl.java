@@ -1,25 +1,23 @@
-package com.issoft.entity;
+package com.issoft.entity.dao;
 
-import org.hibernate.SessionFactory;
+import com.issoft.entity.EmailNotification;
 import org.hibernate.criterion.DetachedCriteria;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import java.util.List;
 
 /**
  * Notification DAO implementation
  */
-public class NotificationDAOImpl extends CommonDAO<Notification, Integer> {
+public class EmailNotificationDAOImpl extends CommonDAO<EmailNotification, Integer> {
     /**
      * Gets list of entities
      *
      * @return Entities list
      */
     @Override
-    public List<Notification> list() {
-        DetachedCriteria criteria = DetachedCriteria.forClass(Notification.class);
-        List<Notification> notifications = hibernateTemplate.findByCriteria(criteria);
+    public List<EmailNotification> list() {
+        DetachedCriteria criteria = DetachedCriteria.forClass(EmailNotification.class);
+        List<EmailNotification> notifications = hibernateTemplate.findByCriteria(criteria);
         return notifications;
     }
 
@@ -30,7 +28,7 @@ public class NotificationDAOImpl extends CommonDAO<Notification, Integer> {
      * @return Entity with specified id
      */
     @Override
-    public Notification getById(Integer id) {
+    public EmailNotification getById(Integer id) {
         return null;
     }
 
@@ -41,7 +39,7 @@ public class NotificationDAOImpl extends CommonDAO<Notification, Integer> {
      * @return <code>true</code> in success case, <code>false</code> - otherwise
      */
     @Override
-    public boolean update(Notification entity) {
+    public boolean update(EmailNotification entity) {
         return false;
     }
 

@@ -4,9 +4,9 @@
 
 <div class="inner">
     <s:form action="Ftp" method="POST">
-        <s:textfield key="administrationForm.user.user_id" labelposition="top" labelSeparator="" label="" id="name"
+        <s:textfield key="administrationForm.user.userId" labelposition="top" labelSeparator="" label="" id="name"
                      placeholder="Name"/>
-        <s:textfield key="administrationForm.user.user_password" labelposition="top" labelSeparator="" label="" id="password"
+        <s:textfield key="administrationForm.user.userPassword" labelposition="top" labelSeparator="" label="" id="password"
                      placeholder="Password"/>
         <s:textfield key="administrationForm.user.home_directory" labelposition="top" labelSeparator="" label=""
                      id="home_directory" placeholder="User home directory"/>
@@ -20,8 +20,8 @@
                   labelposition="top"
                   label="Role"/>
 
-        <s:select name="administrationForm.user.enableflag"
-                  id="enableflag"
+        <s:select name="administrationForm.user.enableFlag"
+                  id="enableFlag"
                   list="#{'false':'false', 'true':'true'}"
                   value="administrationForm.defaultEnable"
                   labelposition="top"

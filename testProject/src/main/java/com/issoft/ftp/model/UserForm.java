@@ -1,7 +1,7 @@
 package com.issoft.ftp.model;
 
-import com.issoft.entity.Notification;
-import com.issoft.entity.User;
+import com.issoft.entity.EmailNotification;
+import com.issoft.entity.UserEntity;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class UserForm {
     /**
      * Notifications list
      */
-    private List<Notification> notifications;
+    private List<EmailNotification> notifications;
     /**
      * Selected by user notification ids
      */
@@ -34,13 +34,13 @@ public class UserForm {
     /**
      * Current user
      */
-    private User user;
+    private UserEntity user;
 
-    public List<Notification> getNotifications() {
+    public List<EmailNotification> getNotifications() {
         return notifications;
     }
 
-    public void setNotifications(List<Notification> notifications) {
+    public void setNotifications(List<EmailNotification> notifications) {
         this.notifications = notifications;
     }
 
@@ -52,11 +52,11 @@ public class UserForm {
         this.checkedNotifications = checkedNotifications;
     }
 
-    public User getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 

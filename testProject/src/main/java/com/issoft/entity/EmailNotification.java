@@ -1,11 +1,6 @@
-package com.issoft.log.database.entity;
+package com.issoft.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,6 +42,26 @@ public class EmailNotification {
 
     public void setUsers(Set<UserEntity> users) {
         this.users = users;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EmailNotification that = (EmailNotification) o;
+
+        if (notificationId != that.notificationId) return false;
+        if (!notification.equals(that.notification)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = notificationId;
+        result = 31 * result + notification.hashCode();
+        return result;
     }
 }
 

@@ -1,7 +1,7 @@
 package com.issoft.ftp.presentation.action;
 
-import com.issoft.log.database.LogEntryDAO;
-import com.issoft.log.database.entity.LogEntry;
+import com.issoft.entity.dao.LogEntryDAO;
+import com.issoft.entity.LogEntry;
 import com.opensymphony.xwork2.ActionSupport;
 
 import java.util.List;
