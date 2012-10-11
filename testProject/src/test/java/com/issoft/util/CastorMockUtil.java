@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.issoft.entity.User;
 import org.xml.sax.InputSource;
 
 /**

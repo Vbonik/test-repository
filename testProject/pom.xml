@@ -25,6 +25,8 @@
             <releases><enabled>true</enabled></releases>
             <snapshots><enabled>false</enabled></snapshots>
         </repository>
+        
+        
     </repositories>
 
     <properties>
@@ -181,6 +183,7 @@
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
             <version>2.6.0</version>
+            <type>pom</type>
         </dependency>
 
         <dependency>

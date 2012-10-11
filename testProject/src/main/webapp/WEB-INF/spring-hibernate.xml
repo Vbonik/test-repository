@@ -28,20 +28,23 @@
             </props>
         </property>
     </bean>
-
+    
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <constructor-arg ref="mySessionFactory"/>
+    </bean>
     <bean id="myLogEntryDAO" class="com.issoft.entity.dao.LogEntryDAOImpl">
-        <property name="sessionFactory" ref="mySessionFactory"/>
+        <property name="hibernateTemplate" ref="hibernateTemplate"/>
     </bean>
 
     <bean id="userDAO" class="com.issoft.entity.dao.UserEntityDAOImpl">
-        <property name="sessionFactory" ref="mySessionFactory"/>
+        <property name="hibernateTemplate" ref="hibernateTemplate"/>
     </bean>
 
     <bean id="notificationDAO" class="com.issoft.entity.dao.EmailNotificationDAOImpl"/>
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
-     <!--Aspect-->
+    <!--Aspect-->
     <bean id="customerAspect" class="com.issoft.log.LogMailAspect">
         <property name="logEntryDAO" ref="myLogEntryDAO"/>
     </bean>
@@ -49,5 +52,31 @@
     <bean id="mailService" class="com.issoft.log.mailer.MailService">
         <property name="userEntityDAO" ref="userDAO"/>
     </bean>
-
+    
+    <!-- ANNOTATION MAGIC-->
+    <bean id="storeAspect" class="com.issoft.log.annotation.StoreAspect"/>
+    
+    <bean id="customerServiceProxy"
+          class="org.springframework.aop.framework.ProxyFactoryBean">  
+        <property name="target" ref="hibernateTemplate"/>
+        <property name="interceptorNames">
+            <list>
+                <value>customerAdvisor</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="hijackAroundStoreAdvice" class="com.issoft.log.annotation.StoreAspect" />
+    
+    <bean id="customerPointcut" 
+          class="org.springframework.aop.support.NameMatchMethodPointcut">
+        <property name="mappedName" value="saveOrUpdate" />
+    </bean>
+         
+    <bean id="customerAdvisor" 
+          class="org.springframework.aop.support.DefaultPointcutAdvisor">
+        <property name="pointcut" ref="customerPointcut" />
+        <property name="advice" ref="hijackAroundStoreAdvice" />
+    </bean>
+    
 </beans>

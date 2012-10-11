@@ -129,4 +129,13 @@ public class LogEntryDAOImpl implements LogEntryDAO {
         this.hibernateTemplate = new HibernateTemplate(sessionFactory);
         hibernateTemplate.setCacheQueries(true);
     }
+
+    public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+        this.hibernateTemplate = hibernateTemplate;
+    }
+
+    public HibernateTemplate getHibernateTemplate() {
+        return hibernateTemplate;
+    }
+    
 }
