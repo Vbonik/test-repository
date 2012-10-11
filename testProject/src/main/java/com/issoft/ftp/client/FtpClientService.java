@@ -13,8 +13,11 @@ import org.apache.mina.core.RuntimeIoException;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -106,11 +109,24 @@ public class FtpClientService {
         return false;
     }
 
-    public InputStream downloadFile(String filePath) throws IOException {
-        if ((logged) && (filePath != null)) {
-            return client.retrieveFileStream(filePath);
+    public InputStream downloadFile(final String filePath) throws IOException {
+         if ((logged) && (filePath != null)) {
+            final PipedOutputStream pout = new PipedOutputStream();
+            PipedInputStream pin = new PipedInputStream(pout);
+            Runnable exporter = new Runnable() {
+                public void run() {
+                    try {
+                        client.retrieveFile(filePath, pout);
+                    } catch (IOException ioEx) {
+                        throw new RuntimeException(ioEx);
+                    }
+                }
+            };
+            Thread t = new Thread(exporter);
+            t.start(); 
+            return pin;
         }
-       return null;
+        throw new FileNotFoundException(filePath + " file not found.");
     }
 
     public FTPFile[] getFileList(String pathname) throws IOException {
