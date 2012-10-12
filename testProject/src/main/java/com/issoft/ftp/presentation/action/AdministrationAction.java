@@ -1,9 +1,14 @@
 package com.issoft.ftp.presentation.action;
 
+import com.issoft.entity.UserEntity;
+import com.issoft.entity.UserRole;
 import com.issoft.ftp.model.AdministrationForm;
 import com.issoft.services.Service;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: nikitadavydov
@@ -16,7 +21,21 @@ public class AdministrationAction extends ActionSupport {
     private Service service;
 
     public String getUserFileList() {
-        administrationForm.setUsersList(service.getUserList());
+        List<UserEntity> allUsers = service.getUserList();
+
+        List<UserEntity> users = new ArrayList<UserEntity>();
+        List<UserEntity> newUsers = new ArrayList<UserEntity>();
+
+        for (UserEntity user : allUsers) {
+            if (user.checkIsNewUser()) {
+                newUsers.add(user);
+            } else {
+                users.add(user);
+            }
+        }
+
+        administrationForm.setUsersList(users);
+        administrationForm.setNewUsersList(newUsers);
         return SUCCESS;
     }
 
@@ -30,18 +49,25 @@ public class AdministrationAction extends ActionSupport {
 
     public String editUser() {
         administrationForm.setUserRoleList(service.getUserRoleList());
-        administrationForm.setUser(service.getUserById(administrationForm.getUser_id()));
+        administrationForm.setUser(service.getUserById(administrationForm.getUserId()));
         administrationForm.setDefault(administrationForm.getUser());
         return SUCCESS;
     }
 
     public String updateUser() {
+        List<UserRole> roles = service.getUserRoleList();
+        for (UserRole userRole : roles) {
+            if (userRole.getId() == administrationForm.getUser().getUser_roles().getId()) {
+                administrationForm.getUser().setUser_roles(userRole);
+                break;
+            }
+        }
         service.updateUser(administrationForm.getUser());
         return SUCCESS;
     }
 
     public String deleteUser() {
-        service.deleteUser(administrationForm.getUser_id());
+        service.deleteUser(administrationForm.getUserId());
         return SUCCESS;
     }
 

@@ -13,8 +13,9 @@ import java.util.List;
 
 public class AdministrationForm {
     private UserEntity user;
-    private String user_id;
+    private String userId;
     private List<UserEntity> usersList;
+    private List<UserEntity> newUsersList;
     private List<UserRole> userRoleList;
     private UserRole defaultRole;
     private boolean defaultEnable;
@@ -22,7 +23,7 @@ public class AdministrationForm {
 
     public AdministrationForm(UserEntity user, String user_id, List<UserEntity> usersList, List<UserRole> userRoleList) {
         this.user = user;
-        this.user_id = user_id;
+        this.userId = user_id;
         this.usersList = usersList;
         this.userRoleList = userRoleList;
     }
@@ -31,6 +32,14 @@ public class AdministrationForm {
     }
 
     //getters & setters
+    public List<UserEntity> getNewUsersList() {
+        return newUsersList;
+    }
+
+    public void setNewUsersList(List<UserEntity> newUsersList) {
+        this.newUsersList = newUsersList;
+    }
+
     public UserEntity getUser() {
         return user;
     }
@@ -47,12 +56,12 @@ public class AdministrationForm {
         this.usersList = usersList;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public void resetUserAndDefaultRoleEnable() {
@@ -119,7 +128,7 @@ public class AdministrationForm {
         if (user != null ? !user.equals(administrationForm.user) : administrationForm.user != null) return false;
         if (userRoleList != null ? !userRoleList.equals(administrationForm.userRoleList) : administrationForm.userRoleList != null)
             return false;
-        if (user_id != null ? !user_id.equals(administrationForm.user_id) : administrationForm.user_id != null)
+        if (userId != null ? !userId.equals(administrationForm.userId) : administrationForm.userId != null)
             return false;
         if (usersList != null ? !usersList.equals(administrationForm.usersList) : administrationForm.usersList != null)
             return false;
@@ -131,7 +140,7 @@ public class AdministrationForm {
     @Override
     public int hashCode() {
         int result = user != null ? user.hashCode() : 0;
-        result = 31 * result + (user_id != null ? user_id.hashCode() : 0);
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (usersList != null ? usersList.hashCode() : 0);
         result = 31 * result + (userRoleList != null ? userRoleList.hashCode() : 0);
         result = 31 * result + (defaultRole != null ? defaultRole.hashCode() : 0);

@@ -1,53 +1,50 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<h1>Here you can add/edit user information</h1>
+<s:form action="Ftp" method="POST" cssClass="bordered">
+    <s:textfield key="administrationForm.user.userId" labelposition="left" labelSeparator="" label="Username" id="name"
+                 placeholder="johndoe"/>
+    <s:textfield key="administrationForm.user.userPassword" labelposition="left" labelSeparator="" label="Password" id="password"
+                 placeholder="johndoepassword"/>
+    <s:textfield key="administrationForm.user.homeDirectory" labelposition="left" labelSeparator="" label="Home directory"
+                 id="home_directory" placeholder="d:\users\johndoe"/>
 
-<div class="inner">
-    <s:form action="Ftp" method="POST">
-        <s:textfield key="administrationForm.user.userId" labelposition="top" labelSeparator="" label="" id="name"
-                     placeholder="Name"/>
-        <s:textfield key="administrationForm.user.userPassword" labelposition="top" labelSeparator="" label="" id="password"
-                     placeholder="Password"/>
-        <s:textfield key="administrationForm.user.home_directory" labelposition="top" labelSeparator="" label=""
-                     id="home_directory" placeholder="User home directory"/>
+    <s:select name="administrationForm.user.user_roles.id"
+              id="role"
+              list="administrationForm.userRoleList"
+              value="administrationForm.defaultRole.id"
+              listKey="id"
+              listValue="authority"
+              labelposition="left"
+              label="User role"/>
 
-        <s:select name="administrationForm.user.user_roles.id"
-                  id="role"
-                  list="administrationForm.userRoleList"
-                  value="administrationForm.defaultRole.id"
-                  listKey="id"
-                  listValue="authority"
-                  labelposition="top"
-                  label="Role"/>
+    <s:select name="administrationForm.user.enableFlag"
+              id="enableFlag"
+              list="#{'false':'false', 'true':'true'}"
+              value="administrationForm.defaultEnable"
+              labelposition="left"
+              label="Enabled"/>
 
-        <s:select name="administrationForm.user.enableFlag"
-                  id="enableFlag"
-                  list="#{'false':'false', 'true':'true'}"
-                  value="administrationForm.defaultEnable"
-                  labelposition="top"
-                  label="Enabed"/>
+    <s:select name="administrationForm.user.writePermission"
+              id="write_permission"
+              list="#{'false':'false', 'true':'true'}"
+              value="administrationForm.defaultWritePermission"
+              labelposition="left"
+              label="Write"/>
 
-        <s:select name="administrationForm.user.write_permission"
-                  id="write_permission"
-                  list="#{'false':'false', 'true':'true'}"
-                  value="administrationForm.defaultWritePermission"
-                  labelposition="top"
-                  label="Write"/>
+    <s:textfield key="administrationForm.user.idleTime" labelposition="left" labelSeparator="" label="Idle time"
+                 id="idle_time" placeholder="1000"/>
+    <s:textfield key="administrationForm.user.uploadRate" labelposition="left" labelSeparator="" label="Upload rate" id="upload_rate"
+                 placeholder="1000"/>
+    <s:textfield key="administrationForm.user.downloadRate" labelposition="left" labelSeparator="" label="Download rate" id="download_rate"
+                 placeholder="1000"/>
+    <s:textfield key="administrationForm.user.maxLoginNumber" labelposition="left" labelSeparator="" label="Max login number"
+                 id="max_login_number" placeholder="1000"/>
+    <s:textfield key="administrationForm.user.maxLoginPerIP" labelposition="left" labelSeparator="" label="Max login per IP"
+                 id="max_login_per_ip" placeholder="1000"/>
+    <s:textfield key="administrationForm.user.email" id="email" labelposition="left" labelSeparator="" label="Email"
+                 placeholder="johndoe@email.com"/>
 
-        <s:textfield key="administrationForm.user.idle_time" labelposition="top" labelSeparator=":" label="Administration"
-                     id="idle_time" placeholder="Idle time"/>
-        <s:textfield key="administrationForm.user.upload_rate" labelposition="top" labelSeparator="" label="" id="upload_rate"
-                     placeholder="Upload rate"/>
-        <s:textfield key="administrationForm.user.download_rate" labelposition="top" labelSeparator="" label="" id="download_rate"
-                     placeholder="Download rate"/>
-        <s:textfield key="administrationForm.user.max_login_number" labelposition="top" labelSeparator="" label=""
-                     id="max_login_number" placeholder="Max login number"/>
-        <s:textfield key="administrationForm.user.max_login_per_ip" labelposition="top" labelSeparator="" label=""
-                     id="max_login_per_ip" placeholder="Max login number per IP"/>
-        <s:textfield key="administrationForm.user.email" id="email" labelposition="top" labelSeparator="" label=""
-                     placeholder="Email"/>
-        <br>
-        <td><s:submit action="updateUser" value="Save or Update" theme="simple"
-                      onclick="return userFormValidation()"/></td>
-    </s:form>
-</div>
+    <td>
+        <s:submit action="updateUser" value="Save or Update" theme="simple" onclick="return userFormValidation()"/>
+    </td>
+</s:form>

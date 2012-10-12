@@ -1,7 +1,7 @@
 package com.issoft.services;
 
 import com.issoft.entity.EmailNotification;
-import com.issoft.entity.dao.CommonDAO;
+import com.issoft.entity.dao.CommonHibernateDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -10,7 +10,7 @@ import java.util.List;
 public class NotificationService extends CommonService<EmailNotification, Integer> {
     @Autowired
     @Qualifier("notificationDAO")
-    public void setDao(CommonDAO dao) {
+    public void setDao(CommonHibernateDAO dao) {
         this.dao = dao;
     }
 

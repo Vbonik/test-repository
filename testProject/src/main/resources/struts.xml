@@ -64,7 +64,7 @@
             </result>
         </action>
 
-        <action name="admin">
+        <action name="admin" class="administrationAction" method="getUserFileList">
             <result name="success" type="tiles">/admin.tiles</result>
             <result name="failure">jsp/warning.jsp</result>
         </action>
@@ -72,6 +72,11 @@
         <action name="userList" method="getUserFileList" class="administrationAction">
             <result>jsp/userList.jsp</result>
             <result name="input">jsp/userList.jsp</result>
+        </action>
+
+        <action name="newUsers" class="administrationAction">
+            <result>jsp/newUsers.jsp</result>
+            <result name="input">jsp/newUsers.jsp</result>
         </action>
 
         <action name="logList">
@@ -101,7 +106,7 @@
         </action>
 
         <action name="addUser" method="addUser" class="administrationAction">
-            <result name="success" type="tiles">/addUser.tiles</result>
+            <result name="success">jsp/user.jsp</result>
             <result name="failure">jsp/warning.jsp</result>
         </action>
 

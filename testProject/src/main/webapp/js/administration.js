@@ -1,12 +1,10 @@
 $(document).ready(function() {
-    $.subscribe('completeDiv', function(event,data) {
-        $('#logTable').dataTable( {
-            "bJQueryUI": true
-        } );
-    });
+    var newUsersLabel = $('#newUsersTab span').html();
+    newUsersLabel += $('#newUsersCount').html();
+    $('#newUsersTab span').html(newUsersLabel);
 
     datePick = function(elem) {
-        $(elem).datepicker({displayFormat: "m.d.Y"});
+        $(elem).datepicker();
         $('#ui-datepicker-div').css("z-index", 2000);
     }
 });

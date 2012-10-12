@@ -11,7 +11,7 @@ import java.util.List;
  * @param <T> Entity type
  * @param <K> Entity id type
  */
-public abstract class CommonDAO<T, K> {
+public abstract class CommonHibernateDAO<T, K> {
     /**
      * Hibernate template to use
      */

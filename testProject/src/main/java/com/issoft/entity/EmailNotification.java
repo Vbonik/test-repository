@@ -13,7 +13,6 @@ public class EmailNotification {
 
     private int notificationId;
     private String notification;
-    private Set<UserEntity> users = new HashSet<UserEntity>();
 
     @Id
     @Column(name = "NOTIFICATION_ID")
@@ -33,15 +32,6 @@ public class EmailNotification {
 
     public void setNotification(String notification) {
         this.notification = notification;
-    }
-
-    @ManyToMany(mappedBy = "notifications")
-    public Set<UserEntity> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<UserEntity> users) {
-        this.users = users;
     }
 
     @Override

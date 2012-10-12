@@ -1,6 +1,6 @@
 package com.issoft.services;
 
-import com.issoft.entity.dao.CommonDAO;
+import com.issoft.entity.dao.CommonHibernateDAO;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public abstract class CommonService<T,K> {
     /**
      * DAO to use in appropriate service
      */
-    protected CommonDAO<T,K> dao;
+    protected CommonHibernateDAO<T,K> dao;
 
     /**
      * Gets list of entities

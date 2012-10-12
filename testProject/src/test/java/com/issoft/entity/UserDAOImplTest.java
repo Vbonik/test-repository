@@ -27,7 +27,7 @@ public class UserDAOImplTest extends AbstractTransactionalDataSourceSpringContex
     /**
      * Path to dbunit data file
      */
-    private static final String DBUNIT_DATA_FILE_PATH = "src/test/resources/dbunit/UserEntityDAOImpl.xml";
+    private static final String DBUNIT_DATA_FILE_PATH = "src/test/resources/dbunit/usersDAOImpl.xml";
     /**
      * {@link com.issoft.entity.dao.UserEntityDAO} entity to test
      */

@@ -29,10 +29,9 @@ public class UserEntity {
     private int downloadRate;
     private int maxLoginNumber;
     private int maxLoginPerIP;
-    private int roleId;
     private String email;
     private UserRole user_roles = new UserRole();
-    Set<EmailNotification> notifications = new HashSet<EmailNotification>();
+    private Set<EmailNotification> notifications = new HashSet<EmailNotification>();
 
     /**
      * Gets notifications ids of current user
@@ -66,15 +65,6 @@ public class UserEntity {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
-    }
-
-    @Column(name = "ROLE_ID")
-    public int getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
     }
 
     @Column(name = "EMAIL")
@@ -253,6 +243,11 @@ public class UserEntity {
         } catch (NoSuchAlgorithmException ex) {
         }
         return source;
+    }
+
+    public boolean checkIsNewUser() {
+        return UserRole.Role.ROLE_NEW.equals(
+                UserRole.Role.valueOf(user_roles.getAuthority()));
     }
 
     @Override

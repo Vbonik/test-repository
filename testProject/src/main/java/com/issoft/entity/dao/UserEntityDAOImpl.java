@@ -77,7 +77,7 @@ public class UserEntityDAOImpl implements UserEntityDAO {
     @Override
     public UserRole getUserRoleById(long id) {
         DetachedCriteria criteria = DetachedCriteria.forClass(UserRole.class);
-        List<UserRole> result = hibernateTemplate.findByCriteria(criteria.add(Property.forName("id").eq(id)));
+        List<UserRole> result = hibernateTemplate.findByCriteria(criteria.add(Property.forName("id").eq((int) id)));
         return result.get(0);
     }
 
