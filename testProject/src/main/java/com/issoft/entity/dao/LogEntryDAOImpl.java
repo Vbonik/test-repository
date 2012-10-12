@@ -1,20 +1,32 @@
 package com.issoft.entity.dao;
 
-import com.issoft.ftp.util.SearchOperation;
 import com.issoft.entity.LogEntry;
+import com.issoft.ftp.util.SearchOperation;
+import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.*;
+import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author: AS
  */
 
 public class LogEntryDAOImpl implements LogEntryDAO {
+
+    private static final Logger logger = Logger.getLogger(LogEntryDAOImpl.class);
 
     private HibernateTemplate hibernateTemplate;
     LogEntry logEntry;
@@ -103,14 +115,45 @@ public class LogEntryDAOImpl implements LogEntryDAO {
      * @param searchString    search argument
      */
     private void addSearchParametersToCriteria(String searchOperation, String searchField, String searchString) {
-        if (searchOperation == null) return;
-        SearchOperation searchOperationEnum = SearchOperation.getEnumByString(searchOperation);
-        if (searchOperationEnum == null) return;
-        switch (searchOperationEnum) {
-            case CONTAIN:
-                criteria.add(Restrictions.like(searchField, searchString, MatchMode.ANYWHERE));
-                break;
+        try {
+            if (searchOperation == null) return;
+            SearchOperation searchOperationEnum = SearchOperation.getEnumByString(searchOperation);
+            if (searchOperationEnum == null) return;
+            Object searchValue;
+            if (searchField.equals("date")) {
+                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+                Date date = formatter.parse(searchString);
+                searchValue = date;
+            } else {
+                searchValue = searchString;
+            }
+            switch (searchOperationEnum) {
+                case GREATER:
+                    criteria.add(Restrictions.gt(searchField, searchValue));
+                    break;
+                case LITTLE:
+                    criteria.add(Restrictions.lt(searchField, searchValue));
+                    break;
+                case CONTAIN:
+                    criteria.add(Restrictions.like(searchField, searchString, MatchMode.ANYWHERE));
+                    break;
+                case EQUAL:
+                    if (searchField.equals("date")) {
+                        Date dateMin = (Date) searchValue;
+                        Date dateMax = new Date(dateMin.getTime() + TimeUnit.DAYS.toMillis(1));
+                        Conjunction conjunction = Restrictions.conjunction();
+                        conjunction.add(Restrictions.ge(searchField, dateMin));
+                        conjunction.add(Restrictions.lt(searchField, dateMax));
+                        criteria.add(conjunction);
+                        break;
+                    }
+                    criteria.add(Restrictions.eq(searchField, searchValue));
+                    break;
+            }
+        } catch (ParseException e) {
+            logger.error("Date parsing error", e);
         }
+
     }
 
     /**
@@ -137,5 +180,5 @@ public class LogEntryDAOImpl implements LogEntryDAO {
     public HibernateTemplate getHibernateTemplate() {
         return hibernateTemplate;
     }
-    
+
 }

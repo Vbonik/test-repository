@@ -6,18 +6,11 @@ package com.issoft.ftp.util;
  * @author AS
  */
 public enum SearchOperation {
+
     EQUAL("eq"),
-    NOT_EQUAL("ne"),
     LITTLE("lt"),
-    LITTLE_OR_EQUAL("le"),
     GREATER("gt"),
-    GREATER_OR_EQUAL("ge"),
-    BEGINS_WITH("bw"),
-    NOT_BEGINS_WITH("bn"),
-    ENDS_WITH("ew"),
-    NOT_ENDS_WITH("en"),
-    CONTAIN("cn"),
-    NOT_CONTAIN("nc");
+    CONTAIN("cn");
 
     private String code;
 

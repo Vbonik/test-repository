@@ -1,11 +1,17 @@
 package com.issoft.ftp.presentation.action;
 
-import com.issoft.entity.dao.LogEntryDAO;
 import com.issoft.entity.LogEntry;
+import com.issoft.entity.dao.LogEntryDAO;
 import com.opensymphony.xwork2.ActionSupport;
+import org.apache.struts2.json.annotations.JSON;
 
 import java.util.List;
 
+/**
+ * Builds a JSON document for log table represented as JQuery grid.
+ *
+ * @author AS
+ */
 public class JsonTable extends ActionSupport {
 
     //Result list
@@ -162,6 +168,7 @@ public class JsonTable extends ActionSupport {
         this.records = records;
     }
 
+    @JSON(serialize = false)
     public LogEntryDAO getLogEntryDAO() {
         return logEntryDAO;
     }

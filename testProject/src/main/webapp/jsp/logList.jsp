@@ -5,7 +5,7 @@
 <s:url id="remoteurl" value="/jsontable"/>
 
 <div id="logDatepicker" class="hide">
-    <sj:datepicker />
+    <sj:datepicker/>
 </div>
 
 <sjg:grid
@@ -28,18 +28,17 @@
         navigatorSearch="true"
         pagerPosition="left"
         >
-    <sjg:gridColumn name="id" index="id" title="Id" sortable="true" width="25" align="center" search="true"
-                    searchoptions="{sopt:['cn']}"/>
+    <sjg:gridColumn name="id" index="id" title="Id" sortable="true" width="25" align="center" search="false"/>
     <sjg:gridColumn name="userName" index="userName" title="User name" sortable="true" search="true"
-                    searchoptions="{sopt:['cn']}"/>
+                    searchoptions="{sopt:['cn','eq']}"/>
     <sjg:gridColumn name="authorities" index="authorities" title="Authorities" sortable="true" search="true"
-                    searchoptions="{sopt:['cn']}"/>
+                    searchoptions="{sopt:['cn','eq']}"/>
     <sjg:gridColumn name="action" index="action" title="Action" sortable="true" search="true"
-                    searchoptions="{sopt:['cn']}"/>
+                    searchoptions="{sopt:['cn','eq']}"/>
     <sjg:gridColumn name="status" index="status" title="Status" sortable="true" search="true"
-                    searchoptions="{sopt:['cn']}"/>
+                    searchoptions="{sopt:['cn','eq']}"/>
     <sjg:gridColumn name="date" index="date" title="Date" sortable="true" search="true"
                     formatter="date"
                     formatoptions="{newformat : 'm.d.Y H:i', srcformat : 'Y-m-d H:i:s'}"
-                    searchoptions="{sopt:['cn'], dataInit:datePick}"/>
+                    searchoptions="{sopt:['cn','lt','gt'], dataInit:datePick}"/>
 </sjg:grid>
