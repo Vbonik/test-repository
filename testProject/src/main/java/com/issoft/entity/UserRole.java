@@ -10,6 +10,12 @@ import java.io.Serializable;
 @Entity
 @Table(name = "USER_ROLES")
 public class UserRole implements Serializable {
+    enum Role {
+        ROLE_ADMIN,
+        ROLE_USER,
+        ROLE_NEW
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "ID")

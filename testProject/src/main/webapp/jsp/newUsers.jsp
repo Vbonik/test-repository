@@ -1,4 +1,6 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <table class="sortable">
     <thead>
@@ -18,7 +20,7 @@
         <th>Action</th>
     </tr>
     </thead>
-    <s:iterator value="administrationForm.usersList" var="user">
+    <s:iterator value="administrationForm.newUsersList" var="user">
         <s:url var="userEditURL" action="editUser">
             <s:param name="administrationForm.userId">
                 <s:property value="#user.userId"/>

@@ -10,7 +10,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost:3306/ftptest" />
         <property name="username" value="root" />
-        <property name="password" value="admin" />
+        <property name="password" value="anton" />
     </bean>
 
     <bean id="mySessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
@@ -20,7 +20,6 @@
                 <value>com.issoft.entity.LogEntry</value>
                 <value>com.issoft.entity.UserEntity</value>
                 <value>com.issoft.entity.EmailNotification</value>
-                <value>com.issoft.entity.User</value>
                 <value>com.issoft.entity.UserRole</value>
             </list>
         </property>
@@ -29,6 +28,10 @@
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+                <prop key="hibernate.cache.provider_configuration_file_resource_path">/ehcache.xml</prop>
+                <prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</prop>
             </props>
         </property>
     </bean>
@@ -40,7 +43,7 @@
 
     <tx:annotation-driven transaction-manager="transactionManager" />
 
-    <bean id="dao" class="com.issoft.entity.dao.UsersDAOImpl">
+    <bean id="dao" class="com.issoft.entity.dao.UserEntityDAOImpl">
         <property name="sessionFactory" ref="mySessionFactory"/>
     </bean>
 

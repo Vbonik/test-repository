@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Notification DAO implementation
  */
-public class EmailNotificationDAOImpl extends CommonDAO<EmailNotification, Integer> {
+public class EmailNotificationDAOImpl extends CommonHibernateDAO<EmailNotification, Integer> {
     /**
      * Gets list of entities
      *

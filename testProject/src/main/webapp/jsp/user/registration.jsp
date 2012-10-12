@@ -2,19 +2,12 @@
 
 <h1>Type your information</h1>
 
-<div class="inner">
-    <s:form action="Ftp" method="POST">
-        <table class="registration">
-            <s:textfield key="userForm.user.user_id" labelposition="top" labelSeparator="" label="" id="name"
-                         placeholder="Name"/>
-            <s:textfield key="userForm.user.user_password" labelposition="top" labelSeparator="" label="" id="password"
-                         placeholder="Password"/>
-            <s:textfield key="userForm.user.email" id="email" labelposition="top" labelSeparator="" label=""
-                         placeholder="Email"/>
-            <br>
-            <td><s:submit action="updateUserRegistration" value="Save" theme="simple"
-                          onclick="return registrationFormValidation()"/></td>
-        </table>
+<div>
+    <s:form action="updateUserRegistration" method="POST">
+        <s:textfield key="administrationForm.user.userId" id="name" placeholder="Name" label="Username"/>
+        <s:password key="administrationForm.user.userPassword" id="password" placeholder="Password" label="Password"/>
+        <s:textfield key="administrationForm.user.email" id="email" placeholder="Email" label="Email"/>
+        <s:submit value="Save" onclick="return registrationFormValidation()"/>
     </s:form>
 </div>
 </body>
