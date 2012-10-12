@@ -4,6 +4,7 @@
  */
 package com.issoft.ftp.client;
 
+import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
@@ -13,14 +14,12 @@ import org.apache.mina.core.RuntimeIoException;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import org.apache.commons.net.ftp.FTP;
 
 /**
  * @author slavabrodnitski
@@ -56,10 +55,10 @@ public class FtpClientService {
     /**
      * Connect and login to FTP Server
      *
-     * @param login User login
+     * @param login    User login
      * @param password User password
      * @return <code>true</code> - in case of success login, <code>false</code>
-     * - otherwise
+     *         - otherwise
      * @throws FtpException In case of connection error
      */
     public Boolean login(String login, String password) throws FtpException {
@@ -89,7 +88,7 @@ public class FtpClientService {
      * Logout and disconnect from FTP Server
      *
      * @return <code>true</code> - in case of success logout and
-     * disconnect, <code>false</code> - otherwise
+     *         disconnect, <code>false</code> - otherwise
      */
     public Boolean logout() {
         try {
@@ -115,23 +114,23 @@ public class FtpClientService {
         return false;
     }
 
-    public InputStream downloadFile(final String filePath) throws IOException, InterruptedException {
+    public InputStream downloadFile(final String filePath) throws IOException {
         final PipedOutputStream pout = new PipedOutputStream();
-            PipedInputStream pin = new PipedInputStream(pout);
-            Runnable exporter = new Runnable() {
-                public void run() {
-                    try {
-                        client.setFileType(FTP.BINARY_FILE_TYPE);
-                        client.retrieveFile(filePath, pout);
-                    } catch (IOException ioEx) {
-                        throw new RuntimeException(ioEx);
-                    }
+        PipedInputStream pin = new PipedInputStream(pout);
+        Runnable exporter = new Runnable() {
+            public void run() {
+                try {
+                    client.setFileType(FTP.BINARY_FILE_TYPE);
+                    client.retrieveFile(filePath, pout);
+                } catch (IOException ioEx) {
+                    throw new RuntimeException(ioEx);
                 }
-            };
-            Thread t = new Thread(exporter);
-            t.setDaemon(false);
-            t.start();
-            return pin;
+            }
+        };
+        Thread t = new Thread(exporter);
+        t.setDaemon(false);
+        t.start();
+        return pin;
     }
 
     public FTPFile[] getFileList(String pathname) throws IOException {
