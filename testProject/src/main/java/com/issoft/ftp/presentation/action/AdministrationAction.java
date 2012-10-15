@@ -3,10 +3,13 @@ package com.issoft.ftp.presentation.action;
 import com.issoft.entity.UserEntity;
 import com.issoft.entity.UserRole;
 import com.issoft.ftp.model.AdministrationForm;
+import com.issoft.ftp.util.Constants;
+import com.issoft.ftp.util.ConvertUtil;
 import com.issoft.services.Service;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.log4j.Logger;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +18,7 @@ import java.util.List;
  * Date: 9/25/12
  */
 public class AdministrationAction extends ActionSupport {
-
-    private static final Logger logger = Logger.getLogger(AdministrationAction.class);
+    private static final Logger LOGGER = Logger.getLogger(AdministrationAction.class);
 
     private AdministrationForm administrationForm;
     private Service service;
@@ -62,6 +64,23 @@ public class AdministrationAction extends ActionSupport {
                 administrationForm.getUser().setUser_roles(userRole);
                 break;
             }
+        }
+        service.updateUser(administrationForm.getUser());
+        return SUCCESS;
+    }
+
+    /**
+     * User registration. Converts original password to md5
+     * @return SUCCESS constant in case of success flow, FAILURE - otherwise
+     */
+    public String registerUser() {
+        String originalPassword = administrationForm.getUser().getUserPassword();
+        try {
+            String md5Password = ConvertUtil.stringToMD5(originalPassword);
+            administrationForm.getUser().setUserPassword(md5Password);
+        } catch (NoSuchAlgorithmException e) {
+            LOGGER.error(e);
+            return Constants.FAILURE;
         }
         service.updateUser(administrationForm.getUser());
         return SUCCESS;

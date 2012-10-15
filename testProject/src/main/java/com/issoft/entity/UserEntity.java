@@ -235,16 +235,6 @@ public class UserEntity {
         this.user_roles = null;
     }
 
-    private String md5(String source) {
-        try {
-            MessageDigest mdEnc = MessageDigest.getInstance("MD5");
-            mdEnc.update(source.getBytes(), 0, source.length());
-            source = new BigInteger(1, mdEnc.digest()).toString(16);
-        } catch (NoSuchAlgorithmException ex) {
-        }
-        return source;
-    }
-
     public boolean checkIsNewUser() {
         return UserRole.Role.ROLE_NEW.equals(
                 UserRole.Role.valueOf(user_roles.getAuthority()));

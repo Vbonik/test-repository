@@ -95,7 +95,7 @@
             <result name="failure">jsp/warning.jsp</result>
         </action>
 
-        <action name="updateUserRegistration" method="updateUser" class="administrationAction">
+        <action name="updateUserRegistration" method="registerUser" class="administrationAction">
             <result name="success" type="tiles">/waitApprove.tiles</result>
             <result name="failure">jsp/warning.jsp</result>
         </action>
