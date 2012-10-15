@@ -50,5 +50,3 @@ function clearNotificationMessages(message) {
 function handleAddError() {
     alert("Some problem with server.");
 }
-
-
