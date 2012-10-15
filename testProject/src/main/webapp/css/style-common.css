@@ -172,3 +172,7 @@ input.error {
 .hide {
     display: none;
 }
+
+div#chatlog {
+    margin-bottom: 10px;
+}
