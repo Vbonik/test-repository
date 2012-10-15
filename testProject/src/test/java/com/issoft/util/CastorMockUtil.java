@@ -26,7 +26,7 @@ public class CastorMockUtil {
      */
     public enum MockEntity {
         /**
-         * Name for {@link User} class
+         * Name for {@link com.issoft.ftp.model.User} class
          */
         USER,
         /**

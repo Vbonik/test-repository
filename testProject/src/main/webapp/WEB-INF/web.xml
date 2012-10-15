@@ -15,7 +15,7 @@
         </param-value>
     </context-param>
     <context-param>
-        <param-name> org.apache.tiles.impl.BasicTilesContainer.DEFINITIONS_CONFIG </param-name>
+        <param-name>org.apache.tiles.impl.BasicTilesContainer.DEFINITIONS_CONFIG</param-name>
         <param-value>/WEB-INF/tiles.xml</param-value>
     </context-param>
     <!--End of Context parameters to set -->
@@ -57,6 +57,26 @@
             org.apache.struts2.tiles.StrutsTilesListener
         </listener-class>
     </listener>
+
+    <!--DWR-->
+    <servlet>
+        <servlet-name>dwr</servlet-name>
+        <servlet-class>org.directwebremoting.spring.DwrSpringServlet</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>crossDomainSessionSecurity</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dwr</servlet-name>
+        <url-pattern>/dwr/*</url-pattern>
+    </servlet-mapping>
+    <!--end DWR-->
 
     <!-- Welcome files -->
     <welcome-file-list>

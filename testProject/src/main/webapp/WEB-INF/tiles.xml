@@ -15,7 +15,7 @@
         </put-list-attribute>
         <put-list-attribute name="scripts"/>
     </definition>
-
+    
     <definition name="/login.tiles" extends="baseLayout">
         <put-attribute name="title" value="Login"/>
         <put-attribute name="body" value="/jsp/login.jsp"/>
@@ -30,7 +30,16 @@
             <add-attribute value="/css/style-admin.css"/>
         </put-list-attribute>
         <put-list-attribute name="scripts">
-            <add-attribute value="/js/administration.js"/>
+            <add-attribute value="/js/prettify.js"/>
+            <add-attribute value="/js/kickstart.js"/>
+            <add-attribute value="/js/jquery-ui-personalized-1.5.2.packed.js"/>
+            <add-attribute value="/js/sprinkle.js"/>
+            <!--dwr settings-->
+            <add-attribute value="/js/notification/notificationAlert.js"/>
+            <add-attribute value="/dwr/engine.js"/>
+            <add-attribute value="/dwr/util.js"/>
+            <add-attribute value="/dwr/interface/AdministrationNotificationScript.js"/>
+            <!--end dwr settings-->
         </put-list-attribute>
     </definition>
 

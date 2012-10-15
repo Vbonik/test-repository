@@ -2,7 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bean="http://www.springframework.org/schema/beans"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+       xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+       http://www.directwebremoting.org/schema/spring-dwr
+    http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd
+    http://www.directwebremoting.org/schema/spring-dwr">
 
     <bean:import resource="spring-database.xml"/>
 
@@ -45,8 +52,22 @@
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <!--Aspect-->
+    <!--DWR configuration-->
+    <dwr:configuration/>
+    <dwr:controller id="dwrController" debug="true"/>
+
+    <bean id="administrationNotificationBean"
+          class="com.issoft.ftp.presentation.action.AdministrationNotificationAction">
+        <dwr:remote javascript="AdministrationNotificationScript">
+            <dwr:include method="sendNotifications"/>
+            <dwr:include method="emptyListOfNotifications"/>
+            <dwr:convert type="bean" class="com.issoft.ftp.model.AdministrationNotificationForm"/>
+        </dwr:remote>
+    </bean>
+    <!--end DWR-->
     <bean id="customerAspect" class="com.issoft.log.LogMailAspect">
         <property name="logEntryDAO" ref="myLogEntryDAO"/>
+        <property name="notificationAction" ref="administrationNotificationBean"/>
     </bean>
 
     <bean id="mailService" class="com.issoft.log.mailer.MailService">

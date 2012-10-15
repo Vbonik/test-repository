@@ -33,3 +33,14 @@
 <div class="hide" id="newUsersCount">
     (<c:out value='${fn:length(administrationForm.newUsersList)}'/>)
 </div>
+
+<div id="chatlog"></div>
+<input type="button" onClick="history.go(0)" value="Start">
+<input type="button" onclick="clearInterval(timer)" value="Stop">
+<input type="button" onclick="emptyListOfNotifications()" value="Clear">
+
+<script type="text/javascript">
+    window.onload = function() {
+        var timer = setInterval(function() { getNotificationFromServer() }, 10000);
+    }
+</script>

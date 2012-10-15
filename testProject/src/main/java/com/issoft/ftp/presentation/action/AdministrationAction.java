@@ -15,6 +15,7 @@ import java.util.List;
  * Date: 9/25/12
  */
 public class AdministrationAction extends ActionSupport {
+
     private static final Logger logger = Logger.getLogger(AdministrationAction.class);
 
     private AdministrationForm administrationForm;

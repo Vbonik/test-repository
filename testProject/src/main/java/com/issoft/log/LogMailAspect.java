@@ -1,15 +1,14 @@
 package com.issoft.log;
 
+import com.issoft.ftp.model.AdministrationNotificationForm;
+import com.issoft.ftp.presentation.action.AdministrationAction;
+import com.issoft.ftp.presentation.action.AdministrationNotificationAction;
 import com.issoft.ftp.util.Constants;
 import com.issoft.entity.dao.LogEntryDAO;
 import com.issoft.log.mailer.model.Mail;
 import com.issoft.log.mailer.model.MailStorage;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,6 +28,8 @@ import java.io.InputStream;
 public class LogMailAspect {
 
     private LogEntryDAO logEntryDAO;
+    private AdministrationNotificationAction notificationAction;
+
     private static final String SPRING_SECURITY_AUTHENTICATION = "Spring security authentication";
     private static final String UPLOAD = "Upload";
     private static final String DOWNLOAD = "Download";
@@ -49,6 +50,7 @@ public class LogMailAspect {
         String principalName = (String) authentication.getPrincipal();
         String action = SPRING_SECURITY_AUTHENTICATION;
         String status = Constants.FAILURE + ": " + exception.getMessage();
+        notificationAction.createNotification(principalName, action, status);
         logEntryDAO.saveEntry(principalName, "", action, status);
     }
 
@@ -65,6 +67,7 @@ public class LogMailAspect {
         User user = (User) authentication.getPrincipal();
         String action = SPRING_SECURITY_AUTHENTICATION;
         String status = Constants.SUCCESS;
+        notificationAction.createNotification(user.getUsername(), action, status);
         logEntryDAO.saveEntry(user.getUsername(), getAuthorities(user), action, status);
     }
 
@@ -81,6 +84,7 @@ public class LogMailAspect {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String action = joinPoint.getSignature().getName();
         String status = result.toString();
+        notificationAction.createNotification(user.getUsername(), action, status);
         logEntryDAO.saveEntry(user.getUsername(), getAuthorities(user), action, status);
     }
 
@@ -118,6 +122,7 @@ public class LogMailAspect {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String action = "Download file: " + filePath;
         String status = (inputStream != null ? Constants.SUCCESS : Constants.FAILURE);
+        notificationAction.createNotification(user.getUsername(), action, status);
         logEntryDAO.saveEntry(user.getUsername(), getAuthorities(user), action, status);
 
         //Adds mail to storage for sent later
@@ -137,6 +142,7 @@ public class LogMailAspect {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String action = "Operation: " + joinPoint.getSignature().getName();
         String status = Constants.FAILURE + ": " + exception.getMessage();
+        notificationAction.createNotification(user.getUsername(), action, status);
         logEntryDAO.saveEntry(user.getUsername(), getAuthorities(user), action, status);
     }
 
@@ -153,6 +159,7 @@ public class LogMailAspect {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String action = "Upload file: " + filePath;
         String status = (result ? Constants.SUCCESS : Constants.FAILURE);
+        notificationAction.createNotification(user.getUsername(), action, status);
         logEntryDAO.saveEntry(user.getUsername(), getAuthorities(user), action, status);
 
         //Adds mail to storage for sent later
@@ -173,6 +180,7 @@ public class LogMailAspect {
         for (String path : filePaths) {
             action.append(path + ", ");
         }
+        notificationAction.createNotification(user.getUsername(), action.toString(), " success.");
         logEntryDAO.saveEntry(user.getUsername(), getAuthorities(user), action.toString(), Constants.SUCCESS);
 
         //Adds mail to storage for sent later
@@ -196,5 +204,9 @@ public class LogMailAspect {
 
     public void setLogEntryDAO(LogEntryDAO logEntryDAO) {
         this.logEntryDAO = logEntryDAO;
+    }
+
+    public void setNotificationAction(AdministrationNotificationAction notificationAction) {
+        this.notificationAction = notificationAction;
     }
 }

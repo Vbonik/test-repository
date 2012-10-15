@@ -3,10 +3,14 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:bean="http://www.springframework.org/schema/beans"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://www.directwebremoting.org/schema/spring-dwr
+    http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd
+http://www.directwebremoting.org/schema/spring-dwr http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-    <context:annotation-config />
+    <context:annotation-config/>
 
     <bean:import resource="spring-hibernate.xml"/>
 
@@ -20,6 +24,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.spri
     <bean id="inetAddress" class="java.net.Inet4Address" factory-method="getByName">
         <constructor-arg value="localhost"/>
     </bean>
+
     <bean id="ftpClientService" class="com.issoft.ftp.client.FtpClientService">
         <constructor-arg ref="inetAddress"/>
         <constructor-arg value="2121"/>
@@ -33,7 +38,9 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.spri
     <bean id="administrationAction" class="com.issoft.ftp.presentation.action.AdministrationAction">
         <property name="administrationForm" ref="administrationForm"/>
         <property name="service">
-            <bean id="administrationService" class="com.issoft.services.AdministrationService"/>
+            <bean id="administrationService" class="com.issoft.services.AdministrationService">
+                <property name="dao" ref="userDAO"/>
+            </bean>
         </property>
     </bean>
 
@@ -42,15 +49,12 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.spri
 
     <!--Spring Quartz-->
     <bean name="runMeJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-
         <property name="jobClass" value="com.issoft.log.mailer.QuartzMailJob"/>
-
         <property name="jobDataAsMap">
             <map>
                 <entry key="runMeTask" value-ref="mailService"/>
             </map>
         </property>
-
     </bean>
 
     <bean id="mailService" class="com.issoft.log.mailer.MailService"/>
