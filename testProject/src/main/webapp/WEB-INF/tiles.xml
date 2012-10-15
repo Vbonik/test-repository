@@ -34,6 +34,7 @@
             <add-attribute value="/js/kickstart.js"/>
             <add-attribute value="/js/jquery-ui-personalized-1.5.2.packed.js"/>
             <add-attribute value="/js/sprinkle.js"/>
+            <add-attribute value="/js/administration.js"/>
             <!--dwr settings-->
             <add-attribute value="/js/notification/notificationAlert.js"/>
             <add-attribute value="/dwr/engine.js"/>
@@ -65,7 +66,8 @@
         <put-attribute name="body" value="/jsp/user/registration.jsp"/>
         <put-list-attribute name="scripts">
             <add-attribute value="/js/jquery-1.8.1.js"/>
-            <add-attribute value="/js/validation.js"/>
+            <add-attribute value="/js/jquery.validate.js"/>
+            <add-attribute value="/js/userProfileValidation.js"/>
         </put-list-attribute>
         <put-list-attribute name="styles">
             <add-attribute value="/css/style-common.css"/>
