@@ -47,6 +47,7 @@ public class AdministrationAction extends ActionSupport {
             administrationForm.resetUserAndDefaultRoleEnable();
         }
         administrationForm.setUserRoleList(service.getUserRoleList());
+        administrationForm.setRestrictEdit(false);
         return SUCCESS;
     }
 
@@ -54,7 +55,24 @@ public class AdministrationAction extends ActionSupport {
         administrationForm.setUserRoleList(service.getUserRoleList());
         administrationForm.setUser(service.getUserById(administrationForm.getUserId()));
         administrationForm.setDefault(administrationForm.getUser());
+        administrationForm.setRestrictEdit(true);
         return SUCCESS;
+    }
+
+    /**
+     * Updates user password - convert to md5
+     * @param originalPassword Original user password
+     * @return <code>true</code> - in case of success convert, <code>false</code> - otherwise
+     */
+    private boolean convertUserPassword(String originalPassword) {
+        try {
+            String md5Password = ConvertUtil.stringToMD5(originalPassword);
+            administrationForm.getUser().setUserPassword(md5Password);
+        } catch (NoSuchAlgorithmException e) {
+            LOGGER.error(e);
+            return false;
+        }
+        return true;
     }
 
     public String updateUser() {
@@ -63,6 +81,12 @@ public class AdministrationAction extends ActionSupport {
             if (userRole.getId() == administrationForm.getUser().getUser_roles().getId()) {
                 administrationForm.getUser().setUser_roles(userRole);
                 break;
+            }
+        }
+        if (!administrationForm.isRestrictEdit()) {
+            boolean convertResult = convertUserPassword(administrationForm.getUser().getUserPassword());
+            if (!convertResult) {
+                return Constants.FAILURE;
             }
         }
         service.updateUser(administrationForm.getUser());
@@ -74,12 +98,8 @@ public class AdministrationAction extends ActionSupport {
      * @return SUCCESS constant in case of success flow, FAILURE - otherwise
      */
     public String registerUser() {
-        String originalPassword = administrationForm.getUser().getUserPassword();
-        try {
-            String md5Password = ConvertUtil.stringToMD5(originalPassword);
-            administrationForm.getUser().setUserPassword(md5Password);
-        } catch (NoSuchAlgorithmException e) {
-            LOGGER.error(e);
+        boolean convertResult = convertUserPassword(administrationForm.getUser().getUserPassword());
+        if (!convertResult) {
             return Constants.FAILURE;
         }
         service.updateUser(administrationForm.getUser());

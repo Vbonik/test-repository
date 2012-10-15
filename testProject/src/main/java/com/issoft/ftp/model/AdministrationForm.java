@@ -19,6 +19,10 @@ public class AdministrationForm {
     private List<UserRole> userRoleList;
     private UserRole defaultRole;
     private boolean defaultEnable;
+    /**
+     * Restrict flag for editing some fields
+     */
+    private boolean restrictEdit;
     private List<LogEntry> logEntryList;
 
     public AdministrationForm(UserEntity user, String user_id, List<UserEntity> usersList, List<UserRole> userRoleList) {
@@ -32,6 +36,14 @@ public class AdministrationForm {
     }
 
     //getters & setters
+    public boolean isRestrictEdit() {
+        return restrictEdit;
+    }
+
+    public void setRestrictEdit(boolean restrictEdit) {
+        this.restrictEdit = restrictEdit;
+    }
+
     public List<UserEntity> getNewUsersList() {
         return newUsersList;
     }
