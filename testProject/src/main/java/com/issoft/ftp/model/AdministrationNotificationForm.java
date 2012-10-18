@@ -7,9 +7,9 @@ package com.issoft.ftp.model;
  */
 public class AdministrationNotificationForm {
     private String activity;
+    private String activityStatus;
     private String user;
     private String dateTime;
-    private String activityStatus;
 
     public AdministrationNotificationForm() {
     }
@@ -55,7 +55,8 @@ public class AdministrationNotificationForm {
 
         if (activity != null ? !activity.equals(that.activity) : that.activity != null) return false;
         if (dateTime != null ? !dateTime.equals(that.dateTime) : that.dateTime != null) return false;
-        if (activityStatus != null ? !activityStatus.equals(that.activityStatus) : that.activityStatus != null) return false;
+        if (activityStatus != null ? !activityStatus.equals(that.activityStatus) : that.activityStatus != null)
+            return false;
         if (user != null ? !user.equals(that.user) : that.user != null) return false;
 
         return true;

@@ -10,6 +10,13 @@ function getNotificationFromServer() {
     });
 }
 
+function emptyListOfNotifications() {
+    AdministrationNotificationScript.emptyListOfNotifications({
+        callback:clearNotificationMessages,
+        errorHandler:handleAddError
+    });
+}
+
 function handleAddSuccess(message) {
     if (message != null) {
         receiveMessages(message);
@@ -33,13 +40,6 @@ function findSubStringInString(message, string) {
     if (message.indexOf(string) != -1) {
         return true;
     } else return false;
-}
-
-function emptyListOfNotifications() {
-    AdministrationNotificationScript.emptyListOfNotifications({
-        callback:clearNotificationMessages,
-        errorHandler:handleAddError
-    });
 }
 
 function clearNotificationMessages(message) {
